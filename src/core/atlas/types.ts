@@ -9,6 +9,14 @@ export interface AtlasDatasetMetadata {
   readonly license?: string;
   readonly recordCount: number;
   readonly checksum?: string;
+  readonly illuminant?: string;
+  readonly observer?: string;
+}
+
+export interface SpectralSample {
+  readonly wavelengthsNm: readonly number[];
+  readonly reflectance: readonly number[];
+  readonly source: "OPTIMIZED" | "MEASURED" | "UNKNOWN";
 }
 
 export interface AtlasRecord {
@@ -16,6 +24,7 @@ export interface AtlasRecord {
   readonly lab: LabColor;
   readonly hex?: string;
   readonly name?: string;
+  readonly spectrum?: SpectralSample;
   readonly sourceRow?: number;
 }
 
