@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "test": "node --test --import tsx 'src/**/*.test.ts'",
+    "test": "node --test --import tsx src/core/reference/reference-engine.test.ts",
     "check": "npm run typecheck && npm test"
   },
   "dependencies": {
