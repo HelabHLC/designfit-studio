@@ -34,6 +34,12 @@ function parseHlcLab(atlasId: string): AtlasRecord["lab"] {
   };
 }
 
+function parseTrailingInteger(line: string | undefined): number | undefined {
+  if (!line) return undefined;
+  const value = Number(line.split(/\s+/).at(-1));
+  return Number.isInteger(value) ? value : undefined;
+}
+
 export function importCgatsSpectralDataset(
   sourceText: string,
   options: CgatsImportOptions,
@@ -52,11 +58,27 @@ export function importCgatsSpectralDataset(
   if (formatStart < 0 || formatEnd < 0 || dataStart < 0 || dataEnd < 0) {
     throw new CgatsImportError("CGATS data-format or data block is missing.");
   }
+  if (!(formatStart < formatEnd && formatEnd < dataStart && dataStart < dataEnd)) {
+    throw new CgatsImportError("CGATS blocks are out of order.");
+  }
 
-  const fieldLine = lines.slice(formatStart + 1, formatEnd).join("\t");
-  const fields = fieldLine.split(/\s+/);
+  const formatLines = lines.slice(formatStart + 1, formatEnd);
+  if (formatLines.length !== 1) {
+    throw new CgatsImportError("CGATS data format must contain exactly one field line.");
+  }
+
+  const fields = formatLines[0].split(/\s+/);
   if (fields[0] !== "SAMPLE_NAME") {
     throw new CgatsImportError("First CGATS field must be SAMPLE_NAME.");
+  }
+
+  const declaredFields = parseTrailingInteger(
+    lines.find((line) => line.startsWith("NUMBER_OF_FIELDS")),
+  );
+  if (declaredFields !== undefined && declaredFields !== fields.length) {
+    throw new CgatsImportError(
+      `CGATS declares ${declaredFields} fields but format contains ${fields.length}.`,
+    );
   }
 
   const wavelengthFields = fields.slice(1).map((field) => {
@@ -68,11 +90,18 @@ export function importCgatsSpectralDataset(
   if (wavelengthFields.length === 0) {
     throw new CgatsImportError("No spectral wavelength fields found.");
   }
+  if (new Set(wavelengthFields).size !== wavelengthFields.length) {
+    throw new CgatsImportError("Duplicate spectral wavelength fields found.");
+  }
+  for (let index = 1; index < wavelengthFields.length; index += 1) {
+    if (wavelengthFields[index] <= wavelengthFields[index - 1]) {
+      throw new CgatsImportError("Spectral wavelengths must be strictly increasing.");
+    }
+  }
 
-  const declaredSetsLine = lines.find((line) => line.startsWith("NUMBER_OF_SETS"));
-  const declaredSets = declaredSetsLine
-    ? Number(declaredSetsLine.split(/\s+/).at(-1))
-    : undefined;
+  const declaredSets = parseTrailingInteger(
+    lines.find((line) => line.startsWith("NUMBER_OF_SETS")),
+  );
 
   const records: AtlasRecord[] = [];
   const ids = new Set<string>();
