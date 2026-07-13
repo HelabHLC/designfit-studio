@@ -1,3 +1,4 @@
+export * from "./candidate-search";
 export * from "./cgats-importer";
 export * from "./csv-importer";
 export * from "./repository";
