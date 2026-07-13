@@ -57,3 +57,44 @@ test("rejects duplicate atlas identities", () => {
     CgatsImportError,
   );
 });
+
+test("rejects a mismatched NUMBER_OF_FIELDS declaration", () => {
+  const malformed = fixture.replace("NUMBER_OF_FIELDS 4", "NUMBER_OF_FIELDS 37");
+  assert.throws(
+    () => importCgatsSpectralDataset(malformed, { metadata }),
+    /declares 37 fields/,
+  );
+});
+
+test("rejects duplicate wavelength columns", () => {
+  const malformed = fixture.replace(
+    "SPECTRAL_NM_380 SPECTRAL_NM_390 SPECTRAL_NM_400",
+    "SPECTRAL_NM_380 SPECTRAL_NM_390 SPECTRAL_NM_390",
+  );
+  assert.throws(
+    () => importCgatsSpectralDataset(malformed, { metadata }),
+    /Duplicate spectral wavelength/,
+  );
+});
+
+test("rejects wavelengths that are not strictly increasing", () => {
+  const malformed = fixture.replace(
+    "SPECTRAL_NM_380 SPECTRAL_NM_390 SPECTRAL_NM_400",
+    "SPECTRAL_NM_380 SPECTRAL_NM_400 SPECTRAL_NM_390",
+  );
+  assert.throws(
+    () => importCgatsSpectralDataset(malformed, { metadata }),
+    /strictly increasing/,
+  );
+});
+
+test("rejects out-of-order CGATS blocks", () => {
+  const malformed = fixture
+    .replace("BEGIN_DATA_FORMAT", "BEGIN_DATA_FORMAT_REPLACED")
+    .replace("BEGIN_DATA", "BEGIN_DATA_FORMAT")
+    .replace("BEGIN_DATA_FORMAT_REPLACED", "BEGIN_DATA");
+  assert.throws(
+    () => importCgatsSpectralDataset(malformed, { metadata }),
+    CgatsImportError,
+  );
+});
