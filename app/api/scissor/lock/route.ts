@@ -29,11 +29,16 @@ function parseRequestBody(value: unknown): ParsedRequest | undefined {
   if (!spectrumValue || typeof spectrumValue !== "object") return undefined;
   const spectrum = spectrumValue as Record<string, unknown>;
 
+  const targetReferenceValue = body.targetReference;
+  const wavelengthsValue = spectrum.wavelengthsNm;
+  const reflectanceValue = spectrum.reflectance;
+  const allowedLambdaDriftValue = body.allowedLambdaDriftNm;
+
   if (
-    typeof body.targetReference !== "string" ||
-    !isFiniteNumberArray(spectrum.wavelengthsNm) ||
-    !isFiniteNumberArray(spectrum.reflectance) ||
-    !isFiniteNumber(body.allowedLambdaDriftNm)
+    typeof targetReferenceValue !== "string" ||
+    !isFiniteNumberArray(wavelengthsValue) ||
+    !isFiniteNumberArray(reflectanceValue) ||
+    !isFiniteNumber(allowedLambdaDriftValue)
   ) {
     return undefined;
   }
@@ -43,7 +48,7 @@ function parseRequestBody(value: unknown): ParsedRequest | undefined {
       ? (body.options as Record<string, unknown>)
       : {};
   const options: ScissorLockPipelineOptions = {
-    allowedLambdaDriftNm: body.allowedLambdaDriftNm,
+    allowedLambdaDriftNm: allowedLambdaDriftValue,
     ...(isFiniteNumber(rawOptions.epsilon) ? { epsilon: rawOptions.epsilon } : {}),
     ...(isFiniteNumber(rawOptions.smoothSigmaBands)
       ? { smoothSigmaBands: rawOptions.smoothSigmaBands }
@@ -54,9 +59,9 @@ function parseRequestBody(value: unknown): ParsedRequest | undefined {
   };
 
   return {
-    targetReference: body.targetReference,
-    wavelengthsNm: spectrum.wavelengthsNm,
-    reflectance: spectrum.reflectance,
+    targetReference: targetReferenceValue,
+    wavelengthsNm: wavelengthsValue,
+    reflectance: reflectanceValue,
     options,
   };
 }
