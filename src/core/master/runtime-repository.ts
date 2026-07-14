@@ -138,4 +138,8 @@ export class RuntimeMasterRepository implements MasterRepository {
   async listReferences(): Promise<readonly string[]> {
     return [...this.records.keys()].sort();
   }
+
+  async listRecords(): Promise<readonly MasterRecord[]> {
+    return [...this.records.values()];
+  }
 }

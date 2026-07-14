@@ -41,6 +41,7 @@ export interface MasterRepository {
   verifySource(): Promise<void>;
   findByReference(reference: string): Promise<MasterRecord | undefined>;
   listReferences(): Promise<readonly string[]>;
+  listRecords(): Promise<readonly MasterRecord[]>;
 }
 
 export class MasterSourceIntegrityError extends Error {
