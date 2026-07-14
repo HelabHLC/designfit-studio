@@ -53,22 +53,27 @@ export async function POST(request: Request) {
     );
   }
 
+  const targetReference = body.targetReference;
+  const wavelengthsNm = spectrum.wavelengthsNm;
+  const reflectance = spectrum.reflectance;
+  const allowedLambdaDriftNm = body.allowedLambdaDriftNm;
   const options = body.options ?? {};
+
   try {
     const repository = await getMasterRepository();
     const evidence = await runSpectralScissorLockPipeline(
       repository,
-      body.targetReference,
+      targetReference,
+      { wavelengthsNm, reflectance },
       {
-        wavelengthsNm: spectrum.wavelengthsNm,
-        reflectance: spectrum.reflectance,
-      },
-      {
-        allowedLambdaDriftNm: body.allowedLambdaDriftNm,
-        epsilon: typeof options.epsilon === "number" ? options.epsilon : undefined,
-        smoothSigmaBands:
-          typeof options.smoothSigmaBands === "number" ? options.smoothSigmaBands : undefined,
-        smoothRadius: typeof options.smoothRadius === "number" ? options.smoothRadius : undefined,
+        allowedLambdaDriftNm,
+        ...(typeof options.epsilon === "number" ? { epsilon: options.epsilon } : {}),
+        ...(typeof options.smoothSigmaBands === "number"
+          ? { smoothSigmaBands: options.smoothSigmaBands }
+          : {}),
+        ...(typeof options.smoothRadius === "number"
+          ? { smoothRadius: options.smoothRadius }
+          : {}),
       },
     );
     const manifest = await repository.getManifest();
