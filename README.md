@@ -1,18 +1,43 @@
 # ARBE DesignFit Studio
 
-Part of the **ARBE λ* Platform — The Reference Platform for Spectral Colour Intelligence**.
+**Creative Workspace powered by the ARBE λ* Platform**
 
-ARBE DesignFit Studio is the first reference application built on ARBE Core. This repository contains the application, reference-core implementation, controlled runtime integration, public documentation and claim-safe evidence contracts.
+> Create without limits. Validate with evidence.
+
+ARBE DesignFit Studio helps designers move from inspiration and visual intent to reference-bound, material-aware and auditable colour decisions. It is the creative workspace of **ARBE λ* — The Creative Reference Platform for Spectral Colour Intelligence**.
+
+## Designer journey
+
+```text
+Inspiration
+→ Create
+→ Palette
+→ Reference
+→ Materials
+→ Produce
+```
+
+The workspace begins with images, moodboards, prompts, palettes, light and material ideas. ARBE Core works behind the creative experience to preserve identity, provenance and evidence.
 
 ## Platform structure
 
 - **Scientific Foundation:** ARBE λ*_V2 and the public `arbe-lambda` repository.
 - **ARBE Core:** Reference Engine, Atlas Repository, AtlasFit, MixLock, Spectral Scissor, Metamerism Gate and ARBE Measured.
-- **Applications:** ARBE DesignFit Studio, ARIA, Master Palette Coach, APIs and future domain-specific tools.
+- **Creative Workspace:** ARBE DesignFit Studio.
+- **Applications:** ARIA, Master Palette Coach, APIs, SDKs and future domain-specific workspaces.
+
+## Operating principle
+
+> The designer creates.  
+> The reference guides.  
+> The recipe is the candidate.  
+> The curve decides.  
+> The reference lock makes it valid.  
+> The metamerism gate qualifies the lock.
 
 ## Identity rule
 
-Only canonical references matching `Hxxx_Lxxx_Cxxx` are ARBE colour identities. Lab, HEX, RGB, names, images and descriptions remain requests or communication values.
+Only canonical references matching `Hxxx_Lxxx_Cxxx` are ARBE colour identities. Lab, HEX, RGB, names, images, palettes and descriptions remain requests or communication values.
 
 ## Claim boundary
 
