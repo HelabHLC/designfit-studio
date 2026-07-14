@@ -60,7 +60,8 @@ test("issues SCISSOR_LOCKED only after computed structural drift passes", async 
 });
 
 test("does not lock when the Master structural descriptor is unavailable", async () => {
-  const incomplete = { ...record, deltaLambdaNm: undefined };
+  const { deltaLambdaNm: _omitted, ...withoutDeltaLambda } = record;
+  const incomplete: MasterRecord = withoutDeltaLambda;
   const incompleteRepository: MasterRepository = {
     ...repository,
     async findByReference(reference) {
