@@ -1,8 +1,15 @@
 import type { LabColor } from "../reference";
 
+export interface Srgb8Color {
+  readonly r: number;
+  readonly g: number;
+  readonly b: number;
+}
+
 export type ReferenceRequest =
   | { readonly kind: "REFERENCE"; readonly value: string }
   | { readonly kind: "HEX"; readonly value: string }
+  | { readonly kind: "SRGB8"; readonly value: Srgb8Color }
   | { readonly kind: "LAB"; readonly value: LabColor }
   | { readonly kind: "DESCRIPTION"; readonly value: string }
   | { readonly kind: "EXTERNAL_STANDARD"; readonly system: string; readonly value: string }
@@ -11,6 +18,7 @@ export type ReferenceRequest =
 export type NormalizedReferenceRequest =
   | { readonly kind: "REFERENCE"; readonly value: string; readonly identityRule: "REQUEST_ONLY" }
   | { readonly kind: "HEX"; readonly value: string; readonly identityRule: "REQUEST_ONLY" }
+  | { readonly kind: "SRGB8"; readonly value: Srgb8Color; readonly identityRule: "REQUEST_ONLY" }
   | { readonly kind: "LAB"; readonly value: LabColor; readonly identityRule: "REQUEST_ONLY" }
   | { readonly kind: "DESCRIPTION"; readonly value: string; readonly identityRule: "REQUEST_ONLY" }
   | { readonly kind: "EXTERNAL_STANDARD"; readonly system: string; readonly value: string; readonly identityRule: "REQUEST_ONLY" }
@@ -43,7 +51,8 @@ export interface ReferenceGatewayResult {
   readonly bindingMethod?:
     | "DIRECT_REFERENCE"
     | "LAB_CIE76_MASTER_SEARCH"
-    | "HEX_SRGB_TO_LAB_D50_CIE76_MASTER_SEARCH";
+    | "HEX_SRGB_TO_LAB_D50_CIE76_MASTER_SEARCH"
+    | "SRGB8_TO_LAB_D50_CIE76_MASTER_SEARCH";
   readonly conversionEvidence?: ReferenceGatewayConversionEvidence;
   readonly availableActions: readonly ("REFERENCE" | "MIXLOCK" | "PALETTE" | "PIGMENTS" | "REPORT")[];
   readonly claimBoundary: string;
