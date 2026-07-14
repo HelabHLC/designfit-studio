@@ -1,0 +1,25 @@
+{
+  "datasetId": "arbe-atlas-master-active-v2-illumext",
+  "title": "ARBE Atlas Master — Active Master v2 IllumExt",
+  "fileName": "atlas_master__active_master__v2_illumext.pkl",
+  "format": "python-pickle/pandas-dataframe",
+  "sha256": "8283ab91b10f89ac758d09ecf5fb4d6343536600a06dd468b1cc1ecf4ec747c4",
+  "sizeBytes": 9741473,
+  "recordCount": 13283,
+  "columnCount": 114,
+  "identityField": "reference",
+  "identityPattern": "^H\\d{3}_L\\d{3}_C\\d{3}$",
+  "duplicateIdentityCount": 0,
+  "invalidIdentityCount": 0,
+  "spectralGridNm": [380,390,400,410,420,430,440,450,460,470,480,490,500,510,520,530,540,550,560,570,580,590,600,610,620,630,640,650,660,670,680,690,700,710,720,730],
+  "spectralColumnPrefix": "R_",
+  "lambdaV2MethodObserved": "Brent",
+  "sourceAtlasObserved": "decision_ready_v1",
+  "sourceCxfObserved": "HLC-Colour-Atlas-XL_SpectralData_v1-2.cxf",
+  "status": "REGISTERED_NOT_COMMITTED",
+  "notes": [
+    "The binary PKL is treated as an immutable internal master source and is not committed by this manifest.",
+    "The original HLC Colour Atlas XL remains the external reference and provenance foundation.",
+    "Any runtime loader must verify the SHA-256 checksum before accepting the dataset."
+  ]
+}

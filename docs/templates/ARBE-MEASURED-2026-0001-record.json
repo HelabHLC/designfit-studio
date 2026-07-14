@@ -1,0 +1,77 @@
+{
+  "recordId": "ARBE-MEASURED-2026-0001",
+  "status": "PROVISIONAL_AWAITING_MEASUREMENT",
+  "dataClass": "ARBE_MEASURED",
+  "material": {
+    "genericDescription": "Ultramarine Blue",
+    "pigmentIndexDeclared": ["PB29"],
+    "singlePigmentDeclaration": true,
+    "manufacturer": "",
+    "productLine": "",
+    "productName": "",
+    "articleNumber": "",
+    "batchLot": "",
+    "containerOpenedAt": ""
+  },
+  "specimen": {
+    "substrateManufacturer": "",
+    "substrateProduct": "",
+    "substrateBatch": "",
+    "opticalBrightenerStatus": "UNKNOWN",
+    "applicationMethod": "",
+    "applicatorGapMicrometres": null,
+    "dilution": "none",
+    "layers": 1,
+    "dryingStart": "",
+    "measurementDate": "",
+    "backing": "",
+    "temperatureC": null,
+    "relativeHumidityPercent": null
+  },
+  "instrument": {
+    "manufacturer": "",
+    "model": "",
+    "serialNumber": "",
+    "geometry": "",
+    "aperture": "",
+    "measurementMode": "",
+    "uvMode": "",
+    "softwareVersion": "",
+    "calibrationReference": "",
+    "calibratedAt": ""
+  },
+  "spectralGrid": {
+    "startNm": 380,
+    "endNm": 730,
+    "stepNm": 10,
+    "valueCount": 36
+  },
+  "repeats": [],
+  "aggregation": {
+    "method": "ARITHMETIC_MEAN",
+    "meanReflectance": []
+  },
+  "rawFiles": [],
+  "repeatability": {
+    "perWavelengthStandardDeviation": [],
+    "maximumPerWavelengthRange": null,
+    "repeatLabD50_2deg": [],
+    "meanLabD50_2deg": null,
+    "pairwiseDeltaE00": []
+  },
+  "atlasFit": {
+    "status": "NOT_RUN",
+    "method": "",
+    "candidates": [],
+    "referenceLock": null
+  },
+  "publication": {
+    "rightsReviewed": false,
+    "provenanceComplete": false,
+    "publicationGate": "BLOCKED"
+  },
+  "notes": [
+    "Template only. No measured values are present.",
+    "Do not publish as a completed ARBE Measured record."
+  ]
+}

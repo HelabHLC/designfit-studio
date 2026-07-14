@@ -1,0 +1,22 @@
+{
+  "datasetId": "freiefarbe-hlc-colour-atlas-xl-v1-2",
+  "title": "freieFarbe HLC Colour Atlas XL",
+  "version": "1.2",
+  "releasedAt": "2019-01-30",
+  "publisher": "freieFarbe e.V.",
+  "license": "CC-BY-ND-4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-nd/4.0/",
+  "illuminant": "D50",
+  "observer": "2°",
+  "recordCount": 13283,
+  "packageFile": "HLC-Colour-Atlas-XL_Set_DE_v1-2.zip",
+  "packageSha256": "49d0bc10aeb90ee4b6f30d20305dd919caa37eca94e81a80ebf8e23b36ed1bdd",
+  "spectralCgatsFile": "HLC-Colour-Atlas-XL_SpectralData_CGATS_v1-2.txt",
+  "spectralCgatsSha256": "7ed2a376dc1a338cae6d2d4eadb99cd7d20c124e32a4806fb5892649b6cf8114",
+  "spectralRangeNm": {
+    "start": 380,
+    "end": 730,
+    "step": 10
+  },
+  "integrationPolicy": "Original vendor files remain unchanged. ARBE reads them through versioned import adapters and preserves publisher, source, version and licence metadata."
+}

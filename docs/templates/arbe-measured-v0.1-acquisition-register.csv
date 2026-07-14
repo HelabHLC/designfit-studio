@@ -1,0 +1,4 @@
+sample_id,status,functional_role,manufacturer,product_line,product_name,article_number,batch,pigment_index,medium,substrate,application_method,wet_thickness_um,dry_time_hours,instrument,geometry,illuminant,observer,measurement_date,raw_file,raw_file_sha256,atlasfit_reference,atlasfit_method,publication_class,notes
+AMV01-001,PLANNED,Opaque white,,,,,,,acrylic,,,,,,,,D50,2deg,,,,,,ARBE_MEASURED,
+AMV01-002,PLANNED,Transparent/mixing white,,,,,,,acrylic,,,,,,,,D50,2deg,,,,,,ARBE_MEASURED,
+AMV01-003,PLANNED,Neutral black,,,,,,,acrylic,,,,,,,,D50,2deg,,,,,,ARBE_MEASURED,

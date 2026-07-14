@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "source_file": "atlas_master__active_master__v2_illumext.pkl",
+  "source_sha256": "8283ab91b10f89ac758d09ecf5fb4d6343536600a06dd468b1cc1ecf4ec747c4",
+  "rows": 13283,
+  "columns": 114,
+  "unique_references": 13283,
+  "invalid_reference_ids": 0,
+  "duplicate_references": 0,
+  "spectral_columns": 36,
+  "spectral_range_nm": [380, 730],
+  "spectral_step_nm": 10,
+  "spectral_min": 0.0,
+  "spectral_max": 0.9718000292778015,
+  "lambda_v2_methods": ["Brent"],
+  "runtime_format": "gzip-compressed JSON Lines",
+  "runtime_export": "arbe_atlas_master_v2_illumext.jsonl.gz",
+  "runtime_export_sha256": "cf44064fc0faf958a298983bf0e282caaa6b66635f65b5910be4f896e49bd9b6",
+  "security_boundary": "The PKL is opened only in a trusted offline ingestion process. The web application consumes the non-executable runtime export or a database derived from it."
+}
