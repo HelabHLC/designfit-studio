@@ -6,11 +6,14 @@ export interface Srgb8Color {
   readonly b: number;
 }
 
-export interface XyzD50Color {
+export interface XyzColor {
   readonly x: number;
   readonly y: number;
   readonly z: number;
 }
+
+export type XyzD50Color = XyzColor;
+export type XyzD65Color = XyzColor;
 
 export interface HlcD50Color {
   readonly h: number;
@@ -23,6 +26,7 @@ export type ReferenceRequest =
   | { readonly kind: "HEX"; readonly value: string }
   | { readonly kind: "SRGB8"; readonly value: Srgb8Color }
   | { readonly kind: "XYZ_D50"; readonly value: XyzD50Color }
+  | { readonly kind: "XYZ_D65"; readonly value: XyzD65Color }
   | { readonly kind: "HLC_D50"; readonly value: HlcD50Color }
   | { readonly kind: "LAB"; readonly value: LabColor }
   | { readonly kind: "DESCRIPTION"; readonly value: string }
@@ -34,6 +38,7 @@ export type NormalizedReferenceRequest =
   | { readonly kind: "HEX"; readonly value: string; readonly identityRule: "REQUEST_ONLY" }
   | { readonly kind: "SRGB8"; readonly value: Srgb8Color; readonly identityRule: "REQUEST_ONLY" }
   | { readonly kind: "XYZ_D50"; readonly value: XyzD50Color; readonly identityRule: "REQUEST_ONLY" }
+  | { readonly kind: "XYZ_D65"; readonly value: XyzD65Color; readonly identityRule: "REQUEST_ONLY" }
   | { readonly kind: "HLC_D50"; readonly value: HlcD50Color; readonly identityRule: "REQUEST_ONLY" }
   | { readonly kind: "LAB"; readonly value: LabColor; readonly identityRule: "REQUEST_ONLY" }
   | { readonly kind: "DESCRIPTION"; readonly value: string; readonly identityRule: "REQUEST_ONLY" }
@@ -66,6 +71,12 @@ export type ReferenceGatewayConversionEvidence =
       readonly method: "CIE_XYZ_D50_RELATIVE_Y1_TO_LAB_D50";
     }
   | {
+      readonly sourceSpace: "CIE_XYZ_D65_RELATIVE_Y1";
+      readonly destinationSpace: "CIELAB_D50";
+      readonly lab: LabColor;
+      readonly method: "CIE_XYZ_D65_RELATIVE_Y1_TO_LAB_D50_BRADFORD";
+    }
+  | {
       readonly sourceSpace: "HLC_AB_D50_DEGREES";
       readonly destinationSpace: "CIELAB_D50";
       readonly lab: LabColor;
@@ -83,6 +94,7 @@ export interface ReferenceGatewayResult {
     | "HEX_SRGB_TO_LAB_D50_CIE76_MASTER_SEARCH"
     | "SRGB8_TO_LAB_D50_CIE76_MASTER_SEARCH"
     | "XYZ_D50_TO_LAB_D50_CIE76_MASTER_SEARCH"
+    | "XYZ_D65_TO_LAB_D50_CIE76_MASTER_SEARCH"
     | "HLC_D50_TO_LAB_D50_CIE76_MASTER_SEARCH";
   readonly conversionEvidence?: ReferenceGatewayConversionEvidence;
   readonly availableActions: readonly ("REFERENCE" | "MIXLOCK" | "PALETTE" | "PIGMENTS" | "REPORT")[];
