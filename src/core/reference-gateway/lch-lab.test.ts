@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import type { MasterRecord, MasterRepository } from "../master";
 import { runReferenceGateway } from "./gateway";
-import { convertLchAbD50ToLabD50 } from "./lch-lab";
+import { convertHlcD50ToLabD50 } from "./lch-lab";
 
 const wavelengthsNm = Array.from({ length: 36 }, (_, index) => 380 + index * 10);
 
@@ -50,38 +50,38 @@ const repository: MasterRepository = {
   },
 };
 
-test("converts LCh(ab) hue 0 degrees to positive a axis", () => {
-  const result = convertLchAbD50ToLabD50({ l: 50, c: 40, h: 0 });
+test("converts HLC hue 0 degrees to positive a axis", () => {
+  const result = convertHlcD50ToLabD50({ h: 0, l: 50, c: 40 });
   assert.equal(result.labD50.l, 50);
   assert.ok(Math.abs(result.labD50.a - 40) < 1e-12);
   assert.ok(Math.abs(result.labD50.b) < 1e-12);
 });
 
-test("converts LCh(ab) hue 90 degrees to positive b axis", () => {
-  const result = convertLchAbD50ToLabD50({ l: 50, c: 40, h: 90 });
+test("converts HLC hue 90 degrees to positive b axis", () => {
+  const result = convertHlcD50ToLabD50({ h: 90, l: 50, c: 40 });
   assert.ok(Math.abs(result.labD50.a) < 1e-12);
   assert.ok(Math.abs(result.labD50.b - 40) < 1e-12);
 });
 
-test("binds LCh(ab) D50 through explicit Lab evidence", async () => {
+test("binds HLC D50 through explicit Lab evidence", async () => {
   const result = await runReferenceGateway(repository, {
-    kind: "LCH_AB_D50",
-    value: { l: 50, c: 40, h: 90 },
+    kind: "HLC_D50",
+    value: { h: 90, l: 50, c: 40 },
   });
   assert.equal(result.status, "REFERENCE_BOUND");
   assert.equal(result.boundReference, "H090_L050_C040");
-  assert.equal(result.bindingMethod, "LCH_AB_D50_TO_LAB_D50_CIE76_MASTER_SEARCH");
-  assert.equal(result.conversionEvidence?.method, "CIELCH_AB_D50_DEGREES_TO_LAB_D50");
+  assert.equal(result.bindingMethod, "HLC_D50_TO_LAB_D50_CIE76_MASTER_SEARCH");
+  assert.equal(result.conversionEvidence?.method, "HLC_AB_D50_DEGREES_TO_LAB_D50");
   assert.equal(result.request.identityRule, "REQUEST_ONLY");
 });
 
 test("rejects negative chroma and hue angle 360", async () => {
   await assert.rejects(
-    () => runReferenceGateway(repository, { kind: "LCH_AB_D50", value: { l: 50, c: -1, h: 0 } }),
+    () => runReferenceGateway(repository, { kind: "HLC_D50", value: { h: 0, l: 50, c: -1 } }),
     /chroma must be nonnegative/,
   );
   await assert.rejects(
-    () => runReferenceGateway(repository, { kind: "LCH_AB_D50", value: { l: 50, c: 40, h: 360 } }),
+    () => runReferenceGateway(repository, { kind: "HLC_D50", value: { h: 360, l: 50, c: 40 } }),
     /0 inclusive to 360 exclusive/,
   );
 });
