@@ -3,7 +3,7 @@ const milestones = [
   ["Atlas repository", "Implemented", "Versioned reference ingestion, strict validation and candidate search foundation."],
   ["Master ingestion", "Implemented", "Checksum-locked offline PKL ingestion and verified non-executable runtime export."],
   ["Data governance", "Implemented", "OPEN_REFERENCE, ARBE_MEASURED and RESTRICTED_INTERNAL publication boundaries."],
-  ["ARBE.org public layer", "In progress", "Public landing page, documentation, glossary, architecture and status."],
+  ["ARBE public knowledge layer", "In progress", "Public landing page, documentation, glossary, architecture and status."],
   ["Runtime AtlasFit", "Next", "Server-side loading of the verified master export and the first live application search."],
   ["MixLock and Scissor", "Foundation", "Core spectral and Kubelka–Munk primitives exist; validated production workflows remain under development."],
   ["ARBE Measured v0.1", "Prepared", "Protocol, 36-sample acquisition set and PB29 pilot structure await real measurement data."],
