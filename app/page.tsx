@@ -23,8 +23,8 @@ export default function HomePage() {
   return (
     <main>
       <header className="site-header shell">
-        <Link className="brand" href="/" aria-label="ARBE.org home">
-          ARBE<span>.org</span>
+        <Link className="brand" href="/" aria-label="ARBE home">
+          ARBE
         </Link>
         <nav aria-label="Primary navigation">
           <Link href="/documentation">Documentation</Link>
@@ -84,9 +84,9 @@ export default function HomePage() {
         <div>
           <p>
             The normative λ*_V2 definition and deterministic reference work
-            remain in the public <code>arbe-lambda</code> repository. ARBE.org
-            and DesignFit Studio implement that reference; they do not silently
-            redefine it.
+            remain in the public <code>arbe-lambda</code> repository. The ARBE
+            platform and DesignFit Studio implement that reference; they do not
+            silently redefine it.
           </p>
           <a
             className="text-link"
@@ -110,7 +110,7 @@ export default function HomePage() {
       </section>
 
       <footer className="site-footer shell">
-        <p>ARBE.org development preview</p>
+        <p>ARBE development preview</p>
         <p>Evidence before claims. Provenance before publication.</p>
       </footer>
     </main>
