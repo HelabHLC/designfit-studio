@@ -1,0 +1,37 @@
+{
+  "reference": "H075_L080_C100",
+  "baselinePigmentsLock": {
+    "atlasBinding": "H075_L080_C100",
+    "nearestReference": "H075_L080_C100",
+    "targetRank": 1,
+    "lockStatus": "REFERENCE_LOCKED",
+    "finalVerdict": "REFERENCE_LOCKED_METAMERISM_LOW",
+    "metamerismGateStatus": "REFERENCE_LOCKED_METAMERISM_LOW",
+    "nearestDeltaE00": 0.255132,
+    "spectralRmseToTargetCurve": 0.0241896,
+    "lockMarginDeltaE00": 0.639045
+  },
+  "scissorProbe": {
+    "crossingsBefore": 8,
+    "crossingsAfterV04": 0,
+    "nearestAfterCorrection": "H075_L080_C100",
+    "targetAfterCorrection": "H075_L080_C100",
+    "targetDeltaE00": 0.6782171066156011,
+    "deltaDeltaLambdaNm": 7.111826578730046,
+    "driftStatus": "WATCH",
+    "scissorStatusDefaultGate": "SCISSOR_UNLOCKED",
+    "defaultAllowedLambdaDriftNm": 5
+  },
+  "scissoredTargetCurveMix": {
+    "atlasBinding": "H075_L080_C100",
+    "nearestReference": "H075_L080_C100",
+    "targetRank": 1,
+    "lockStatus": "REFERENCE_LOCKED",
+    "finalVerdict": "REFERENCE_LOCKED_METAMERISM_WARNING",
+    "metamerismGateStatus": "REFERENCE_LOCKED_METAMERISM_WARNING",
+    "nearestDeltaE00": 0.687998,
+    "spectralRmseToTargetCurve": 0.03156894,
+    "lockMarginDeltaE00": 0.206149,
+    "candidateVsScissorTargetCrossings": 4
+  }
+}
