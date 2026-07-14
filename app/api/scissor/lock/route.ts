@@ -59,10 +59,12 @@ function parseRequestBody(value: unknown): ParsedRequest | undefined {
   const smoothSigmaBands = optionalFiniteNumber(rawOptions, "smoothSigmaBands");
   const smoothRadius = optionalFiniteNumber(rawOptions, "smoothRadius");
 
-  const options: ScissorLockPipelineOptions = { allowedLambdaDriftNm };
-  if (epsilon !== undefined) options.epsilon = epsilon;
-  if (smoothSigmaBands !== undefined) options.smoothSigmaBands = smoothSigmaBands;
-  if (smoothRadius !== undefined) options.smoothRadius = smoothRadius;
+  const options: ScissorLockPipelineOptions = {
+    allowedLambdaDriftNm,
+    ...(epsilon === undefined ? {} : { epsilon }),
+    ...(smoothSigmaBands === undefined ? {} : { smoothSigmaBands }),
+    ...(smoothRadius === undefined ? {} : { smoothRadius }),
+  };
 
   return { targetReference, wavelengthsNm, reflectance, options };
 }
