@@ -22,50 +22,49 @@ function isFiniteNumberArray(value: unknown): value is number[] {
   return Array.isArray(value) && value.every(isFiniteNumber);
 }
 
-function parseRequestBody(value: unknown): ParsedRequest | undefined {
-  if (!value || typeof value !== "object") return undefined;
-  const body = value as Record<string, unknown>;
-  const spectrumValue = body.candidateSpectrum;
-  if (!spectrumValue || typeof spectrumValue !== "object") return undefined;
-  const spectrum = spectrumValue as Record<string, unknown>;
+function optionalFiniteNumber(record: Record<string, unknown>, key: string): number | undefined {
+  const value = record[key];
+  return isFiniteNumber(value) ? value : undefined;
+}
 
-  const targetReferenceValue = body.targetReference;
-  const wavelengthsValue = spectrum.wavelengthsNm;
-  const reflectanceValue = spectrum.reflectance;
-  const allowedLambdaDriftValue = body.allowedLambdaDriftNm;
+function parseRequestBody(value: unknown): ParsedRequest | undefined {
+  if (value === null || typeof value !== "object") return undefined;
+
+  const body = value as Record<string, unknown>;
+  const spectrumValue = body["candidateSpectrum"];
+  if (spectrumValue === null || typeof spectrumValue !== "object") return undefined;
+
+  const spectrum = spectrumValue as Record<string, unknown>;
+  const targetReference = body["targetReference"];
+  const wavelengthsNm = spectrum["wavelengthsNm"];
+  const reflectance = spectrum["reflectance"];
+  const allowedLambdaDriftNm = body["allowedLambdaDriftNm"];
 
   if (
-    typeof targetReferenceValue !== "string" ||
-    !isFiniteNumberArray(wavelengthsValue) ||
-    !isFiniteNumberArray(reflectanceValue) ||
-    !isFiniteNumber(allowedLambdaDriftValue)
+    typeof targetReference !== "string" ||
+    !isFiniteNumberArray(wavelengthsNm) ||
+    !isFiniteNumberArray(reflectance) ||
+    !isFiniteNumber(allowedLambdaDriftNm)
   ) {
     return undefined;
   }
 
-  const rawOptions =
-    body.options && typeof body.options === "object"
-      ? (body.options as Record<string, unknown>)
+  const rawOptionsValue = body["options"];
+  const rawOptions: Record<string, unknown> =
+    rawOptionsValue !== null && typeof rawOptionsValue === "object"
+      ? (rawOptionsValue as Record<string, unknown>)
       : {};
-  const epsilonValue = rawOptions.epsilon;
-  const smoothSigmaBandsValue = rawOptions.smoothSigmaBands;
-  const smoothRadiusValue = rawOptions.smoothRadius;
 
-  const options: ScissorLockPipelineOptions = {
-    allowedLambdaDriftNm: allowedLambdaDriftValue,
-    ...(isFiniteNumber(epsilonValue) ? { epsilon: epsilonValue } : {}),
-    ...(isFiniteNumber(smoothSigmaBandsValue)
-      ? { smoothSigmaBands: smoothSigmaBandsValue }
-      : {}),
-    ...(isFiniteNumber(smoothRadiusValue) ? { smoothRadius: smoothRadiusValue } : {}),
-  };
+  const epsilon = optionalFiniteNumber(rawOptions, "epsilon");
+  const smoothSigmaBands = optionalFiniteNumber(rawOptions, "smoothSigmaBands");
+  const smoothRadius = optionalFiniteNumber(rawOptions, "smoothRadius");
 
-  return {
-    targetReference: targetReferenceValue,
-    wavelengthsNm: wavelengthsValue,
-    reflectance: reflectanceValue,
-    options,
-  };
+  const options: ScissorLockPipelineOptions = { allowedLambdaDriftNm };
+  if (epsilon !== undefined) options.epsilon = epsilon;
+  if (smoothSigmaBands !== undefined) options.smoothSigmaBands = smoothSigmaBands;
+  if (smoothRadius !== undefined) options.smoothRadius = smoothRadius;
+
+  return { targetReference, wavelengthsNm, reflectance, options };
 }
 
 export async function POST(request: Request) {
