@@ -58,6 +58,13 @@ export function buildMixLockReport(
     throw new Error("Final MixLock evidence does not contain a resolved AtlasFit reference and target rank.");
   }
 
+  const reference: MixLockReportModel["reference"] = {
+    nearestReference: atlasFit.nearestReference,
+    targetRank: atlasFit.targetRank,
+    ...(atlasFit.spectralRmse === undefined ? {} : { spectralRmse: atlasFit.spectralRmse }),
+    ...(atlasFit.lockMargin === undefined ? {} : { lockMargin: atlasFit.lockMargin }),
+  };
+
   const modelWithoutConfidence: Omit<MixLockReportModel, "confidence"> = {
     reportId: audit.reportId,
     generatedAt: audit.generatedAt,
@@ -69,12 +76,7 @@ export function buildMixLockReport(
       value: request.value,
       identityRule: "REQUEST_ONLY",
     },
-    reference: {
-      nearestReference: atlasFit.nearestReference,
-      targetRank: atlasFit.targetRank,
-      spectralRmse: atlasFit.spectralRmse,
-      lockMargin: atlasFit.lockMargin,
-    },
+    reference,
     recipe1: evidence.initialCandidate.recipe.map((item) => ({
       pigmentId: item.pigmentId,
       weight: item.normalizedWeight,
