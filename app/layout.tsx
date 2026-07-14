@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "ARBE DesignFit Studio",
+  title: {
+    default: "ARBE.org — Reference-bound colour intelligence",
+    template: "%s — ARBE.org",
+  },
   description:
-    "Reference-based colour and material design workspace powered by ARBE colour intelligence.",
+    "Scientific reference, documentation and development status for ARBE reference-bound spectral colour intelligence.",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
