@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import type { FinalMixLockEvidence } from "@/src/core/mixlock";
 import {
   buildMixLockReport,
+  createMixLockReportEnvelope,
   type MixLockReportAuditContext,
   type MixLockReportRequestContext,
 } from "@/src/core/reporting";
@@ -83,7 +84,8 @@ export async function POST(httpRequest: Request) {
       request,
       audit,
     );
-    return NextResponse.json({ status: "MIXLOCK_REPORT_READY", report });
+    const envelope = createMixLockReportEnvelope(report);
+    return NextResponse.json({ status: "MIXLOCK_REPORT_READY", envelope });
   } catch (error) {
     return NextResponse.json(
       {
