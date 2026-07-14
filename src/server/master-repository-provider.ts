@@ -1,12 +1,10 @@
-import "server-only";
-
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import {
   RuntimeMasterRepository,
+  type MasterRepository,
   type RuntimeMasterManifest,
 } from "../core/master";
-import type { MasterRepository } from "../core/master";
 
 const PAYLOAD_ENV = "ARBE_MASTER_RUNTIME_PATH";
 const MANIFEST_ENV = "ARBE_MASTER_MANIFEST_PATH";
