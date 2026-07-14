@@ -1,4 +1,4 @@
-import type { NormalizedReferenceRequest, ReferenceRequest, Srgb8Color } from "./types";
+import type { NormalizedReferenceRequest, ReferenceRequest, Srgb8Color, XyzD50Color } from "./types";
 
 const REFERENCE_PATTERN = /^H\d{3}_L\d{3}_C\d{3}$/;
 const HEX_PATTERN = /^#[0-9A-F]{6}$/;
@@ -15,6 +15,17 @@ function normalizeSrgb8(value: Srgb8Color): Srgb8Color {
     throw new Error("sRGB8 request channels must be integers between 0 and 255.");
   }
   return { r: value.r, g: value.g, b: value.b };
+}
+
+function normalizeXyzD50(value: XyzD50Color): XyzD50Color {
+  const components = [value.x, value.y, value.z];
+  if (!components.every((component) => typeof component === "number" && Number.isFinite(component))) {
+    throw new Error("XYZ D50 request components must be finite numbers.");
+  }
+  if (!components.every((component) => component >= 0)) {
+    throw new Error("XYZ D50 request components must be nonnegative relative values.");
+  }
+  return { x: value.x, y: value.y, z: value.z };
 }
 
 export function normalizeReferenceRequest(request: ReferenceRequest): NormalizedReferenceRequest {
@@ -35,6 +46,10 @@ export function normalizeReferenceRequest(request: ReferenceRequest): Normalized
 
   if (request.kind === "SRGB8") {
     return { kind: "SRGB8", value: normalizeSrgb8(request.value), identityRule: "REQUEST_ONLY" };
+  }
+
+  if (request.kind === "XYZ_D50") {
+    return { kind: "XYZ_D50", value: normalizeXyzD50(request.value), identityRule: "REQUEST_ONLY" };
   }
 
   if (request.kind === "LAB") {
