@@ -1,6 +1,6 @@
 import { findMasterCandidates } from "../master";
 import type { MasterRepository } from "../master";
-import { convertLchAbD50ToLabD50 } from "./lch-lab";
+import { convertHlcD50ToLabD50 } from "./lch-lab";
 import { normalizeReferenceRequest } from "./normalize";
 import { convertHexToLabD50, convertSrgb8ToLabD50 } from "./srgb-lab";
 import type { ReferenceGatewayResult, ReferenceRequest } from "./types";
@@ -16,7 +16,7 @@ type LabBindingMethod =
   | "HEX_SRGB_TO_LAB_D50_CIE76_MASTER_SEARCH"
   | "SRGB8_TO_LAB_D50_CIE76_MASTER_SEARCH"
   | "XYZ_D50_TO_LAB_D50_CIE76_MASTER_SEARCH"
-  | "LCH_AB_D50_TO_LAB_D50_CIE76_MASTER_SEARCH";
+  | "HLC_D50_TO_LAB_D50_CIE76_MASTER_SEARCH";
 
 function sourceLimitations(request: ReferenceGatewayResult["request"]): readonly [string, string] {
   if (request.kind === "HEX") {
@@ -37,10 +37,10 @@ function sourceLimitations(request: ReferenceGatewayResult["request"]): readonly
       "XYZ source measurement geometry, observer, illuminant provenance and scaling history are supplied assumptions, not inferred evidence.",
     ];
   }
-  if (request.kind === "LCH_AB_D50") {
+  if (request.kind === "HLC_D50") {
     return [
-      "LCH_AB_D50 is interpreted as cylindrical CIELAB D50 data with hue expressed in degrees and converted to Cartesian CIELAB D50 before candidate routing.",
-      "LCh source measurement conditions, observer, illuminant and provenance are supplied assumptions, not inferred evidence.",
+      "HLC_D50 is interpreted as cylindrical CIELAB D50 data ordered as hue, lightness and chroma, then converted to Cartesian CIELAB D50 before candidate routing.",
+      "HLC source measurement conditions, observer, illuminant and provenance are supplied assumptions, not inferred evidence.",
     ];
   }
   return [
@@ -158,10 +158,10 @@ export async function runReferenceGateway(
     });
   }
 
-  if (normalized.kind === "LCH_AB_D50") {
-    const conversion = convertLchAbD50ToLabD50(normalized.value);
-    return bindLab(repository, normalized, conversion.labD50, "LCH_AB_D50_TO_LAB_D50_CIE76_MASTER_SEARCH", {
-      sourceSpace: "CIELCH_AB_D50_DEGREES",
+  if (normalized.kind === "HLC_D50") {
+    const conversion = convertHlcD50ToLabD50(normalized.value);
+    return bindLab(repository, normalized, conversion.labD50, "HLC_D50_TO_LAB_D50_CIE76_MASTER_SEARCH", {
+      sourceSpace: "HLC_AB_D50_DEGREES",
       destinationSpace: "CIELAB_D50",
       lab: conversion.labD50,
       method: conversion.method,
