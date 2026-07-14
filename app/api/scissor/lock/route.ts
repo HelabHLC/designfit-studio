@@ -1,33 +1,70 @@
 import { NextResponse } from "next/server";
-import { runSpectralScissorLockPipeline } from "@/src/core/scissor";
+import {
+  runSpectralScissorLockPipeline,
+  type ScissorLockPipelineOptions,
+} from "@/src/core/scissor";
 import { getMasterRepository } from "@/src/server/master-repository-provider";
 
 export const runtime = "nodejs";
 
-type RequestBody = {
-  readonly targetReference?: unknown;
-  readonly candidateSpectrum?: {
-    readonly wavelengthsNm?: unknown;
-    readonly reflectance?: unknown;
-  };
-  readonly allowedLambdaDriftNm?: unknown;
-  readonly options?: {
-    readonly epsilon?: unknown;
-    readonly smoothSigmaBands?: unknown;
-    readonly smoothRadius?: unknown;
-  };
+type ParsedRequest = {
+  readonly targetReference: string;
+  readonly wavelengthsNm: number[];
+  readonly reflectance: number[];
+  readonly options: ScissorLockPipelineOptions;
 };
 
-function numberArray(value: unknown): value is number[] {
-  return Array.isArray(value) && value.every(
-    (item) => typeof item === "number" && Number.isFinite(item),
-  );
+function isFiniteNumber(value: unknown): value is number {
+  return typeof value === "number" && Number.isFinite(value);
+}
+
+function isFiniteNumberArray(value: unknown): value is number[] {
+  return Array.isArray(value) && value.every(isFiniteNumber);
+}
+
+function parseRequestBody(value: unknown): ParsedRequest | undefined {
+  if (!value || typeof value !== "object") return undefined;
+  const body = value as Record<string, unknown>;
+  const spectrumValue = body.candidateSpectrum;
+  if (!spectrumValue || typeof spectrumValue !== "object") return undefined;
+  const spectrum = spectrumValue as Record<string, unknown>;
+
+  if (
+    typeof body.targetReference !== "string" ||
+    !isFiniteNumberArray(spectrum.wavelengthsNm) ||
+    !isFiniteNumberArray(spectrum.reflectance) ||
+    !isFiniteNumber(body.allowedLambdaDriftNm)
+  ) {
+    return undefined;
+  }
+
+  const rawOptions =
+    body.options && typeof body.options === "object"
+      ? (body.options as Record<string, unknown>)
+      : {};
+  const options: ScissorLockPipelineOptions = {
+    allowedLambdaDriftNm: body.allowedLambdaDriftNm,
+    ...(isFiniteNumber(rawOptions.epsilon) ? { epsilon: rawOptions.epsilon } : {}),
+    ...(isFiniteNumber(rawOptions.smoothSigmaBands)
+      ? { smoothSigmaBands: rawOptions.smoothSigmaBands }
+      : {}),
+    ...(isFiniteNumber(rawOptions.smoothRadius)
+      ? { smoothRadius: rawOptions.smoothRadius }
+      : {}),
+  };
+
+  return {
+    targetReference: body.targetReference,
+    wavelengthsNm: spectrum.wavelengthsNm,
+    reflectance: spectrum.reflectance,
+    options,
+  };
 }
 
 export async function POST(request: Request) {
-  let body: RequestBody;
+  let rawBody: unknown;
   try {
-    body = (await request.json()) as RequestBody;
+    rawBody = await request.json();
   } catch {
     return NextResponse.json(
       { status: "INVALID_SCISSOR_REQUEST", error: "Request body must be valid JSON." },
@@ -35,15 +72,8 @@ export async function POST(request: Request) {
     );
   }
 
-  const spectrum = body.candidateSpectrum;
-  if (
-    typeof body.targetReference !== "string" ||
-    !spectrum ||
-    !numberArray(spectrum.wavelengthsNm) ||
-    !numberArray(spectrum.reflectance) ||
-    typeof body.allowedLambdaDriftNm !== "number" ||
-    !Number.isFinite(body.allowedLambdaDriftNm)
-  ) {
+  const parsed = parseRequestBody(rawBody);
+  if (!parsed) {
     return NextResponse.json(
       {
         status: "INVALID_SCISSOR_REQUEST",
@@ -53,28 +83,16 @@ export async function POST(request: Request) {
     );
   }
 
-  const targetReference = body.targetReference;
-  const wavelengthsNm = spectrum.wavelengthsNm;
-  const reflectance = spectrum.reflectance;
-  const allowedLambdaDriftNm = body.allowedLambdaDriftNm;
-  const options = body.options ?? {};
-
   try {
     const repository = await getMasterRepository();
     const evidence = await runSpectralScissorLockPipeline(
       repository,
-      targetReference,
-      { wavelengthsNm, reflectance },
+      parsed.targetReference,
       {
-        allowedLambdaDriftNm,
-        ...(typeof options.epsilon === "number" ? { epsilon: options.epsilon } : {}),
-        ...(typeof options.smoothSigmaBands === "number"
-          ? { smoothSigmaBands: options.smoothSigmaBands }
-          : {}),
-        ...(typeof options.smoothRadius === "number"
-          ? { smoothRadius: options.smoothRadius }
-          : {}),
+        wavelengthsNm: parsed.wavelengthsNm,
+        reflectance: parsed.reflectance,
       },
+      parsed.options,
     );
     const manifest = await repository.getManifest();
     return NextResponse.json({
