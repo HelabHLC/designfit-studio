@@ -1,7 +1,7 @@
 import { findMasterCandidates } from "../master";
 import type { MasterRepository } from "../master";
 import { normalizeReferenceRequest } from "./normalize";
-import { convertHexToLabD50 } from "./srgb-lab";
+import { convertHexToLabD50, convertSrgb8ToLabD50 } from "./srgb-lab";
 import type { ReferenceGatewayResult, ReferenceRequest } from "./types";
 
 const CLAIM_BOUNDARY =
@@ -15,7 +15,8 @@ async function bindLab(
   lab: { readonly l: number; readonly a: number; readonly b: number },
   bindingMethod:
     | "LAB_CIE76_MASTER_SEARCH"
-    | "HEX_SRGB_TO_LAB_D50_CIE76_MASTER_SEARCH",
+    | "HEX_SRGB_TO_LAB_D50_CIE76_MASTER_SEARCH"
+    | "SRGB8_TO_LAB_D50_CIE76_MASTER_SEARCH",
   conversionEvidence?: ReferenceGatewayResult["conversionEvidence"],
 ): Promise<ReferenceGatewayResult> {
   const candidates = await findMasterCandidates(repository, lab, { limit: 5 });
@@ -34,7 +35,13 @@ async function bindLab(
 
   const sourceLimitation = request.kind === "HEX"
     ? "HEX is interpreted as an encoded sRGB communication request and converted to CIELAB D50 before candidate routing."
-    : "Lab is a communication request, not an ARBE identity.";
+    : request.kind === "SRGB8"
+      ? "SRGB8 is interpreted as encoded IEC 61966-2-1 channel data and converted to CIELAB D50 before candidate routing."
+      : "Lab is a communication request, not an ARBE identity.";
+
+  const sourceContextLimitation = request.kind === "HEX" || request.kind === "SRGB8"
+    ? "Display profile, device calibration, viewing conditions and source provenance are not recoverable from unprofiled sRGB channel data."
+    : "Lab source measurement conditions and provenance are not inferred by the Gateway.";
 
   return {
     status: "REFERENCE_BOUND",
@@ -53,7 +60,7 @@ async function bindLab(
     limitations: [
       sourceLimitation,
       "CIE76 candidate routing uses Master communication values and does not replace spectral AtlasFit validation.",
-      "Display profile, device calibration, viewing conditions and source provenance are not recoverable from a bare HEX value.",
+      sourceContextLimitation,
       "No Spectral Scissor, recipe solution, Metamerism Gate or production approval has been performed.",
     ],
   };
@@ -100,6 +107,26 @@ export async function runReferenceGateway(
       normalized,
       conversion.labD50,
       "HEX_SRGB_TO_LAB_D50_CIE76_MASTER_SEARCH",
+      {
+        sourceSpace: "SRGB_IEC61966_2_1",
+        destinationSpace: "CIELAB_D50",
+        lab: conversion.labD50,
+        method: conversion.method,
+      },
+    );
+  }
+
+  if (normalized.kind === "SRGB8") {
+    const conversion = convertSrgb8ToLabD50([
+      normalized.value.r,
+      normalized.value.g,
+      normalized.value.b,
+    ]);
+    return bindLab(
+      repository,
+      normalized,
+      conversion.labD50,
+      "SRGB8_TO_LAB_D50_CIE76_MASTER_SEARCH",
       {
         sourceSpace: "SRGB_IEC61966_2_1",
         destinationSpace: "CIELAB_D50",
