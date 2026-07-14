@@ -1,4 +1,4 @@
-import type { CandidateSpectrum } from "../atlasfit";
+import { evaluateAtlasFit, type CandidateSpectrum } from "../atlasfit";
 import type { MasterRepository } from "../master";
 import { runSpectralScissorV03, type ScissorV03Options } from "./correct-v03";
 import { computeStructuralDrift, type StructuralDriftEvidence } from "./structural-drift";
@@ -66,11 +66,7 @@ export async function runSpectralScissorLockPipeline(
     };
   }
 
-  const correction = runSpectralScissorV03(
-    target.spectrum,
-    candidateSpectrum,
-    options,
-  );
+  const correction = runSpectralScissorV03(target.spectrum, candidateSpectrum, options);
   if (correction.physicalRangeStatus !== "OK_REFLECTANCE_RANGE") {
     return {
       status: "SCISSOR_INVALID",
@@ -85,12 +81,17 @@ export async function runSpectralScissorLockPipeline(
     correction.correctedSpectrum,
     target.deltaLambdaNm,
   );
+  const atlasFit = await evaluateAtlasFit(
+    repository,
+    targetReference,
+    correction.correctedSpectrum,
+  );
   const validation = await validateSpectralScissor(repository, {
     targetReference,
     correctedTargetCurve: correction.correctedSpectrum,
     crossingsBefore: correction.crossingsBefore,
     crossingsAfter: correction.crossingsAfter,
-    nearestAfterCorrection: targetReference,
+    nearestAfterCorrection: atlasFit.nearestReference,
     deltaDeltaLambdaNm: structuralDrift.deltaDeltaLambdaNm,
     allowedLambdaDriftNm: options.allowedLambdaDriftNm,
   });
