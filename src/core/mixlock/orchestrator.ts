@@ -82,7 +82,7 @@ export async function runFinalMixLock(
     targetReference,
     scissor.correction.correctedSpectrum,
     pigments,
-    options.secondRecipe,
+    options.secondRecipe ?? {},
   );
   const referenceLocked =
     secondRecipe.atlasFit.status === "REFERENCE_LOCKED" &&
@@ -107,6 +107,19 @@ export async function runFinalMixLock(
     metamerismEvaluations,
     options.metamerismThresholds,
   );
+
+  if (metamerism.status === "METAMERISM_INVALID") {
+    return {
+      status: "MIXLOCK_INVALID",
+      targetReference,
+      initialCandidate,
+      scissor,
+      secondRecipe,
+      metamerism,
+      finalVerdict: "NOT_FINAL",
+      limitations,
+    };
+  }
 
   return {
     status: metamerism.status,
