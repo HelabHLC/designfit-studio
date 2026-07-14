@@ -1,4 +1,10 @@
-import type { NormalizedReferenceRequest, ReferenceRequest, Srgb8Color, XyzD50Color } from "./types";
+import type {
+  HlcD50Color,
+  NormalizedReferenceRequest,
+  ReferenceRequest,
+  Srgb8Color,
+  XyzD50Color,
+} from "./types";
 
 const REFERENCE_PATTERN = /^H\d{3}_L\d{3}_C\d{3}$/;
 const HEX_PATTERN = /^#[0-9A-F]{6}$/;
@@ -28,6 +34,23 @@ function normalizeXyzD50(value: XyzD50Color): XyzD50Color {
   return { x: value.x, y: value.y, z: value.z };
 }
 
+function normalizeHlcD50(value: HlcD50Color): HlcD50Color {
+  const components = [value.h, value.l, value.c];
+  if (!components.every((component) => typeof component === "number" && Number.isFinite(component))) {
+    throw new Error("HLC D50 request components must be finite numbers.");
+  }
+  if (value.h < 0 || value.h >= 360) {
+    throw new Error("HLC D50 hue angle must be in degrees from 0 inclusive to 360 exclusive.");
+  }
+  if (value.l < 0 || value.l > 100) {
+    throw new Error("HLC D50 lightness must be between 0 and 100.");
+  }
+  if (value.c < 0) {
+    throw new Error("HLC D50 chroma must be nonnegative.");
+  }
+  return { h: value.h, l: value.l, c: value.c };
+}
+
 export function normalizeReferenceRequest(request: ReferenceRequest): NormalizedReferenceRequest {
   if (request.kind === "REFERENCE") {
     const value = nonEmpty(request.value, "Reference").toUpperCase();
@@ -50,6 +73,10 @@ export function normalizeReferenceRequest(request: ReferenceRequest): Normalized
 
   if (request.kind === "XYZ_D50") {
     return { kind: "XYZ_D50", value: normalizeXyzD50(request.value), identityRule: "REQUEST_ONLY" };
+  }
+
+  if (request.kind === "HLC_D50") {
+    return { kind: "HLC_D50", value: normalizeHlcD50(request.value), identityRule: "REQUEST_ONLY" };
   }
 
   if (request.kind === "LAB") {
