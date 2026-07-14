@@ -54,6 +54,9 @@ function assertSpectrum(spectrum: CandidateSpectrum, label: string): void {
 
 function assertPigment(pigment: MixLockPigmentInput, index: number): void {
   if (!pigment.id.trim()) throw new Error(`Pigment ${index} requires a non-empty id.`);
+  if (!Number.isFinite(pigment.weight) || pigment.weight < 0) {
+    throw new Error(`Pigment ${pigment.id} weight must be finite and non-negative.`);
+  }
   assertSpectrum(pigment.spectrum, `Pigment ${pigment.id}`);
 }
 
@@ -99,9 +102,7 @@ export async function solveSecondRecipe(
     throw new Error("maxPassesPerStep must be a positive integer.");
   }
 
-  let weights = normalizeWeights(
-    pigments.map((pigment) => (Number.isFinite(pigment.weight) && pigment.weight >= 0 ? pigment.weight : 0)),
-  );
+  let weights = normalizeWeights(pigments.map((pigment) => pigment.weight));
   let spectrum = mixedSpectrum(pigments, weights);
   let bestRmse = rmse(spectrum.reflectance, scissoredTargetSpectrum.reflectance);
   let evaluatedCandidates = 1;
