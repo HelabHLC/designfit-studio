@@ -79,12 +79,14 @@ test("binds Lab requests through ranked Master candidates", async () => {
   assert.equal(result.bindingMethod, "LAB_CIE76_MASTER_SEARCH");
 });
 
-test("does not invent a binding for unsupported normalized request kinds", async () => {
+test("binds normalized HEX requests through deterministic sRGB-to-Lab routing", async () => {
   const result = await runReferenceGateway(repository, {
     kind: "HEX",
-    value: "#A1B2C3",
+    value: "#777777",
   });
-  assert.equal(result.status, "REQUEST_NORMALIZED_BINDING_UNAVAILABLE");
-  assert.equal(result.boundReference, undefined);
-  assert.deepEqual(result.candidates, []);
+  assert.equal(result.status, "REFERENCE_BOUND");
+  assert.equal(result.boundReference, "H000_L050_C000");
+  assert.equal(result.bindingMethod, "HEX_SRGB_TO_LAB_D50_CIE76_MASTER_SEARCH");
+  assert.equal(result.request.identityRule, "REQUEST_ONLY");
+  assert.equal(result.candidates[0]?.rank, 1);
 });

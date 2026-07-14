@@ -28,12 +28,23 @@ export interface ReferenceGatewayCandidate {
   readonly method: "DIRECT_REFERENCE" | "CIE76";
 }
 
+export interface ReferenceGatewayConversionEvidence {
+  readonly sourceSpace: "SRGB_IEC61966_2_1";
+  readonly destinationSpace: "CIELAB_D50";
+  readonly lab: LabColor;
+  readonly method: "SRGB_IEC61966_2_1_TO_LAB_D50_BRADFORD";
+}
+
 export interface ReferenceGatewayResult {
   readonly status: ReferenceGatewayStatus;
   readonly request: NormalizedReferenceRequest;
   readonly boundReference?: string;
   readonly candidates: readonly ReferenceGatewayCandidate[];
-  readonly bindingMethod?: "DIRECT_REFERENCE" | "LAB_CIE76_MASTER_SEARCH";
+  readonly bindingMethod?:
+    | "DIRECT_REFERENCE"
+    | "LAB_CIE76_MASTER_SEARCH"
+    | "HEX_SRGB_TO_LAB_D50_CIE76_MASTER_SEARCH";
+  readonly conversionEvidence?: ReferenceGatewayConversionEvidence;
   readonly availableActions: readonly ("REFERENCE" | "MIXLOCK" | "PALETTE" | "PIGMENTS" | "REPORT")[];
   readonly claimBoundary: string;
   readonly limitations: readonly string[];
