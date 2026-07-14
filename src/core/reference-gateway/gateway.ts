@@ -4,7 +4,7 @@ import { convertHlcD50ToLabD50 } from "./lch-lab";
 import { normalizeReferenceRequest } from "./normalize";
 import { convertHexToLabD50, convertSrgb8ToLabD50 } from "./srgb-lab";
 import type { ReferenceGatewayResult, ReferenceRequest } from "./types";
-import { convertXyzD50ToLabD50 } from "./xyz-lab";
+import { convertXyzD50ToLabD50, convertXyzD65ToLabD50 } from "./xyz-lab";
 
 const CLAIM_BOUNDARY =
   "This result is the deterministic ARBE λ* binding of the submitted request. The submitted request itself is not an ARBE reference identity.";
@@ -16,6 +16,7 @@ type LabBindingMethod =
   | "HEX_SRGB_TO_LAB_D50_CIE76_MASTER_SEARCH"
   | "SRGB8_TO_LAB_D50_CIE76_MASTER_SEARCH"
   | "XYZ_D50_TO_LAB_D50_CIE76_MASTER_SEARCH"
+  | "XYZ_D65_TO_LAB_D50_CIE76_MASTER_SEARCH"
   | "HLC_D50_TO_LAB_D50_CIE76_MASTER_SEARCH";
 
 function sourceLimitations(request: ReferenceGatewayResult["request"]): readonly [string, string] {
@@ -34,6 +35,12 @@ function sourceLimitations(request: ReferenceGatewayResult["request"]): readonly
   if (request.kind === "XYZ_D50") {
     return [
       "XYZ_D50 is interpreted as relative CIE XYZ D50 data on a Y=1 white scale and converted to CIELAB D50 before candidate routing.",
+      "XYZ source measurement geometry, observer, illuminant provenance and scaling history are supplied assumptions, not inferred evidence.",
+    ];
+  }
+  if (request.kind === "XYZ_D65") {
+    return [
+      "XYZ_D65 is interpreted as relative CIE XYZ D65 data on a Y=1 white scale, Bradford-adapted to D50 and converted to CIELAB D50 before candidate routing.",
       "XYZ source measurement geometry, observer, illuminant provenance and scaling history are supplied assumptions, not inferred evidence.",
     ];
   }
@@ -152,6 +159,16 @@ export async function runReferenceGateway(
     const conversion = convertXyzD50ToLabD50(normalized.value);
     return bindLab(repository, normalized, conversion.labD50, "XYZ_D50_TO_LAB_D50_CIE76_MASTER_SEARCH", {
       sourceSpace: "CIE_XYZ_D50_RELATIVE_Y1",
+      destinationSpace: "CIELAB_D50",
+      lab: conversion.labD50,
+      method: conversion.method,
+    });
+  }
+
+  if (normalized.kind === "XYZ_D65") {
+    const conversion = convertXyzD65ToLabD50(normalized.value);
+    return bindLab(repository, normalized, conversion.labD50, "XYZ_D65_TO_LAB_D50_CIE76_MASTER_SEARCH", {
+      sourceSpace: "CIE_XYZ_D65_RELATIVE_Y1",
       destinationSpace: "CIELAB_D50",
       lab: conversion.labD50,
       method: conversion.method,
