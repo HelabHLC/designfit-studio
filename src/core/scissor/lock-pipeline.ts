@@ -68,6 +68,18 @@ export async function runSpectralScissorLockPipeline(
 
   const structuralDrift = computeStructuralDrift(correction.correctedSpectrum, target.deltaLambdaNm);
   const atlasFit = await evaluateAtlasFit(repository, targetReference, correction.correctedSpectrum);
+
+  if (atlasFit.nearestReference === undefined) {
+    return {
+      status: "SCISSOR_INVALID",
+      targetReference,
+      correction,
+      structuralDrift,
+      verdict: "NOT_FINAL",
+      limitations,
+    };
+  }
+
   const validation = await validateSpectralScissor(repository, {
     targetReference,
     correctedTargetCurve: correction.correctedSpectrum,
