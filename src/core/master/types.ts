@@ -4,11 +4,11 @@ export interface MasterDatasetManifest {
   readonly datasetId: string;
   readonly title: string;
   readonly fileName: string;
-  readonly format: "python-pickle/pandas-dataframe";
+  readonly format: "python-pickle/pandas-dataframe" | "application/x-ndjson+gzip";
   readonly sha256: string;
   readonly sizeBytes: number;
   readonly recordCount: number;
-  readonly columnCount: number;
+  readonly columnCount?: number;
   readonly identityField: "reference";
   readonly spectralGridNm: readonly number[];
   readonly status: "REGISTERED_NOT_COMMITTED" | "AVAILABLE" | "VERIFIED";
