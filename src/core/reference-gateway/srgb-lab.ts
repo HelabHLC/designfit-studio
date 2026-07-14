@@ -1,7 +1,7 @@
 import type { LabColor } from "../reference";
 
 export interface SrgbLabConversionEvidence {
-  readonly hex: string;
+  readonly hex?: string;
   readonly rgb8: readonly [number, number, number];
   readonly xyzD65: readonly [number, number, number];
   readonly xyzD50: readonly [number, number, number];
@@ -30,6 +30,12 @@ function parseHex(hex: string): readonly [number, number, number] {
   ];
 }
 
+function validateRgb8(rgb8: readonly [number, number, number]): void {
+  if (!rgb8.every((channel) => Number.isInteger(channel) && channel >= 0 && channel <= 255)) {
+    throw new Error("sRGB8 channels must be integers between 0 and 255.");
+  }
+}
+
 function xyzToLabComponent(value: number): number {
   const delta = 6 / 29;
   const deltaCubed = delta ** 3;
@@ -38,9 +44,11 @@ function xyzToLabComponent(value: number): number {
     : value / (3 * delta * delta) + 4 / 29;
 }
 
-export function convertHexToLabD50(hex: string): SrgbLabConversionEvidence {
-  const normalized = hex.trim().toUpperCase();
-  const rgb8 = parseHex(normalized);
+export function convertSrgb8ToLabD50(
+  rgb8: readonly [number, number, number],
+  hex?: string,
+): SrgbLabConversionEvidence {
+  validateRgb8(rgb8);
   const [r, g, b] = rgb8.map(decodeSrgb) as [number, number, number];
 
   const xyzD65 = [
@@ -60,7 +68,7 @@ export function convertHexToLabD50(hex: string): SrgbLabConversionEvidence {
   const fz = xyzToLabComponent(xyzD50[2] / D50[2]);
 
   return {
-    hex: normalized,
+    hex,
     rgb8,
     xyzD65,
     xyzD50,
@@ -71,4 +79,9 @@ export function convertHexToLabD50(hex: string): SrgbLabConversionEvidence {
     },
     method: "SRGB_IEC61966_2_1_TO_LAB_D50_BRADFORD",
   };
+}
+
+export function convertHexToLabD50(hex: string): SrgbLabConversionEvidence {
+  const normalized = hex.trim().toUpperCase();
+  return convertSrgb8ToLabD50(parseHex(normalized), normalized);
 }

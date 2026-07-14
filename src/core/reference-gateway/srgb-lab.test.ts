@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import type { MasterRecord, MasterRepository } from "../master";
 import { runReferenceGateway } from "./gateway";
-import { convertHexToLabD50 } from "./srgb-lab";
+import { convertHexToLabD50, convertSrgb8ToLabD50 } from "./srgb-lab";
 
 const wavelengthsNm = Array.from({ length: 36 }, (_, index) => 380 + index * 10);
 
@@ -58,6 +58,13 @@ test("converts sRGB white to approximately Lab D50 white", () => {
   assert.ok(Math.abs(result.labD50.b) < 0.03);
 });
 
+test("HEX and SRGB8 use the same conversion pipeline", () => {
+  const fromHex = convertHexToLabD50("#777777");
+  const fromRgb = convertSrgb8ToLabD50([119, 119, 119]);
+  assert.deepEqual(fromRgb.rgb8, fromHex.rgb8);
+  assert.deepEqual(fromRgb.labD50, fromHex.labD50);
+});
+
 test("binds HEX through explicit sRGB-to-Lab evidence", async () => {
   const result = await runReferenceGateway(repository, { kind: "HEX", value: "#FFFFFF" });
   assert.equal(result.status, "REFERENCE_BOUND");
@@ -67,6 +74,29 @@ test("binds HEX through explicit sRGB-to-Lab evidence", async () => {
   assert.equal(result.request.identityRule, "REQUEST_ONLY");
 });
 
+test("binds explicit SRGB8 through the shared sRGB conversion", async () => {
+  const result = await runReferenceGateway(repository, {
+    kind: "SRGB8",
+    value: { r: 255, g: 255, b: 255 },
+  });
+  assert.equal(result.status, "REFERENCE_BOUND");
+  assert.equal(result.boundReference, "H000_L100_C000");
+  assert.equal(result.bindingMethod, "SRGB8_TO_LAB_D50_CIE76_MASTER_SEARCH");
+  assert.equal(result.conversionEvidence?.method, "SRGB_IEC61966_2_1_TO_LAB_D50_BRADFORD");
+  assert.equal(result.request.identityRule, "REQUEST_ONLY");
+});
+
 test("rejects malformed HEX", () => {
   assert.throws(() => convertHexToLabD50("#FFF"), /#RRGGBB/);
+});
+
+test("rejects out-of-range or non-integer SRGB8 channels", async () => {
+  await assert.rejects(
+    runReferenceGateway(repository, { kind: "SRGB8", value: { r: 256, g: 0, b: 0 } }),
+    /integers between 0 and 255/,
+  );
+  await assert.rejects(
+    runReferenceGateway(repository, { kind: "SRGB8", value: { r: 12.5, g: 0, b: 0 } }),
+    /integers between 0 and 255/,
+  );
 });
