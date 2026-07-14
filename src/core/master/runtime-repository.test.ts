@@ -19,7 +19,7 @@ function makeRecord(reference: string) {
     sourceCxf: "fixture",
     lab: { l: 50, a: 12, b: -8 },
     spectrum: {
-      wavelengthsNm,
+      wavelengthsNm: [...wavelengthsNm],
       reflectance: wavelengthsNm.map((_, index) => 0.2 + index / 100),
     },
   };
@@ -36,7 +36,7 @@ function fixture(records = [makeRecord("H180_L050_C040")]) {
     sizeBytes: payload.byteLength,
     recordCount: records.length,
     identityField: "reference",
-    spectralGridNm: wavelengthsNm,
+    spectralGridNm: [...wavelengthsNm],
     status: "VERIFIED",
   };
   return { payload, manifest };
