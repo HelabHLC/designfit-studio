@@ -4,8 +4,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "ARBE.org — Reference-bound colour intelligence",
-    template: "%s — ARBE.org",
+    default: "ARBE — Reference-bound colour intelligence",
+    template: "%s — ARBE",
   },
   description:
     "Scientific reference, documentation and development status for ARBE reference-bound spectral colour intelligence.",
