@@ -1,0 +1,34 @@
+{
+  "kbName": "ARBE AtlasFit MixLock KB",
+  "kbVersion": "0.5",
+  "generatedDate": "2026-06-26",
+  "status": "KB_FROZEN_FOR_REPEATABLE_ATLASFIT_TESTING",
+  "sourceArchive": {
+    "fileName": "ARBE_ATLASFIT_MIXLOCK_KB_v0_5_CLEAN_NODATA.zip",
+    "sha256": "82900bb48d02419296cab53619812b52af78e9a0bacb60039bed1895c75e0830",
+    "sizeBytes": 687560,
+    "rawDataIncluded": false
+  },
+  "masterAtlas": {
+    "fileName": "atlas_master__active_master__v2_illumext.pkl",
+    "sha256": "8283ab91b10f89ac758d09ecf5fb4d6343536600a06dd468b1cc1ecf4ec747c4",
+    "recordCount": 13283,
+    "spectralBandCount": 36,
+    "lambdaV2Method": "Brent",
+    "redistributed": false
+  },
+  "candidateSpace": {
+    "fileName": "pigments.rs",
+    "sha256": "76086ff3a72a62d5d5a47463bb494b332723e1a4ecd0091b97197f3d16a3aaaa",
+    "recordCount": 290,
+    "redistributed": false,
+    "licenseBoundary": "Local-use candidate space; redistribution rights are not asserted."
+  },
+  "goldenReference": "H075_L080_C100",
+  "canonicalStatement": [
+    "The recipe is the candidate.",
+    "The curve decides.",
+    "The reference lock makes it valid.",
+    "The metamerism gate qualifies the lock."
+  ]
+}
