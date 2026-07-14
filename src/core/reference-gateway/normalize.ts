@@ -1,5 +1,5 @@
 import type {
-  LchAbD50Color,
+  HlcD50Color,
   NormalizedReferenceRequest,
   ReferenceRequest,
   Srgb8Color,
@@ -34,21 +34,21 @@ function normalizeXyzD50(value: XyzD50Color): XyzD50Color {
   return { x: value.x, y: value.y, z: value.z };
 }
 
-function normalizeLchAbD50(value: LchAbD50Color): LchAbD50Color {
-  const components = [value.l, value.c, value.h];
+function normalizeHlcD50(value: HlcD50Color): HlcD50Color {
+  const components = [value.h, value.l, value.c];
   if (!components.every((component) => typeof component === "number" && Number.isFinite(component))) {
-    throw new Error("LCh(ab) D50 request components must be finite numbers.");
-  }
-  if (value.l < 0 || value.l > 100) {
-    throw new Error("LCh(ab) D50 L must be between 0 and 100.");
-  }
-  if (value.c < 0) {
-    throw new Error("LCh(ab) D50 chroma must be nonnegative.");
+    throw new Error("HLC D50 request components must be finite numbers.");
   }
   if (value.h < 0 || value.h >= 360) {
-    throw new Error("LCh(ab) D50 hue angle must be in degrees from 0 inclusive to 360 exclusive.");
+    throw new Error("HLC D50 hue angle must be in degrees from 0 inclusive to 360 exclusive.");
   }
-  return { l: value.l, c: value.c, h: value.h };
+  if (value.l < 0 || value.l > 100) {
+    throw new Error("HLC D50 lightness must be between 0 and 100.");
+  }
+  if (value.c < 0) {
+    throw new Error("HLC D50 chroma must be nonnegative.");
+  }
+  return { h: value.h, l: value.l, c: value.c };
 }
 
 export function normalizeReferenceRequest(request: ReferenceRequest): NormalizedReferenceRequest {
@@ -75,8 +75,8 @@ export function normalizeReferenceRequest(request: ReferenceRequest): Normalized
     return { kind: "XYZ_D50", value: normalizeXyzD50(request.value), identityRule: "REQUEST_ONLY" };
   }
 
-  if (request.kind === "LCH_AB_D50") {
-    return { kind: "LCH_AB_D50", value: normalizeLchAbD50(request.value), identityRule: "REQUEST_ONLY" };
+  if (request.kind === "HLC_D50") {
+    return { kind: "HLC_D50", value: normalizeHlcD50(request.value), identityRule: "REQUEST_ONLY" };
   }
 
   if (request.kind === "LAB") {
