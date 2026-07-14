@@ -47,15 +47,17 @@ function parseRequestBody(value: unknown): ParsedRequest | undefined {
     body.options && typeof body.options === "object"
       ? (body.options as Record<string, unknown>)
       : {};
+  const epsilonValue = rawOptions.epsilon;
+  const smoothSigmaBandsValue = rawOptions.smoothSigmaBands;
+  const smoothRadiusValue = rawOptions.smoothRadius;
+
   const options: ScissorLockPipelineOptions = {
     allowedLambdaDriftNm: allowedLambdaDriftValue,
-    ...(isFiniteNumber(rawOptions.epsilon) ? { epsilon: rawOptions.epsilon } : {}),
-    ...(isFiniteNumber(rawOptions.smoothSigmaBands)
-      ? { smoothSigmaBands: rawOptions.smoothSigmaBands }
+    ...(isFiniteNumber(epsilonValue) ? { epsilon: epsilonValue } : {}),
+    ...(isFiniteNumber(smoothSigmaBandsValue)
+      ? { smoothSigmaBands: smoothSigmaBandsValue }
       : {}),
-    ...(isFiniteNumber(rawOptions.smoothRadius)
-      ? { smoothRadius: rawOptions.smoothRadius }
-      : {}),
+    ...(isFiniteNumber(smoothRadiusValue) ? { smoothRadius: smoothRadiusValue } : {}),
   };
 
   return {
