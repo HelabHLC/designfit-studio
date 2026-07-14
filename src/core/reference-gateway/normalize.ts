@@ -1,4 +1,4 @@
-import type { NormalizedReferenceRequest, ReferenceRequest } from "./types";
+import type { NormalizedReferenceRequest, ReferenceRequest, Srgb8Color } from "./types";
 
 const REFERENCE_PATTERN = /^H\d{3}_L\d{3}_C\d{3}$/;
 const HEX_PATTERN = /^#[0-9A-F]{6}$/;
@@ -7,6 +7,14 @@ function nonEmpty(value: string, label: string): string {
   const normalized = value.trim();
   if (!normalized) throw new Error(`${label} must not be empty.`);
   return normalized;
+}
+
+function normalizeSrgb8(value: Srgb8Color): Srgb8Color {
+  const channels = [value.r, value.g, value.b];
+  if (!channels.every((channel) => Number.isInteger(channel) && channel >= 0 && channel <= 255)) {
+    throw new Error("sRGB8 request channels must be integers between 0 and 255.");
+  }
+  return { r: value.r, g: value.g, b: value.b };
 }
 
 export function normalizeReferenceRequest(request: ReferenceRequest): NormalizedReferenceRequest {
@@ -23,6 +31,10 @@ export function normalizeReferenceRequest(request: ReferenceRequest): Normalized
     const normalized = value.startsWith("#") ? value : `#${value}`;
     if (!HEX_PATTERN.test(normalized)) throw new Error("HEX request must contain exactly six hexadecimal digits.");
     return { kind: "HEX", value: normalized, identityRule: "REQUEST_ONLY" };
+  }
+
+  if (request.kind === "SRGB8") {
+    return { kind: "SRGB8", value: normalizeSrgb8(request.value), identityRule: "REQUEST_ONLY" };
   }
 
   if (request.kind === "LAB") {
