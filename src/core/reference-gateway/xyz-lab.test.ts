@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import type { MasterRecord, MasterRepository } from "../master";
 import { runReferenceGateway } from "./gateway";
-import { convertXyzD50ToLabD50 } from "./xyz-lab";
+import { convertXyzD50ToLabD50, convertXyzD65ToLabD50 } from "./xyz-lab";
 
 const wavelengthsNm = Array.from({ length: 36 }, (_, index) => 380 + index * 10);
 
@@ -57,6 +57,13 @@ test("converts relative XYZ D50 white to Lab D50 white", () => {
   assert.ok(Math.abs(result.labD50.b) < 1e-10);
 });
 
+test("converts relative XYZ D65 white to Lab D50 white through Bradford adaptation", () => {
+  const result = convertXyzD65ToLabD50({ x: 0.95047, y: 1, z: 1.08883 });
+  assert.ok(Math.abs(result.labD50.l - 100) < 0.02);
+  assert.ok(Math.abs(result.labD50.a) < 0.03);
+  assert.ok(Math.abs(result.labD50.b) < 0.03);
+});
+
 test("binds XYZ D50 through explicit conversion evidence", async () => {
   const result = await runReferenceGateway(repository, {
     kind: "XYZ_D50",
@@ -70,16 +77,26 @@ test("binds XYZ D50 through explicit conversion evidence", async () => {
   assert.equal(result.request.identityRule, "REQUEST_ONLY");
 });
 
-test("rejects negative XYZ D50 components", async () => {
+test("binds XYZ D65 through Bradford-adapted Lab D50 evidence", async () => {
+  const result = await runReferenceGateway(repository, {
+    kind: "XYZ_D65",
+    value: { x: 0.95047, y: 1, z: 1.08883 },
+  });
+  assert.equal(result.status, "REFERENCE_BOUND");
+  assert.equal(result.boundReference, "H000_L100_C000");
+  assert.equal(result.bindingMethod, "XYZ_D65_TO_LAB_D50_CIE76_MASTER_SEARCH");
+  assert.equal(result.conversionEvidence?.sourceSpace, "CIE_XYZ_D65_RELATIVE_Y1");
+  assert.equal(result.conversionEvidence?.method, "CIE_XYZ_D65_RELATIVE_Y1_TO_LAB_D50_BRADFORD");
+  assert.equal(result.request.identityRule, "REQUEST_ONLY");
+});
+
+test("rejects invalid XYZ components for both white points", async () => {
   await assert.rejects(
     runReferenceGateway(repository, { kind: "XYZ_D50", value: { x: -0.1, y: 0.5, z: 0.2 } }),
     /nonnegative/,
   );
-});
-
-test("rejects non-finite XYZ D50 components", async () => {
   await assert.rejects(
-    runReferenceGateway(repository, { kind: "XYZ_D50", value: { x: Number.NaN, y: 0.5, z: 0.2 } }),
+    runReferenceGateway(repository, { kind: "XYZ_D65", value: { x: Number.NaN, y: 0.5, z: 0.2 } }),
     /finite numbers/,
   );
 });
