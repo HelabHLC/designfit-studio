@@ -1,21 +1,17 @@
 import Link from "next/link";
 
-const capabilities = [
+const platformAreas = [
   {
-    title: "Reference Engine",
-    text: "Binds colour requests to canonical HLC atlas identities instead of treating RGB, HEX or names as final colour identities.",
+    title: "Scientific Foundation",
+    text: "ARBE λ*_V2, deterministic reference methods, reproducibility and the public arbe-lambda repository.",
   },
   {
-    title: "AtlasFit",
-    text: "Ranks atlas candidates, preserves provenance and separates a useful candidate from a validated reference lock.",
+    title: "ARBE Core",
+    text: "Reference Engine, Atlas Repository, AtlasFit, MixLock, Spectral Scissor, Metamerism Gate and ARBE Measured.",
   },
   {
-    title: "Spectral evaluation",
-    text: "Compares reflectance structure, balance, asymmetry and curve behaviour rather than reducing every decision to one distance number.",
-  },
-  {
-    title: "MixLock",
-    text: "Develops pigment-aware mixture evidence with explicit model limits, traceable inputs and independent validation.",
+    title: "Applications",
+    text: "ARBE DesignFit Studio, ARIA, Master Palette Coach, APIs and future domain-specific applications.",
   },
 ];
 
@@ -23,8 +19,8 @@ export default function HomePage() {
   return (
     <main>
       <header className="site-header shell">
-        <Link className="brand" href="/" aria-label="ARBE.org home">
-          ARBE<span>.org</span>
+        <Link className="brand" href="/" aria-label="ARBE lambda star home">
+          ARBE <span>λ*</span>
         </Link>
         <nav aria-label="Primary navigation">
           <Link href="/documentation">Documentation</Link>
@@ -35,13 +31,13 @@ export default function HomePage() {
       </header>
 
       <section className="hero shell">
-        <p className="eyebrow">Reference-bound spectral colour intelligence</p>
+        <p className="eyebrow">The Reference Platform for Spectral Colour Intelligence</p>
         <h1>From colour request to defensible reference.</h1>
         <p className="hero-copy">
-          ARBE is building an open, traceable framework for atlas-bound colour
-          decisions, spectral comparison and pigment-aware formulation. The
-          platform distinguishes communication values from colour identity and
-          evidence from approval.
+          ARBE λ* is an open, traceable platform for atlas-bound colour identity,
+          spectral comparison, pigment-aware formulation and evidence-based
+          validation. Applications are built on the platform; they do not redefine
+          its scientific foundation.
         </p>
         <div className="actions">
           <Link className="button primary" href="/documentation">
@@ -55,22 +51,22 @@ export default function HomePage() {
 
       <section className="statement shell">
         <p>
-          <strong>ARBE does not invent colour identity.</strong> External Lab,
-          HEX, RGB, brand colours, images and descriptions are requests. A
+          <strong>Colour is communication. Reference is evidence.</strong> External
+          Lab, HEX, RGB, brand colours, images and descriptions are requests. A
           canonical atlas reference is the identity used by the system.
         </p>
       </section>
 
       <section className="section shell">
         <div className="section-heading">
-          <p className="eyebrow">Core capabilities</p>
-          <h2>A layered system, not a single score.</h2>
+          <p className="eyebrow">Platform structure</p>
+          <h2>One scientific foundation. One reference core. Many applications.</h2>
         </div>
         <div className="card-grid">
-          {capabilities.map((capability) => (
-            <article className="card" key={capability.title}>
-              <h3>{capability.title}</h3>
-              <p>{capability.text}</p>
+          {platformAreas.map((area) => (
+            <article className="card" key={area.title}>
+              <h3>{area.title}</h3>
+              <p>{area.text}</p>
             </article>
           ))}
         </div>
@@ -79,19 +75,15 @@ export default function HomePage() {
       <section className="section split shell">
         <div>
           <p className="eyebrow">Scientific reference</p>
-          <h2>λ*_V2 remains independently specified.</h2>
+          <h2>ARBE λ*_V2 remains independently specified.</h2>
         </div>
         <div>
           <p>
-            The normative λ*_V2 definition and deterministic reference work
-            remain in the public <code>arbe-lambda</code> repository. ARBE.org
-            and DesignFit Studio implement that reference; they do not silently
-            redefine it.
+            The normative ARBE λ*_V2 definition and deterministic reference work
+            remain in the public <code>arbe-lambda</code> repository. ARBE DesignFit
+            Studio implements that reference; it does not silently redefine it.
           </p>
-          <a
-            className="text-link"
-            href="https://github.com/HelabHLC/arbe-lambda"
-          >
+          <a className="text-link" href="https://github.com/HelabHLC/arbe-lambda">
             Open the scientific repository →
           </a>
         </div>
@@ -110,7 +102,7 @@ export default function HomePage() {
       </section>
 
       <footer className="site-footer shell">
-        <p>ARBE.org development preview</p>
+        <p>ARBE λ* development preview</p>
         <p>Evidence before claims. Provenance before publication.</p>
       </footer>
     </main>

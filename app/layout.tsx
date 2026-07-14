@@ -4,11 +4,11 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "ARBE.org — Reference-bound colour intelligence",
-    template: "%s — ARBE.org",
+    default: "ARBE λ* — Spectral Colour Intelligence",
+    template: "%s — ARBE λ*",
   },
   description:
-    "Scientific reference, documentation and development status for ARBE reference-bound spectral colour intelligence.",
+    "Scientific reference, reference core, documentation and applications for the ARBE λ* Platform.",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
