@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { demoMixLockReport as report } from "@/src/core/reporting/demo-report";
+import { PrintButton } from "./print-button";
 
 function Percent({ value }: { value: number }) {
   return <>{(value * 100).toFixed(1)}%</>;
@@ -15,7 +16,7 @@ export default function MixLockReportDemoPage() {
         <nav aria-label="Report navigation">
           <Link href="/">Platform</Link>
           <a href="#audit">Audit</a>
-          <button type="button" onClick={undefined} className="print-button">Print / PDF</button>
+          <PrintButton />
         </nav>
       </header>
 
