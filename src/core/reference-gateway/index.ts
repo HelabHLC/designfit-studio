@@ -1,5 +1,6 @@
 export * from "./decision-object";
 export * from "./evidence-chain";
+export * from "./explainable-decision";
 export * from "./gateway";
 export * from "./lch-lab";
 export * from "./normalize";
