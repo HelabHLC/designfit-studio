@@ -1,3 +1,4 @@
+export * from "./decision-object";
 export * from "./evidence-chain";
 export * from "./gateway";
 export * from "./lch-lab";
