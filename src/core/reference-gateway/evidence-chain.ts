@@ -12,7 +12,7 @@ export type ReferenceGatewayEvidenceStepKind =
 export interface ReferenceGatewayEvidenceStep {
   readonly sequence: number;
   readonly kind: ReferenceGatewayEvidenceStepKind;
-  readonly evidence: Readonly<Record<string, unknown>>;
+  readonly evidence: unknown;
 }
 
 export interface ReferenceGatewayEvidencePayload {
