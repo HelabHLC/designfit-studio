@@ -5,6 +5,7 @@ export * from "./recipe-evidence-assessment-report-binding";
 export * from "./recipe-intelligence-evidence-package";
 export * from "./reference-gateway-evidence-report";
 export * from "./report-envelope";
+export * from "./runtime-evidence-chain-verification";
 export * from "./runtime-intelligence-evidence-package";
 export * from "./runtime-intelligence-report-binding";
 export * from "./spectral-intelligence-evidence-package";
