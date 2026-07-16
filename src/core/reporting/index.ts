@@ -2,6 +2,7 @@ export * from "./from-final-mixlock";
 export * from "./mixlock-report";
 export * from "./recipe-decision-support-report-binding";
 export * from "./recipe-evidence-assessment-report-binding";
+export * from "./recipe-intelligence-evidence-package";
 export * from "./reference-gateway-evidence-report";
 export * from "./report-envelope";
 export * from "./spectral-intelligence-evidence-package";
