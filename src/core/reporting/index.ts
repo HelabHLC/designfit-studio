@@ -9,6 +9,7 @@ export * from "./runtime-evidence-chain-verification";
 export * from "./runtime-evidence-chain-verification-report";
 export * from "./runtime-intelligence-evidence-package";
 export * from "./runtime-intelligence-report-binding";
+export * from "./runtime-verification-audit-package";
 export * from "./spectral-intelligence-evidence-package";
 export * from "./spectral-intelligence-report-binding";
 export * from "./structural-cause-indicator-report-binding";
