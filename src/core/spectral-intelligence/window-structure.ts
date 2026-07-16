@@ -125,7 +125,6 @@ export function createSpectralWindowStructure(
     (value, index) => value - referenceSpectrum.reflectance[index],
   );
   const absoluteDifferences = differences.map(Math.abs);
-  const totalIntegratedAbsoluteDifferenceNm = integrateTrapezoidal(absoluteDifferences);
   const globalRmse = Math.sqrt(
     differences.reduce((sum, value) => sum + value * value, 0) / differences.length,
   );
@@ -151,6 +150,13 @@ export function createSpectralWindowStructure(
     };
   });
 
+  // Concentration shares are defined over the six fixed analytical windows.
+  // Summing the window integrals avoids assigning the unowned transition
+  // intervals between adjacent windows to either window.
+  const totalIntegratedAbsoluteDifferenceNm = rawWindows.reduce(
+    (sum, window) => sum + window.integratedAbsoluteDifferenceNm,
+    0,
+  );
   const windows: SpectralWindowEvidence[] = rawWindows.map((window) => ({
     ...window,
     absoluteDifferenceShare: totalIntegratedAbsoluteDifferenceNm > 0
@@ -178,6 +184,7 @@ export function createSpectralWindowStructure(
     claimBoundary: "This structure records local spectral differences against an existing ARBE reference. It does not identify pigment, substrate or process root cause and does not grant production release.",
     limitations: [
       "Window boundaries are fixed analytical partitions and are not universal pigment bands.",
+      "Window concentration shares are normalized over the six fixed windows; transition intervals between windows are not assigned.",
       "No cause is inferred from direction, peak position, crossings or concentration alone.",
       "A recorded local difference does not establish visual difference or production unsuitability.",
     ],
