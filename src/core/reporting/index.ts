@@ -1,6 +1,7 @@
 export * from "./decision-narrative-report-binding";
 export * from "./explainable-decision-report-binding";
 export * from "./from-final-mixlock";
+export * from "./industrial-validation-report-binding";
 export * from "./mixlock-report";
 export * from "./recipe-decision-support-report-binding";
 export * from "./recipe-evidence-assessment-report-binding";
