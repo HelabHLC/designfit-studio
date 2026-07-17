@@ -1,3 +1,4 @@
+export * from "./decision-narrative-report-binding";
 export * from "./explainable-decision-report-binding";
 export * from "./from-final-mixlock";
 export * from "./mixlock-report";
