@@ -7,6 +7,7 @@ export * from "./reference-gateway-evidence-report";
 export * from "./report-envelope";
 export * from "./runtime-evidence-chain-verification";
 export * from "./runtime-evidence-chain-verification-report";
+export * from "./runtime-intelligence-audit-manifest";
 export * from "./runtime-intelligence-evidence-package";
 export * from "./runtime-intelligence-report-binding";
 export * from "./runtime-verification-audit-package";
