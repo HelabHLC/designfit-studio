@@ -82,12 +82,12 @@ export function runIndustrialDecisionEngine(
   let outcome: IndustrialDecisionOutcome;
   let rationaleCode: IndustrialDecisionEngineResult["rationaleCode"];
 
-  if (contract.readiness !== "READY_FOR_DECISION_SYNTHESIS") {
-    outcome = "INSUFFICIENT_DECISION_EVIDENCE";
-    rationaleCode = "CONTRACT_NOT_READY_FOR_SYNTHESIS";
-  } else if (blockingModules.length > 0) {
+  if (blockingModules.length > 0) {
     outcome = "TECHNICAL_REVIEW_BLOCKED";
     rationaleCode = "BLOCKING_MODULE_FINDINGS_PRESENT";
+  } else if (contract.readiness !== "READY_FOR_DECISION_SYNTHESIS") {
+    outcome = "INSUFFICIENT_DECISION_EVIDENCE";
+    rationaleCode = "CONTRACT_NOT_READY_FOR_SYNTHESIS";
   } else if (cautionModules.length > 0 || notRunModules.length > 0) {
     outcome = "TECHNICAL_REVIEW_SUPPORTED_WITH_CAUTION";
     rationaleCode = "CAUTION_OR_UNEXECUTED_MODULES_PRESENT";
