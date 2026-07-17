@@ -18,7 +18,8 @@ test("explains a report-bindable runtime without granting approval", () => {
   assert.equal(explanation.findings.length, 4);
   assert.equal(explanation.findings[2].severity, "CAUTION");
   assert.match(explanation.nextAction, /technical review/);
-  assert.ok(explanation.prohibitedClaims.includes("Recipe approval"));
+  assert.ok(explanation.prohibitedClaims.includes("RECIPE_APPROVED"));
+  assert.ok(explanation.prohibitedClaims.includes("PRODUCTION_RELEASE_GRANTED"));
   assert.ok(explanation.limitations.some((item) => item.includes("not recipe approval or production release")));
   assert.equal(Object.isFrozen(explanation), true);
   assert.equal(Object.isFrozen(explanation.findings), true);
