@@ -1,0 +1,61 @@
+services:
+  designfit:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: arbe-designfit-studio:${APP_VERSION:-local}
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      APP_ENV: ${APP_ENV:-production}
+      APP_VERSION: ${APP_VERSION:-local}
+    expose:
+      - "3000"
+    networks:
+      - edge
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:3000/api/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 5s
+      start_period: 20s
+      retries: 3
+
+  caddy:
+    image: caddy:2.8-alpine
+    restart: unless-stopped
+    depends_on:
+      designfit:
+        condition: service_healthy
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      DESIGNFIT_DOMAIN: ${DESIGNFIT_DOMAIN}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - edge
+    security_opt:
+      - no-new-privileges:true
+
+networks:
+  edge:
+    driver: bridge
+
+volumes:
+  caddy_data:
+  caddy_config:

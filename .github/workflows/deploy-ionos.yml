@@ -1,0 +1,115 @@
+name: Deploy to IONOS
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ionos-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run deterministic checks
+        run: npm run check
+
+      - name: Build production application
+        run: npm run build
+
+  deploy:
+    needs: validate
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure SSH
+        env:
+          IONOS_SSH_KEY: ${{ secrets.IONOS_SSH_KEY }}
+          IONOS_HOST: ${{ secrets.IONOS_HOST }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$IONOS_SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "$IONOS_HOST" >> ~/.ssh/known_hosts
+
+      - name: Create deployment archive
+        run: |
+          tar \
+            --exclude='.git' \
+            --exclude='.next' \
+            --exclude='node_modules' \
+            --exclude='.env' \
+            --exclude='private-data' \
+            --exclude='controlled-data' \
+            --exclude='customer-data' \
+            -czf designfit-deploy.tgz .
+
+      - name: Upload release
+        env:
+          IONOS_HOST: ${{ secrets.IONOS_HOST }}
+          IONOS_USER: ${{ secrets.IONOS_USER }}
+        run: scp designfit-deploy.tgz "$IONOS_USER@$IONOS_HOST:/tmp/designfit-deploy.tgz"
+
+      - name: Activate release
+        env:
+          IONOS_HOST: ${{ secrets.IONOS_HOST }}
+          IONOS_USER: ${{ secrets.IONOS_USER }}
+          IONOS_DEPLOY_PATH: ${{ secrets.IONOS_DEPLOY_PATH }}
+          RELEASE_SHA: ${{ github.sha }}
+        run: |
+          ssh "$IONOS_USER@$IONOS_HOST" \
+            "IONOS_DEPLOY_PATH='$IONOS_DEPLOY_PATH' RELEASE_SHA='$RELEASE_SHA' bash -s" <<'REMOTE'
+          set -euo pipefail
+
+          release_dir="$IONOS_DEPLOY_PATH/releases/$RELEASE_SHA"
+          current_link="$IONOS_DEPLOY_PATH/current"
+          compose=(docker compose -p designfit --env-file .env)
+
+          mkdir -p "$release_dir"
+          tar -xzf /tmp/designfit-deploy.tgz -C "$release_dir"
+          rm -f /tmp/designfit-deploy.tgz
+
+          if [ ! -f "$IONOS_DEPLOY_PATH/.env" ]; then
+            echo "Missing $IONOS_DEPLOY_PATH/.env" >&2
+            exit 1
+          fi
+
+          ln -sfn "$IONOS_DEPLOY_PATH/.env" "$release_dir/.env"
+          cd "$release_dir"
+          APP_VERSION="$RELEASE_SHA" "${compose[@]}" build --pull designfit
+          APP_VERSION="$RELEASE_SHA" "${compose[@]}" up -d --remove-orphans
+
+          for attempt in $(seq 1 30); do
+            if "${compose[@]}" exec -T designfit \
+              node -e "fetch('http://127.0.0.1:3000/api/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"; then
+              ln -sfn "$release_dir" "$current_link"
+              find "$IONOS_DEPLOY_PATH/releases" -mindepth 1 -maxdepth 1 -type d \
+                -printf '%T@ %p\n' | sort -nr | tail -n +6 | cut -d' ' -f2- | xargs -r rm -rf
+              exit 0
+            fi
+            sleep 4
+          done
+
+          "${compose[@]}" logs --no-color --tail=200
+          exit 1
+          REMOTE
