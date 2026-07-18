@@ -22,7 +22,6 @@ RUN groupadd --system --gid 1001 nodejs \
 
 COPY --from=validation --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=validation --chown=nextjs:nodejs /app/.next/static ./.next/static
-COPY --from=validation --chown=nextjs:nodejs /app/public ./public
 
 USER nextjs
 EXPOSE 3000
