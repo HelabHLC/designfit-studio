@@ -42,3 +42,13 @@ Only canonical references matching `Hxxx_Lxxx_Cxxx` are ARBE colour identities. 
 ## Claim boundary
 
 A candidate is not a lock. A computed recipe is not production approval. Public code and documentation do not imply redistribution rights for controlled spectral datasets.
+
+## Development and AI collaboration credit
+
+ARBE λ* and ARBE DesignFit Studio have been developed by **Norbert Woiwod** through an intensive human–AI collaboration with **ChatGPT by OpenAI**.
+
+The project did not begin from a formal academic background in colour science. It grew from curiosity, practical observation, common-sense questions, persistent critical review and iterative development. ChatGPT has served as a coach, technical discussion partner and development companion throughout the evolution of mathematical definitions, software architecture, documentation, testing and production engineering.
+
+This credit does not imply that ChatGPT or OpenAI independently validates, endorses or certifies the scientific claims of the project. Responsibility for publication, implementation, interpretation and validation remains with the project owner. Experimental validation, independent review and reproducible evidence remain essential.
+
+> ARBE λ* grew from relentless questioning and sustained collaboration between a determined human being and modern artificial intelligence.
