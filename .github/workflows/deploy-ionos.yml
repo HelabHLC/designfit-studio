@@ -84,6 +84,7 @@ jobs:
 
           release_dir="$IONOS_DEPLOY_PATH/releases/$RELEASE_SHA"
           current_link="$IONOS_DEPLOY_PATH/current"
+          compose=(docker compose -p designfit --env-file .env)
 
           mkdir -p "$release_dir"
           tar -xzf /tmp/designfit-deploy.tgz -C "$release_dir"
@@ -96,11 +97,11 @@ jobs:
 
           ln -sfn "$IONOS_DEPLOY_PATH/.env" "$release_dir/.env"
           cd "$release_dir"
-          APP_VERSION="$RELEASE_SHA" docker compose --env-file .env build --pull designfit
-          APP_VERSION="$RELEASE_SHA" docker compose --env-file .env up -d --remove-orphans
+          APP_VERSION="$RELEASE_SHA" "${compose[@]}" build --pull designfit
+          APP_VERSION="$RELEASE_SHA" "${compose[@]}" up -d --remove-orphans
 
           for attempt in $(seq 1 30); do
-            if docker compose --env-file .env exec -T designfit \
+            if "${compose[@]}" exec -T designfit \
               node -e "fetch('http://127.0.0.1:3000/api/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"; then
               ln -sfn "$release_dir" "$current_link"
               find "$IONOS_DEPLOY_PATH/releases" -mindepth 1 -maxdepth 1 -type d \
@@ -110,6 +111,6 @@ jobs:
             sleep 4
           done
 
-          docker compose --env-file .env logs --no-color --tail=200
+          "${compose[@]}" logs --no-color --tail=200
           exit 1
           REMOTE
