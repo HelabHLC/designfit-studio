@@ -54,7 +54,7 @@ test("rejects malformed non-package input", () => {
 });
 
 test("detects report and package tampering", () => {
-  const tampered = structuredClone(createProductionQualificationEvidencePackage(qualification()));
+  const tampered = structuredClone(createProductionQualificationEvidencePackage(qualification())) as any;
   tampered.payload.report.headline = "Tampered production claim";
   const verification = verifyProductionQualificationEvidencePackage(tampered);
 
@@ -64,7 +64,7 @@ test("detects report and package tampering", () => {
 });
 
 test("detects artifact manifest tampering even when package hash is stale", () => {
-  const tampered = structuredClone(createProductionQualificationEvidencePackage(qualification()));
+  const tampered = structuredClone(createProductionQualificationEvidencePackage(qualification())) as any;
   tampered.payload.artifacts[0].sha256 = "0".repeat(64);
   const verification = verifyProductionQualificationEvidencePackage(tampered);
 
