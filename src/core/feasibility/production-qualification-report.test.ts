@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
+import "./production-qualification-evidence-package.test";
 import { qualifyFeasibility } from "./qualification-engine";
 import { createProductionQualificationReport } from "./production-qualification-report";
 
