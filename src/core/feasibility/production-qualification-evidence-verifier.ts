@@ -45,12 +45,13 @@ function hasPackageShape(value: unknown): value is ProductionQualificationEviden
 
 function expectedArtifacts(packageValue: ProductionQualificationEvidencePackage): readonly ProductionQualificationEvidenceArtifact[] {
   const qualification = packageValue.payload.qualification;
-  return [
+  const artifacts: ProductionQualificationEvidenceArtifact[] = [
     { artifactId: "qualification", kind: "QUALIFICATION_SNAPSHOT", sha256: sha256(qualification) },
     { artifactId: "report", kind: "PRODUCTION_QUALIFICATION_REPORT", sha256: packageValue.payload.report.reportSha256 },
     ...qualification.evidence.map((item) => ({ artifactId: `evidence:${item.evidenceId}`, kind: "EVIDENCE_RECORD" as const, sha256: sha256(item) })),
     ...qualification.criteria.map((item) => ({ artifactId: `criterion:${item.criterionId}`, kind: "CRITERION_RECORD" as const, sha256: sha256(item) })),
-  ].sort((a, b) => a.artifactId.localeCompare(b.artifactId));
+  ];
+  return artifacts.sort((a, b) => a.artifactId.localeCompare(b.artifactId));
 }
 
 function finding(checkId: ProductionQualificationVerificationFinding["checkId"], pass: boolean, reason: string): ProductionQualificationVerificationFinding {
