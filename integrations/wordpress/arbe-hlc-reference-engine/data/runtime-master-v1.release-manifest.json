@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "datasetId": "arbe-hlc-wordpress-runtime-master-v1",
+  "releaseStatus": "READY_FOR_TAG",
+  "sourcePackage": {
+    "publisher": "freieFarbe e.V.",
+    "title": "HLC Colour Atlas XL",
+    "version": "1.2",
+    "downloadUrl": "https://freiefarbe.de/wp-content/uploads/2022/12/HLC-Colour-Atlas-XL_Set_DE_v1-2.zip",
+    "sha256": "49d0bc10aeb90ee4b6f30d20305dd919caa37eca94e81a80ebf8e23b36ed1bdd",
+    "spectralCxf": {
+      "name": "HLC-Colour-Atlas-XL_SpectralData_v1-2.cxf",
+      "sha256": "b385b04067eeb7883c3178e37c2b4d0c2f03e24216ad425bc239b139efd75eab"
+    },
+    "colourValuesXls": {
+      "name": "HLC-Colour-Atlas-XL_ColourValues_v1.xls",
+      "sha256": "720c756d4de95aa485c360490edf74961e6bc01abcbc9deb98a5953c744249c5"
+    }
+  },
+  "reconciledMaster": {
+    "name": "atlas_master_frame_cxf_reconciled_v1.pkl",
+    "sizeBytes": 7828307,
+    "sha256": "15ade17834b63bd607e6549defb6aa1f3a795ce94fb19375478f9dcd7b01506e",
+    "rows": 13283,
+    "columns": 96,
+    "distribution": "not included; executable Python serialization"
+  },
+  "artifact": {
+    "path": "data/runtime-master-v1.csv",
+    "format": "text/csv",
+    "sizeBytes": 1705918,
+    "sha256": "9baa2cdfe75e3489fc94bc92377f5b0509f2f5688a279d92c1201559757f7fd4",
+    "records": 13283,
+    "uniqueReferences": 13283,
+    "columns": [
+      "reference",
+      "lab_L",
+      "lab_a",
+      "lab_b",
+      "hex",
+      "rgb",
+      "lambda_v2_nm",
+      "lambda_ee_nm",
+      "delta_lambda_nm",
+      "mu2_nm2",
+      "sigma_star_nm",
+      "mu3_nm3",
+      "lambda_v2_method",
+      "atlas_identity_valid"
+    ]
+  },
+  "verification": {
+    "cxfSpectraMatched": 13283,
+    "spectrumWavelengthsNm": "380..730 step 10",
+    "maxFloat32SpectrumDifference": 3e-08,
+    "vendorXlsNonemptyHexMatched": 10979,
+    "vendorXlsBlankHex": 2304,
+    "exportByteIdentical": true,
+    "publicWordPressRowsCompared": 13283,
+    "publicWordPressFieldsCompared": 14,
+    "publicWordPressNormalization": "DECIMAL four places; negative zero normalized to zero",
+    "publicWordPressBlockFingerprints": "14/14 matching 64-bit FNV-1a blocks ordered by reference_id; not a raw CSV SHA-256"
+  },
+  "rights": {
+    "upstreamDatabaseProductLicense": "zlib",
+    "publisherLicenseUrl": "https://freiefarbe.de/licence/",
+    "packageReadmeAlsoStates": "CC-BY-ND-4.0",
+    "scopeDecision": "The publisher's file-type-specific zlib statement covers HLC Atlas database products including CxF; the package readme's general CC BY-ND notice and the distinction are disclosed in RELEASE_NOTICE.md.",
+    "publisherCredit": "Copyright (c) freieFarbe e.V.",
+    "alterationsDisclosedIn": "data/RELEASE_NOTICE.md"
+  },
+  "originalVendorFilesIncluded": false,
+  "pickleIncluded": false,
+  "limitations": [
+    "ARBE descriptors were not independently recalculated from spectra in this audit",
+    "No physical or production colour-match claim"
+  ],
+  "plannedTag": "arbe-hlc-runtime-v1.0.0"
+}

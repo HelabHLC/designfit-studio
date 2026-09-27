@@ -25,5 +25,10 @@ jobs:
         run: |
           node --check integrations/wordpress/arbe-hlc-reference-engine/assets/js/frontend.js
           node --check integrations/wordpress/arbe-hlc-reference-engine/assets/js/admin.js
-      - name: Confirm restricted runtime dataset is absent
-        run: test ! -f integrations/wordpress/arbe-hlc-reference-engine/data/runtime-master-v1.csv
+      - name: Validate released runtime dataset and provenance
+        run: |
+          cd integrations/wordpress/arbe-hlc-reference-engine
+          python tools/validate_runtime_master.py
+          echo '9baa2cdfe75e3489fc94bc92377f5b0509f2f5688a279d92c1201559757f7fd4  data/runtime-master-v1.csv' | sha256sum -c -
+          test -f data/RELEASE_NOTICE.md
+          test -f data/runtime-master-v1.release-manifest.json
