@@ -1,0 +1,7 @@
+ARBE HLC Reference Engine v0.1.4
+
+- Non-destructive update for existing MySQL installations
+- Keeps existing imported master table and rows untouched
+- Frontend now tolerates contaminated JSON responses caused by injected script/markup before REST payloads
+- Health check and match requests parse response text defensively
+- Plugin upgrade no longer runs dbDelta unless the master table is missing

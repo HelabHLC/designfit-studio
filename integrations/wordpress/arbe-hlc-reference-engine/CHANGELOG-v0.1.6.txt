@@ -1,0 +1,9 @@
+ARBE HLC Reference Engine v0.1.6 candidate
+
+- Correct frontend technical validation fields and display the actual matching method.
+- Require a complete HLC or supported FP prefix; reject embedded arbitrary references.
+- Require Brent method on exact reference lookups as on nearest-match scans.
+- Fail the guided CSV import on malformed rows and verify the final row count.
+- Document the separate ARBE ΔE00 request route and frozen PKL RGB-only pixel-binding boundary.
+
+Runtime CSV unchanged. WordPress deployment and PHP runtime verification pending.
