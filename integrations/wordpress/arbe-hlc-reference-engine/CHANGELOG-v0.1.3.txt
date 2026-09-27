@@ -1,0 +1,8 @@
+ARBE HLC Reference Engine v0.1.3
+
+- hardened installer AJAX responses for hosts that inject warnings/notices into admin-ajax output
+- clears output buffers before returning JSON
+- suppresses displayed PHP notices during installer AJAX calls
+- chunk size reduced to 100 for more conservative IONOS shared hosting behavior
+- admin.js now parses text responses and surfaces raw debug output when JSON is contaminated
+- keeps resume offset logic

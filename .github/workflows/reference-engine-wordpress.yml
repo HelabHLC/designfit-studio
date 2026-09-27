@@ -1,0 +1,27 @@
+name: Reference Engine WordPress source
+
+on:
+  pull_request:
+    paths:
+      - 'integrations/wordpress/arbe-hlc-reference-engine/**'
+      - '.github/workflows/reference-engine-wordpress.yml'
+  push:
+    paths:
+      - 'integrations/wordpress/arbe-hlc-reference-engine/**'
+      - '.github/workflows/reference-engine-wordpress.yml'
+
+jobs:
+  php-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lint PHP source
+        run: |
+          find integrations/wordpress/arbe-hlc-reference-engine -name '*.php' -print0 |
+            xargs -0 -n1 php -l
+      - name: Check JavaScript syntax
+        run: |
+          node --check integrations/wordpress/arbe-hlc-reference-engine/assets/js/frontend.js
+          node --check integrations/wordpress/arbe-hlc-reference-engine/assets/js/admin.js
+      - name: Confirm restricted runtime dataset is absent
+        run: test ! -f integrations/wordpress/arbe-hlc-reference-engine/data/runtime-master-v1.csv

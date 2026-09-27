@@ -1,0 +1,7 @@
+ARBE HLC Reference Engine v0.1.5
+
+- Added frontend fallback transport via admin-ajax for health and match requests
+- Preserved existing MySQL runtime master and imported rows
+- Added nonce-protected AJAX handlers for public shortcode usage
+- Improved frontend status text to show REST or AJAX transport
+- Keeps atlas-only output contract unchanged
