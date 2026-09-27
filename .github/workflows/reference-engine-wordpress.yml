@@ -19,6 +19,8 @@ jobs:
         run: |
           find integrations/wordpress/arbe-hlc-reference-engine -name '*.php' -print0 |
             xargs -0 -n1 php -l
+      - name: Exercise parser and importer gates
+        run: php integrations/wordpress/arbe-hlc-reference-engine/tests/importer_and_parser.php
       - name: Check JavaScript syntax
         run: |
           node --check integrations/wordpress/arbe-hlc-reference-engine/assets/js/frontend.js
