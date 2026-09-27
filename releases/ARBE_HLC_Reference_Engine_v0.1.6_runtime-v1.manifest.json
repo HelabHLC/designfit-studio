@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-09-27",
+  "pluginVersion": "0.1.6",
+  "package": {
+    "path": "releases/ARBE_HLC_Reference_Engine_v0.1.6_runtime-v1.zip",
+    "sha256": "321994d09851eb9f3e0b61e752a2467f865cb4dbc0de7637e09dbed0bc53c3c3",
+    "sizeBytes": 643445
+  },
+  "runtimeCsv": {
+    "path": "integrations/wordpress/arbe-hlc-reference-engine/data/runtime-master-v1.csv",
+    "sha256": "9baa2cdfe75e3489fc94bc92377f5b0509f2f5688a279d92c1201559757f7fd4",
+    "records": 13283
+  },
+  "licenceAndProvenance": "integrations/wordpress/arbe-hlc-reference-engine/data/RELEASE_NOTICE.md",
+  "sourceManifest": "integrations/wordpress/arbe-hlc-reference-engine/data/runtime-master-v1.release-manifest.json",
+  "plannedTag": "arbe-hlc-runtime-v1.0.0",
+  "releaseStatus": "READY_FOR_TAG"
+}

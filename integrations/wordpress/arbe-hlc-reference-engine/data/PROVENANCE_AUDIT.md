@@ -1,32 +1,54 @@
-# Runtime master provenance and redistribution audit (candidate)
+# Runtime master provenance audit — 2026-09-27
 
-Date: 2026-09-27. This is a factual inventory and release gate, not a licence grant or a published dataset release. The accompanying machine-readable file is `runtime-master-v1.candidate-manifest.json`. The CSV remains absent from GitHub.
+The former candidate gate is superseded by
+`runtime-master-v1.release-manifest.json` and `RELEASE_NOTICE.md`.
 
-## Observed chain
+## Verified chain
 
-1. The user-supplied WordPress v0.1.5 ZIP dated 2026-07-13 includes `data/runtime-master-v1.csv` and `tools/export_runtime_master.py`.
-2. The exporter names `atlas_master_frame_cxf_reconciled_v1.pkl` as its input and selects 14 columns: reference, Lab, display HEX/RGB, precomputed spectral descriptors, method, and identity flag.
-3. The supplied CSV is 1,705,918 bytes, SHA-256 `9baa2cdfe75e3489fc94bc92377f5b0509f2f5688a279d92c1201559757f7fd4`. The local validator passes 13,283 unique references.
-4. The project owner confirmed in this conversation on 2026-09-27: “freieFarbe-Werte als Ausgangsdaten verwendet”. This establishes the use of freieFarbe values as inputs at a high level, not the exact source files or a field-by-field lineage. Existing repository metadata identifies freieFarbe e.V.'s HLC Colour Atlas XL v1.2 as the external reference foundation (CC BY-ND 4.0). The vendor package's original file-level hashes are registered under `data/vendor/hlc-colour-atlas-xl/v1.2/manifest.json`.
-5. A separate internal master manifest names `atlas_master__active_master__v2_illumext.pkl`, SHA-256 `8283ab91b10f89ac758d09ecf5fb4d6343536600a06dd468b1cc1ecf4ec747c4`. This is **not** the same filename as the exporter's declared input. No hash or transformation log proves that they are the same source.
-6. Staging and public WordPress report v0.1.6, `ready`, and 13,283 distinct database references. That count and tested example responses do not establish a database-wide digest equal to the supplied CSV.
+1. The user supplied the original freieFarbe HLC Colour Atlas XL v1.2 ZIP.
+   Its SHA-256 equals the publisher's published checksum
+   `49d0bc10aeb90ee4b6f30d20305dd919caa37eca94e81a80ebf8e23b36ed1bdd`.
+   All eight ZIP entries passed integrity checks.
+2. Its CxF contains 13,283 distinct HLC objects. The uploaded
+   `atlas_master_frame_cxf_reconciled_v1.pkl` has 13,283 rows and 96 columns;
+   its 36 `R_380` through `R_730` values per row match the CxF by reference,
+   with maximum Float32 storage difference below 3×10⁻⁸.
+3. The vendor colour-values XLS has nonempty HEX for 10,979 references; all
+   match the master exactly. The remaining 2,304 XLS HEX cells are blank;
+   the ARBE master supplies display values for these, without implying that
+   they are in sRGB gamut or are measured production values. The master Lab
+   agrees with the HLC target transformation to source precision.
+4. The included `tools/export_runtime_master.py` selects 14 columns from that
+   exact Pickle. Running the same selection and `to_csv(index=False)` produces
+   a byte-identical 1,705,918-byte CSV with SHA-256
+   `9baa2cdfe75e3489fc94bc92377f5b0509f2f5688a279d92c1201559757f7fd4`.
+5. The public WordPress database was read in 14 ordered blocks. Every stored
+   field in all 13,283 records matched the CSV after the plugin's four-place
+   DECIMAL conversion and normalization of negative zero. All 14 deterministic
+   64-bit FNV-1a block fingerprints matched. This is a complete stored-value
+   comparison, not a claim that the SQL table has the raw CSV SHA-256 digest.
 
-## Rights finding
+The exact exporter environment was not frozen. The six ARBE spectral
+descriptors in the Pickle were not independently recomputed from the spectra
+in this audit. The different v2 active master remains a separate dataset and
+is not asserted to be identical to this v1 exporter input.
 
-The freieFarbe package readme in `HelabHLC/arbe-lambda/docs/license_hlc_atlas.txt` names freieFarbe e.V. and CC BY-ND 4.0, with attribution required for copying the original package. The publisher lists the XL v1.2 package as a public download. Creative Commons' BY-ND summary permits sharing licensed material with attribution but restricts sharing adapted material. The owner confirms that freieFarbe values are inputs to the enriched ARBE master. A 14-column export may implicate that restriction; whether any particular columns or transformations legally constitute adapted material requires a rights review or permission from the rights holder. Ownership of ARBE calculations and the exporter does not itself establish redistribution rights for retained upstream values. The public repository's own release policy prohibits publishing derived libraries with unresolved or restrictive source terms.
+## Licence and attribution decision
 
-This audit does not claim that use of the current WordPress deployment is legally cleared; it assesses the proposed public GitHub redistribution only. No CSV or original vendor dataset is included in this PR.
+The package readmes broadly state CC BY-ND 4.0 and permit unchanged copying.
+The publisher's [licence page](https://freiefarbe.de/licence/) more specifically
+states that Atlas PDFs are CC BY-ND 4.0, whereas database products such as the
+HLC CxF and ASE files are under the zlib licence, allowing alteration and
+redistribution including commercial use. This CSV is an altered database
+export rooted in the CxF and the vendor's XLS colour values. The release uses
+the publisher's database-product zlib permission as its redistribution basis;
+both publisher statements and the modifications are disclosed in
+`RELEASE_NOTICE.md`. No vendor PDF or original file is republished here.
 
-Sources:
-- Publisher download listing: https://freiefarbe.de/en/thema-farbe/software/
-- Publisher atlas description: https://freiefarbe.de/en/thema-farbe/hlc-colour-atlas/
-- CC BY-ND 4.0 summary: https://creativecommons.org/licenses/by-nd/4.0/deed.de
-- Repository release policy: https://github.com/HelabHLC/arbe-lambda/blob/main/docs/repository-roles-and-release-policy.md
+Sources: [package download](https://freiefarbe.de/thema-farbe/software/),
+[publisher licence](https://freiefarbe.de/licence/),
+[repository release policy](https://github.com/HelabHLC/arbe-lambda/blob/main/docs/repository-roles-and-release-policy.md).
 
-## Release evidence still needed
-
-- Locate and hash `atlas_master_frame_cxf_reconciled_v1.pkl`; record the exact exporter environment, transformation commands, and hashes of the original vendor components used.
-- Produce a field-by-field source/computation map for the 14 columns, especially Lab/HEX/RGB versus ARBE-derived spectral descriptors. Reconcile the v1 input with the registered v2 internal master.
-- Obtain written redistribution permission or a documented rights determination specifically covering the derived runtime CSV. Include attribution and licence notices for every retained vendor component. A request to freieFarbe should identify the HLC Colour Atlas XL v1.2 inputs, the 14-column schema and CSV digest, and ask expressly about public GitHub distribution, downloads/forks, downstream commercial use, attribution and applicable terms.
-- Export or deterministically fingerprint the actual WordPress table and compare its contents with the CSV; a row count alone is insufficient.
-- After these gates pass, issue an approved manifest with explicit source versions, checksums, schema report, rights evidence and immutable tag/release. Keep the candidate manifest's blocked status until then.
+The CSV remains a computational lookup dataset. It does not imply physical
+colour equality or change the frozen ATLAS Clarus PKL image identity, A′ v0.4,
+or 4C/ECG production-preview behaviour.

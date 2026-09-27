@@ -1,7 +1,9 @@
 # ARBE HLC Reference Engine — WordPress + MySQL package
 
-This public source review omits `data/runtime-master-v1.csv`. It is not an
-installable release. See `SOURCE_REVIEW.md` and `data/README.md`.
+The package includes the checksum-locked `data/runtime-master-v1.csv`.
+Before installing, read `data/RELEASE_NOTICE.md` for freieFarbe attribution,
+licence terms and the description of ARBE additions. Verify the checksums
+in `data/runtime-master-v1.release-manifest.json`.
 
 This package installs a WordPress plugin that:
 
@@ -13,7 +15,9 @@ This package installs a WordPress plugin that:
 ## Installation
 
 1. In WordPress go to **Plugins → Add Plugin → Upload Plugin**.
-2. Upload the ZIP file `arbe-hlc-reference-engine-mysql.zip`.
+2. Zip the `arbe-hlc-reference-engine` directory with its `data/` files and
+   upload that ZIP; keep the plugin directory as the ZIP's single top-level
+   folder.
 3. Activate the plugin.
 4. Open **ARBE HLC** in the WordPress admin menu.
 5. Click **Run guided installation**.

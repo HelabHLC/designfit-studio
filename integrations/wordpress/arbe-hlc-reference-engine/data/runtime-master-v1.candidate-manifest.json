@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "datasetId": "arbe-hlc-wordpress-runtime-master-v1",
-  "manifestStatus": "CANDIDATE_NOT_RELEASED",
+  "manifestStatus": "SUPERSEDED_BY_RELEASE_MANIFEST",
   "releaseApproved": false,
   "artifact": {
     "path": "data/runtime-master-v1.csv",
@@ -27,16 +27,16 @@
       "atlas_identity_valid"
     ],
     "identityPattern": "^H\\d{3}_L\\d{3}_C\\d{3}$",
-    "includedInPublicRepository": false
+    "includedInPublicRepository": true
   },
   "suppliedEvidence": {
     "archiveName": "arbe-hlc-reference-engine.zip",
     "archiveSha256": "f52113ff9c1a0ad069fee3a58173e6ba86aaca03d97e074617412f97a7ec325c",
     "archiveDate": "2026-07-13",
     "exporterDeclaredInput": "atlas_master_frame_cxf_reconciled_v1.pkl",
-    "exporterInputSha256": null,
+    "exporterInputSha256": "15ade17834b63bd607e6549defb6aa1f3a795ce94fb19375478f9dcd7b01506e",
     "exporterOutputSelection": "14 named columns from pandas DataFrame",
-    "lineageVerified": false,
+    "lineageVerified": true,
     "ownerStatement": {
       "date": "2026-09-27",
       "statement": "freieFarbe-Werte als Ausgangsdaten verwendet",
@@ -62,13 +62,13 @@
     "pluginVersion": "0.1.6",
     "stagingAndPublicHealth": "ready",
     "stagingAndPublicDistinctRows": 13283,
-    "publicDatabaseContentDigest": null,
-    "equivalentToArtifactSha256": "UNVERIFIED"
+    "publicDatabaseContentDigest": "14/14 FNV-1a block fingerprints match after four-decimal DB normalization; see release manifest",
+    "equivalentToArtifactSha256": "NORMALIZED_VALUES_MATCH; raw CSV SHA not applicable to SQL DECIMAL storage"
   },
   "rights": {
-    "publicRedistribution": "BLOCKED_PENDING_REVIEW",
-    "reason": "Project owner confirms freieFarbe values were used as inputs. The vendor package states CC BY-ND 4.0; public redistribution rights for this derived 14-column CSV remain unestablished.",
-    "rightsHolderPermissionEvidence": null
+    "publicRedistribution": "SEE_RELEASE_MANIFEST",
+    "reason": "The publisher’s database-product zlib licence and the package readme CC BY-ND statement are documented together in RELEASE_NOTICE.md.",
+    "rightsHolderPermissionEvidence": "https://freiefarbe.de/licence/"
   },
   "release": {
     "immutableTag": null,
@@ -79,6 +79,8 @@
     "https://github.com/HelabHLC/designfit-studio/pull/90",
     "https://github.com/HelabHLC/arbe-lambda/issues/16",
     "https://freiefarbe.de/en/thema-farbe/software/",
-    "https://creativecommons.org/licenses/by-nd/4.0/deed.de"
-  ]
+    "https://creativecommons.org/licenses/by-nd/4.0/deed.de",
+    "https://freiefarbe.de/licence/"
+  ],
+  "supersededBy": "runtime-master-v1.release-manifest.json"
 }
