@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "datasetId": "arbe-hlc-wordpress-runtime-master-v1",
+  "manifestStatus": "CANDIDATE_NOT_RELEASED",
+  "releaseApproved": false,
+  "artifact": {
+    "path": "data/runtime-master-v1.csv",
+    "format": "text/csv",
+    "sizeBytes": 1705918,
+    "sha256": "9baa2cdfe75e3489fc94bc92377f5b0509f2f5688a279d92c1201559757f7fd4",
+    "recordCount": 13283,
+    "uniqueReferenceCount": 13283,
+    "columns": [
+      "reference",
+      "lab_L",
+      "lab_a",
+      "lab_b",
+      "hex",
+      "rgb",
+      "lambda_v2_nm",
+      "lambda_ee_nm",
+      "delta_lambda_nm",
+      "mu2_nm2",
+      "sigma_star_nm",
+      "mu3_nm3",
+      "lambda_v2_method",
+      "atlas_identity_valid"
+    ],
+    "identityPattern": "^H\\d{3}_L\\d{3}_C\\d{3}$",
+    "includedInPublicRepository": false
+  },
+  "suppliedEvidence": {
+    "archiveName": "arbe-hlc-reference-engine.zip",
+    "archiveSha256": "f52113ff9c1a0ad069fee3a58173e6ba86aaca03d97e074617412f97a7ec325c",
+    "archiveDate": "2026-07-13",
+    "exporterDeclaredInput": "atlas_master_frame_cxf_reconciled_v1.pkl",
+    "exporterInputSha256": null,
+    "exporterOutputSelection": "14 named columns from pandas DataFrame",
+    "lineageVerified": false
+  },
+  "upstreamReference": {
+    "title": "freieFarbe HLC Colour Atlas XL",
+    "publisher": "freieFarbe e.V.",
+    "version": "1.2",
+    "license": "CC-BY-ND-4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-nd/4.0/",
+    "publishedPackageSha256": "49d0bc10aeb90ee4b6f30d20305dd919caa37eca94e81a80ebf8e23b36ed1bdd",
+    "relationship": "Reference foundation reported by existing repository metadata; byte-level parentage of the supplied runtime CSV is unverified."
+  },
+  "relatedInternalMaster": {
+    "registeredDatasetId": "arbe-atlas-master-active-v2-illumext",
+    "registeredFileName": "atlas_master__active_master__v2_illumext.pkl",
+    "registeredSha256": "8283ab91b10f89ac758d09ecf5fb4d6343536600a06dd468b1cc1ecf4ec747c4",
+    "sameAsExporterInput": "UNVERIFIED"
+  },
+  "wordpressObservation": {
+    "pluginVersion": "0.1.6",
+    "stagingAndPublicHealth": "ready",
+    "stagingAndPublicDistinctRows": 13283,
+    "publicDatabaseContentDigest": null,
+    "equivalentToArtifactSha256": "UNVERIFIED"
+  },
+  "rights": {
+    "publicRedistribution": "BLOCKED_PENDING_REVIEW",
+    "reason": "The vendor package states CC BY-ND 4.0. Permission to distribute this derived 14-column CSV, including selected vendor values and ARBE-computed fields, has not been established.",
+    "rightsHolderPermissionEvidence": null
+  },
+  "release": {
+    "immutableTag": null,
+    "releaseUrl": null,
+    "artifactPublished": false
+  },
+  "evidenceReferences": [
+    "https://github.com/HelabHLC/designfit-studio/pull/90",
+    "https://github.com/HelabHLC/arbe-lambda/issues/16",
+    "https://freiefarbe.de/en/thema-farbe/software/",
+    "https://creativecommons.org/licenses/by-nd/4.0/deed.de"
+  ]
+}
