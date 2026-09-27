@@ -36,7 +36,12 @@
     "exporterDeclaredInput": "atlas_master_frame_cxf_reconciled_v1.pkl",
     "exporterInputSha256": null,
     "exporterOutputSelection": "14 named columns from pandas DataFrame",
-    "lineageVerified": false
+    "lineageVerified": false,
+    "ownerStatement": {
+      "date": "2026-09-27",
+      "statement": "freieFarbe-Werte als Ausgangsdaten verwendet",
+      "scope": "High-level upstream source confirmation; not a field-level or rights clearance."
+    }
   },
   "upstreamReference": {
     "title": "freieFarbe HLC Colour Atlas XL",
@@ -45,7 +50,7 @@
     "license": "CC-BY-ND-4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-nd/4.0/",
     "publishedPackageSha256": "49d0bc10aeb90ee4b6f30d20305dd919caa37eca94e81a80ebf8e23b36ed1bdd",
-    "relationship": "Reference foundation reported by existing repository metadata; byte-level parentage of the supplied runtime CSV is unverified."
+    "relationship": "Project owner confirmed on 2026-09-27 that freieFarbe values were used as input data for the ARBE master. Exact input files, per-field mapping and byte-level parentage of this runtime CSV remain unverified."
   },
   "relatedInternalMaster": {
     "registeredDatasetId": "arbe-atlas-master-active-v2-illumext",
@@ -62,7 +67,7 @@
   },
   "rights": {
     "publicRedistribution": "BLOCKED_PENDING_REVIEW",
-    "reason": "The vendor package states CC BY-ND 4.0. Permission to distribute this derived 14-column CSV, including selected vendor values and ARBE-computed fields, has not been established.",
+    "reason": "Project owner confirms freieFarbe values were used as inputs. The vendor package states CC BY-ND 4.0; public redistribution rights for this derived 14-column CSV remain unestablished.",
     "rightsHolderPermissionEvidence": null
   },
   "release": {
