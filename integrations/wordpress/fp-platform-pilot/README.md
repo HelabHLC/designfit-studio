@@ -16,3 +16,7 @@ The reconciled source Pickle has 13,283 unique and valid atlas identities. All r
 - The separate `/wp-json/arbe/v1/diagnostics` endpoint reported `status: fail` before the import, while `/wp-json/arbe/v1/health` reported `status: ok`. Investigate diagnostics before a broader rollout.
 
 The pilot importer is one-shot and may be deactivated after verification; imported FP data persists. Broader master import and validated pigment candidates require a separate design and review.
+
+## Parser source recovery status (2026-09-30)
+
+**Blocked: the live parser correction is not preserved as executable source.** The repository audit found no FP Platform parser source in the inspected reachable history. See [the source audit and one-time read-only handoff](PARSER_SOURCE_AUDIT.md) and [pinned evidence manifest](PARSER_SOURCE_AUDIT.json). The HLC Reference Engine parser is a different plugin; its code is not evidence of this live correction. The overwrite warning above remains unresolved.
