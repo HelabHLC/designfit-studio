@@ -1,0 +1,107 @@
+{
+  "received_date": "2026-09-30",
+  "status": "PARTIAL_SOURCE_RECOVERY_NO_LIVE_PARSER_DIFF",
+  "attachments": [
+    {
+      "name": "arbe-fp-structural-solver.php",
+      "declared_version": "5.2.0",
+      "sha256": "7d4c6f6de5a1eb1cbd97e909cf609d6abeedb9228c2772a61071f853cc6a5c8a",
+      "preserved_path": "arbe-fp-structural-solver.php",
+      "provenance": "User-supplied attachment; live or pre-edit origin not independently verified"
+    },
+    {
+      "name": "arbe-fp-structural-solver-v3.0(1).zip",
+      "declared_version": "3.0.0",
+      "sha256": "996580c3f0f750be8fd52ceaa2fd91f8b49583a5a1fcc633ac491ad92dec9112",
+      "file_count": 16,
+      "preservation": "Five relevant source files preserved byte-for-byte; remaining entries inventoried by hash, original archive is not copied into repository",
+      "files": [
+        {
+          "archive_path": "arbe-fp-structural-solver/arbe-fp-structural-solver.php",
+          "bytes": 2292,
+          "sha256": "2fb1ecac5e4687b60151ba95658813a28f1904645ba1c7bd6ddb3a947114ef98",
+          "preserved_path": "legacy-v3.0.0/arbe-fp-structural-solver.php"
+        },
+        {
+          "archive_path": "arbe-fp-structural-solver/README.md",
+          "bytes": 6156,
+          "sha256": "b22ec5cec9ebb0a7b126886768dddafb4e4430fcc0f460402892d8fb1db2952f"
+        },
+        {
+          "archive_path": "arbe-fp-structural-solver/sample_pigment_curves.csv",
+          "bytes": 545,
+          "sha256": "3ad9a5877e3b82a905b438012329cf33471650dda4f4454d2c1e74081575e098"
+        },
+        {
+          "archive_path": "arbe-fp-structural-solver/sample_reference_curves.csv",
+          "bytes": 972,
+          "sha256": "62b16d3e42965e10d79289048cdba2986a83315cbeb43985860c89dd59d291ca"
+        },
+        {
+          "archive_path": "arbe-fp-structural-solver/includes/database.php",
+          "bytes": 17511,
+          "sha256": "7b91b2ffb4186cee975464b73cd5e497bbe4b9b314073be5c5e213cf39784c8f",
+          "preserved_path": "legacy-v3.0.0/includes/database.php"
+        },
+        {
+          "archive_path": "arbe-fp-structural-solver/includes/scissor.php",
+          "bytes": 2720,
+          "sha256": "db6ebe3d2c9c5bc1870ce8866d7f176047a937b665e82048f5b188ca27f3822d"
+        },
+        {
+          "archive_path": "arbe-fp-structural-solver/includes/formula-engine.php",
+          "bytes": 2729,
+          "sha256": "0459f345c105ca52385caa63d551f9965ab1c28fc13737901efd306070f0824e"
+        },
+        {
+          "archive_path": "arbe-fp-structural-solver/includes/confidence.php",
+          "bytes": 864,
+          "sha256": "c3feb91a9bc5dd4663a27476983d33c52af8c51c3ae227f15837f9d37c932606"
+        },
+        {
+          "archive_path": "arbe-fp-structural-solver/includes/optimizer.php",
+          "bytes": 7788,
+          "sha256": "aabc55a5bc6a7772c112fc8ea54b57f8b41f6d41ee4c2e70bc08af355ebf3aef"
+        },
+        {
+          "archive_path": "arbe-fp-structural-solver/includes/solver.php",
+          "bytes": 1399,
+          "sha256": "4aadd3513702fd1a62b4dced524bb72431d0c208149e725c32f62da8e70738ac",
+          "preserved_path": "legacy-v3.0.0/includes/solver.php"
+        },
+        {
+          "archive_path": "arbe-fp-structural-solver/includes/rest-api.php",
+          "bytes": 11716,
+          "sha256": "aeea1239061e0aa744b43bbd653a03ba6360f7a1230419cd3f70a91cc363459c",
+          "preserved_path": "legacy-v3.0.0/includes/rest-api.php"
+        },
+        {
+          "archive_path": "arbe-fp-structural-solver/includes/shortcodes.php",
+          "bytes": 15848,
+          "sha256": "40e4195b9dbf8c28db43876c489aeafb6f9daea3fd1913b7ea2bd8db6ac6d8ec",
+          "preserved_path": "legacy-v3.0.0/includes/shortcodes.php"
+        },
+        {
+          "archive_path": "arbe-fp-structural-solver/includes/admin.php",
+          "bytes": 7129,
+          "sha256": "d89069b70e4944988696f47bb8665f4c796f968015930e7438ae8739e83d50d6"
+        },
+        {
+          "archive_path": "arbe-fp-structural-solver/includes/certificate.php",
+          "bytes": 7699,
+          "sha256": "c7f6848e0137f04ccc22ed3f89b71ea7f69bfb86b3ca2070dc4e981ea5f38318"
+        },
+        {
+          "archive_path": "arbe-fp-structural-solver/assets/arbe-fp-solver.css",
+          "bytes": 3559,
+          "sha256": "0f7120f8554c39ef69b760ecee80b3912471a66c19ac52a874956eeb0b974444"
+        },
+        {
+          "archive_path": "arbe-fp-structural-solver/assets/arbe-fp-solver.js",
+          "bytes": 817,
+          "sha256": "dd3682177f3615cfca7b0bc349dad1c88da061450907ea9adf7ad4686a7cef77"
+        }
+      ]
+    }
+  ]
+}
