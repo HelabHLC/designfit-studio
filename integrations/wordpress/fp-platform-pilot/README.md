@@ -20,3 +20,5 @@ The pilot importer is one-shot and may be deactivated after verification; import
 ## Parser source recovery status (2026-09-30)
 
 **Blocked: the live parser correction is not preserved as executable source.** The repository audit found no FP Platform parser source in the inspected reachable history. See [the source audit and one-time read-only handoff](PARSER_SOURCE_AUDIT.md) and [pinned evidence manifest](PARSER_SOURCE_AUDIT.json). The HLC Reference Engine parser is a different plugin; its code is not evidence of this live correction. The overwrite warning above remains unresolved.
+
+Follow-up: the supplied 5.2.0 entry file and selected unchanged 3.0.0 source files are [preserved with hashes and the verified legacy input path](source-recovery/README.md). The 3.0.0 ZIP identifies the old lookup in `includes/database.php::arbe_fp_get_color`, but is not the missing 5.2.0 live correction or its matching baseline. The live parser overwrite risk remains unresolved.
