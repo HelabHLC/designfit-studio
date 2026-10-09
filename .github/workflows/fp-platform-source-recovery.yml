@@ -1,0 +1,30 @@
+name: FP Platform recovered source
+
+on:
+  pull_request:
+    paths:
+      - 'integrations/wordpress/fp-platform-pilot/source-recovery/**'
+      - '.github/workflows/fp-platform-source-recovery.yml'
+  push:
+    branches: ['codex/fp-platform-h055-pilot']
+    paths:
+      - 'integrations/wordpress/fp-platform-pilot/source-recovery/**'
+      - '.github/workflows/fp-platform-source-recovery.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  recovered-source:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify exported source and provenance checksums
+        run: python3 integrations/wordpress/fp-platform-pilot/source-recovery/verify_live_capture.py
+      - name: Lint captured PHP and offline regression harness
+        run: |
+          find integrations/wordpress/fp-platform-pilot/source-recovery/live-2026-10-09/source \
+            integrations/wordpress/fp-platform-pilot/source-recovery/tests -name '*.php' -print0 |
+            xargs -0 -n1 php -l
+      - name: Exercise captured FP parser and public input paths offline
+        run: php integrations/wordpress/fp-platform-pilot/source-recovery/tests/fp_code_regression.php

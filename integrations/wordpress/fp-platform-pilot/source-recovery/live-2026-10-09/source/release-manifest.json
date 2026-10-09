@@ -1,0 +1,96 @@
+{
+  "name": "ARBE FP One Shortcode",
+  "version": "1.4.0",
+  "generated_utc": "2026-06-15T07:29:51.853399+00:00",
+  "package": "arbe-fp-one-shortcode-v1.4-hlc-guided-solver.zip",
+  "core": [
+    "solver",
+    "scissor",
+    "formula-engine",
+    "confidence",
+    "certificate",
+    "registry",
+    "rest-api",
+    "shortcodes",
+    "admin"
+  ],
+  "endpoints": [
+    "/wp-json/arbe/v1/health",
+    "/wp-json/arbe/v1/selftest",
+    "/wp-json/arbe/v1/solve",
+    "/wp-json/arbe/v1/certificate",
+    "/wp-json/arbe/v1/verify",
+    "/wp-json/arbe/v1/certificate-json",
+    "/wp-json/arbe/v1/certificate-csv",
+    "/wp-json/arbe/v1/certificate-print",
+    "/wp-json/arbe/v1/diagnostics",
+    "/wp-json/arbe/v1/smoke-test",
+    "/wp-json/arbe/v1/audit",
+    "/wp-json/arbe/v1/spectral-search",
+    "/wp-json/arbe/v1/hlc-candidates"
+  ],
+  "shortcodes": [
+    "[arbe_fp]",
+    "[arbe_fp_structural_solver]",
+    "[arbe_fp_solver_result]",
+    "[arbe_fp_solver_card]",
+    "[arbe_fp_certificate]",
+    "[arbe_fp_certificate_json]",
+    "[arbe_fp_verify_certificate]",
+    "[arbe_fp_registry_lookup]",
+    "[arbe_spectral_search]"
+  ],
+  "hardening": [
+    "automatic upgrade/migration",
+    "admin diagnostics",
+    "database repair button",
+    "diagnostics endpoint",
+    "improved self-test",
+    "validated CSV imports",
+    "import reports",
+    "duplicate detection",
+    "import audit"
+  ],
+  "qa": [
+    "smoke-test core",
+    "workflow verification",
+    "registry verification"
+  ],
+  "audit": [
+    "solve",
+    "certificate_registered",
+    "certificate_verified",
+    "certificate_export_json",
+    "certificate_export_csv",
+    "certificate_export_print"
+  ],
+  "admin_pages": [
+    "Dashboard",
+    "CSV Import",
+    "Diagnostics"
+  ],
+  "ux": [
+    "corrected import labels",
+    "no-file-chosen explanation",
+    "mini CSV examples"
+  ],
+  "recommended_shortcode": "[arbe_fp]",
+  "features": [
+    "selectable formula candidates",
+    "formula curve overlay",
+    "SCISSOR difference curve",
+    "formula component table",
+    "HLC acquisition admin module",
+    "ArtistPigments HLC URL generator",
+    "Material candidate import",
+    "Pigment candidate import",
+    "HLC candidates REST endpoint",
+    "public HLC material candidates",
+    "public HLC pigment candidate chips",
+    "HLC atlas source link in public UI",
+    "HLC-guided solver preselection",
+    "curve availability table",
+    "candidate_codes optimizer argument",
+    "fallback to normal solver"
+  ]
+}

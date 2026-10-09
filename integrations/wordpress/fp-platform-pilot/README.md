@@ -17,7 +17,21 @@ The reconciled source Pickle has 13,283 unique and valid atlas identities. All r
 
 The pilot importer is one-shot and may be deactivated after verification; imported FP data persists. Broader master import and validated pigment candidates require a separate design and review.
 
-## Parser source recovery status (2026-09-30)
+## Parser source recovery status (2026-10-09)
+
+The current active 5.2.0 implementation is now [preserved as 20 read-only
+source views, with provenance, SHA-256 checksums and an offline regression
+test](source-recovery/live-2026-10-09/README.md). The public `[arbe_fp]` path uses
+`includes/spectral-search.php::arbe_fp_parse_color_query` to extract the HLC
+address before the master lookup. The direct solver path has a documented
+full-code limitation. No production code or spectral data was changed.
+
+The matching untouched 5.2.0 baseline is still unavailable; the exact historical
+parser correction remains **UNKNOWN**. Source-view hashes cover saved exports,
+not independently attested raw server files. Future upgrades still need to
+preserve the observed behavior explicitly.
+
+### Historical status (2026-09-30)
 
 **Blocked: the live parser correction is not preserved as executable source.** The repository audit found no FP Platform parser source in the inspected reachable history. See [the source audit and one-time read-only handoff](PARSER_SOURCE_AUDIT.md) and [pinned evidence manifest](PARSER_SOURCE_AUDIT.json). The HLC Reference Engine parser is a different plugin; its code is not evidence of this live correction. The overwrite warning above remains unresolved.
 

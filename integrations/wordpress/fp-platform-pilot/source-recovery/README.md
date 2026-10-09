@@ -1,5 +1,14 @@
 # FP Platform source recovery — supplied source evidence
 
+**Update 2026-10-09:** The active 5.2.0 implementation has now been captured
+through authenticated read-only WordPress source inspection. See the
+[20-file live source view, checksums, verified public input path and offline
+regression](live-2026-10-09/README.md). The actual public parser is
+`includes/spectral-search.php::arbe_fp_parse_color_query`, reached through
+`[arbe_fp]`. Export hashes do not independently attest raw server bytes.
+The historical original-to-corrected 5.2.0 difference remains **UNKNOWN**.
+The following September receipt remains unchanged as historical evidence.
+
 Received: 2026-09-30, after the initial [source audit](../PARSER_SOURCE_AUDIT.md).
 Status: **PARTIAL_SOURCE_RECOVERY; EXACT_5_2_0_LIVE_PARSER_DIFF_STILL_MISSING**.
 No speculative parser patch has been created.
