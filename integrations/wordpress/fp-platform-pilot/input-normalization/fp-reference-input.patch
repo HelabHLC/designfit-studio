@@ -1,0 +1,121 @@
+diff --git a/includes/color-query.php b/includes/color-query.php
+new file mode 100644
+index 0000000..7e85a53
+--- /dev/null
++++ b/includes/color-query.php
+@@ -0,0 +1,22 @@
++<?php
++if (!defined('ABSPATH')) { exit; }
++
++/**
++ * Extract a reference lookup key, NOT validate or authenticate an FP payload.
++ * Master membership is established only by the subsequent database lookup.
++ * Unrecognized strings remain literal keys; never repair embedded FP prefixes.
++ */
++function arbe_fp_parse_color_query($q) {
++    if (!is_scalar($q) && $q !== null) { return ''; }
++    $q = strtoupper(trim(strval($q)));
++    if (preg_match('/^FP::(H[0-9]{3}_L[0-9]{3}_C[0-9]{3})(?:::|\z)/', $q, $m)) {
++        return $m[1];
++    }
++    // Keep the single-colon shorthand for literal legacy database keys too.
++    // Strip one leading marker only; repeated/embedded markers are not repaired.
++    if (strncmp($q, 'FP:', 3) === 0 && strncmp($q, 'FP::', 4) !== 0) {
++        $short = trim(substr($q, 3));
++        if (strpos($short, 'FP:') === false) { return $short; }
++    }
++    return $q;
++}
+diff --git a/includes/shortcodes.php b/includes/shortcodes.php
+index 68ff33a..61f4301 100644
+--- a/includes/shortcodes.php
++++ b/includes/shortcodes.php
+@@ -1,6 +1,8 @@
+ <?php
+ if (!defined('ABSPATH')) { exit; }
+ 
++require_once __DIR__ . '/color-query.php';
++
+ add_shortcode('arbe_fp_structural_solver', 'arbe_fp_structural_solver_shortcode');
+ add_shortcode('arbe_spectral_search', function($atts){ return arbe_fp_render_spectral_search('', $atts); });
+ add_shortcode('arbe_fp_solver_result', 'arbe_fp_structural_solver_shortcode');
+@@ -16,7 +18,7 @@ function arbe_fp_structural_solver_shortcode($atts) {
+         'kernel'=>'km',
+     ], $atts);
+ 
+-    $requested = strtoupper(trim($_GET['fp_color'] ?? $atts['color']));
++    $requested = arbe_fp_parse_color_query($_GET['fp_color'] ?? $atts['color']);
+     $args = [
+         'top'=>intval($atts['top']),
+         'max_candidates'=>intval($atts['max_candidates']),
+@@ -116,7 +118,7 @@ add_shortcode('arbe_fp_solver_card', function($atts) {
+         'kernel'=>'km',
+     ], $atts);
+ 
+-    $requested = strtoupper(trim($_GET['fp_color'] ?? $atts['color']));
++    $requested = arbe_fp_parse_color_query($_GET['fp_color'] ?? $atts['color']);
+     if (!$requested) return '<div class="arbe-error">Missing FP-Color ID.</div>';
+ 
+     $result = arbe_fp_solve($requested, [
+@@ -164,7 +166,7 @@ add_shortcode('arbe_fp_certificate', function($atts) {
+         'kernel'=>'km',
+     ], $atts);
+ 
+-    $requested = strtoupper(trim($_GET['fp_color'] ?? $atts['color']));
++    $requested = arbe_fp_parse_color_query($_GET['fp_color'] ?? $atts['color']);
+     if (!$requested) return '<div class="arbe-error">Missing FP-Color ID.</div>';
+ 
+     $result = arbe_fp_solve($requested, [
+@@ -191,7 +193,7 @@ add_shortcode('arbe_fp_certificate_json', function($atts) {
+         'kernel'=>'km',
+     ], $atts);
+ 
+-    $requested = strtoupper(trim($_GET['fp_color'] ?? $atts['color']));
++    $requested = arbe_fp_parse_color_query($_GET['fp_color'] ?? $atts['color']);
+     if (!$requested) return '<pre>{ "error": "Missing FP-Color ID" }</pre>';
+ 
+     $result = arbe_fp_solve($requested, [
+diff --git a/includes/solver.php b/includes/solver.php
+index 6261603..3009540 100644
+--- a/includes/solver.php
++++ b/includes/solver.php
+@@ -1,8 +1,11 @@
+ <?php
+ if (!defined('ABSPATH')) { exit; }
+ 
++require_once __DIR__ . '/color-query.php';
++
+ function arbe_fp_solve($fp_color_id, $args=[]) {
+-    $color = arbe_fp_get_color($fp_color_id);
++    $fp_color_id = arbe_fp_parse_color_query($fp_color_id);
++    $color = $fp_color_id === '' ? null : arbe_fp_get_color($fp_color_id);
+     if (!$color) {
+         return new WP_Error('arbe_color_not_found', 'FP-Color not found in master.', ['status'=>404]);
+     }
+diff --git a/includes/spectral-search.php b/includes/spectral-search.php
+index 3116ab5..ce5dadc 100644
+--- a/includes/spectral-search.php
++++ b/includes/spectral-search.php
+@@ -1,12 +1,7 @@
+ <?php
+ if (!defined('ABSPATH')) { exit; }
+ 
+-function arbe_fp_parse_color_query($q) {
+-    $q = strtoupper(trim(strval($q)));
+-    if (preg_match('/^FP::(H[0-9]{3}_L[0-9]{3}_C[0-9]{3})(?:::|$)/', $q, $m)) { return $m[1]; }
+-    $q = str_replace('FP:', '', $q);
+-    return trim($q);
+-}
++require_once __DIR__ . '/color-query.php';
+ 
+ function arbe_fp_spectral_search($fp_color_id, $args=[]) {
+     $args = wp_parse_args($args, [
+@@ -15,7 +10,7 @@ function arbe_fp_spectral_search($fp_color_id, $args=[]) {
+     ]);
+ 
+     $fp_color_id = arbe_fp_parse_color_query($fp_color_id);
+-    $color = arbe_fp_get_color($fp_color_id);
++    $color = $fp_color_id === '' ? null : arbe_fp_get_color($fp_color_id);
+     if (!$color) {
+         return new WP_Error('arbe_color_not_found', 'FP-Color not found in master.', ['status'=>404]);
+     }
