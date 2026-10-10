@@ -1,0 +1,2 @@
+07a91a2ffc51f1a24b5ad3a5fffb3da241f82c3cb9eaf22d4a062578cfb8c748  arbe-fp-platform-5.2.1-rc1.zip
+88c3046f938e96ab8b944aae43d0ed1f93c30c559a2b2585f8948e38f981fd3c  package-manifest.json

@@ -1,0 +1,70 @@
+name: FP Platform release candidate acceptance
+
+on:
+  pull_request:
+    paths:
+      - 'integrations/wordpress/fp-platform-pilot/release/**'
+      - 'integrations/wordpress/fp-platform-pilot/input-normalization/**'
+      - 'integrations/wordpress/fp-platform-pilot/source-recovery/**'
+      - '.github/workflows/fp-platform-release-candidate.yml'
+  push:
+    branches: ['codex/fp-platform-5.2.1-rc1']
+    paths:
+      - 'integrations/wordpress/fp-platform-pilot/release/**'
+      - '.github/workflows/fp-platform-release-candidate.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  wordpress-acceptance:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.1', '8.5.9']
+    services:
+      mariadb:
+        image: mariadb:10.11
+        env:
+          MARIADB_ROOT_PASSWORD: isolated-ci-only
+          MARIADB_DATABASE: arbe_fp_acceptance
+        ports: ['3306:3306']
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=5s --health-timeout=5s --health-retries=20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mysqli, mbstring, zip, dom
+          coverage: none
+      - name: Original source and parser regression
+        run: python3 integrations/wordpress/fp-platform-pilot/input-normalization/test.py
+      - name: Reproducible package and packaged PHP regression
+        run: |
+          python3 integrations/wordpress/fp-platform-pilot/release/test_release.py
+          python3 integrations/wordpress/fp-platform-pilot/release/build_release.py --output "$RUNNER_TEMP/package"
+          cmp "$RUNNER_TEMP/package/arbe-fp-platform-5.2.1-rc1.zip" integrations/wordpress/fp-platform-pilot/release/dist/arbe-fp-platform-5.2.1-rc1.zip
+      - name: Fetch pinned WordPress 7.1.2 matching the observed site version
+        run: git clone --depth 1 --branch 7.1.2 https://github.com/WordPress/WordPress.git "$RUNNER_TEMP/wordpress"
+      - name: Native install, upgrade, real REST/shortcodes/HTTP, rollback and fresh activation
+        env:
+          FP_TEST_DB_HOST: 127.0.0.1:3306
+          FP_TEST_DB_USER: root
+          FP_TEST_DB_PASSWORD: isolated-ci-only
+        run: >-
+          python3 integrations/wordpress/fp-platform-pilot/release/test_wordpress.py
+          --wp-root "$RUNNER_TEMP/wordpress"
+          --report-dir "$RUNNER_TEMP/fp-acceptance"
+      - name: Save package and acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fp-platform-5.2.1-rc1-php-${{ matrix.php }}
+          path: |
+            ${{ runner.temp }}/package/
+            ${{ runner.temp }}/fp-acceptance/*.json
+            ${{ runner.temp }}/fp-acceptance/*.html
+            ${{ runner.temp }}/fp-acceptance/*.log
