@@ -10,7 +10,7 @@ if (in_array($phase, ['install', 'fresh'], true)) { define('WP_INSTALLING', true
 require $wp_root . '/wp-load.php';
 if (!defined('ARBE_FP_ISOLATED_ACCEPTANCE') || ARBE_FP_ISOLATED_ACCEPTANCE !== true
     || DB_NAME !== 'arbe_fp_acceptance' || !in_array($table_prefix, ['fptest_', 'fpfresh_'], true)
-    || parse_url(home_url(), PHP_URL_HOST) !== '127.0.0.1') {
+    || !defined('WP_HOME') || parse_url(WP_HOME, PHP_URL_HOST) !== '127.0.0.1') {
     throw new RuntimeException('Refusing a non-fixture WordPress installation');
 }
 require_once ABSPATH . 'wp-admin/includes/plugin.php';

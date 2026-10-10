@@ -49,6 +49,7 @@ def main():
     config += "define('ARBE_FP_ISOLATED_ACCEPTANCE', true);\ndefine('WP_DEBUG', true);\n"
     config += "define('WP_DEBUG_DISPLAY', false);\ndefine('WP_HTTP_BLOCK_EXTERNAL', true);\n"
     config += "define('DISABLE_WP_CRON', true);\ndefine('AUTOMATIC_UPDATER_DISABLED', true);\n"
+    config += "define('WP_DISABLE_FATAL_ERROR_HANDLER', true);\n"
     config += "$table_prefix = 'fptest_';\n"
     config += "if (!defined('ABSPATH')) define('ABSPATH', __DIR__ . '/');\nrequire_once ABSPATH . 'wp-settings.php';\n"
     (wp/'wp-config.php').write_text(config)
@@ -58,8 +59,14 @@ def main():
     env = dict(os.environ, FP_WP_ROOT=str(wp), FP_REPORT_DIR=str(report),
                FP_BASELINE_ZIP=str(baseline), FP_RELEASE_ZIP=str(package))
     def phase(name):
-        subprocess.run([args.php, str(ROOT/'tests/wordpress.php')],
-                       env=dict(env, FP_ACCEPTANCE_PHASE=name), check=True)
+        try:
+            subprocess.run([args.php, str(ROOT/'tests/wordpress.php')],
+                           env=dict(env, FP_ACCEPTANCE_PHASE=name), check=True)
+        except subprocess.CalledProcessError:
+            debug = report/'debug.log'
+            if debug.exists():
+                print(debug.read_text(), flush=True)
+            raise
     for name in ['install','baseline','upgrade','accept','reactivate']:
         phase(name)
 
