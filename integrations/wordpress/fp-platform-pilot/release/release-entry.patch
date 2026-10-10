@@ -1,0 +1,60 @@
+diff --git a/arbe-fp-structural-solver.php b/arbe-fp-structural-solver.php
+index 151395f..26f8685 100644
+--- a/arbe-fp-structural-solver.php
++++ b/arbe-fp-structural-solver.php
+@@ -2,7 +2,7 @@
+ /**
+  * Plugin Name: ARBE FP Platform
+  * Description: FP-Code to pigment formula solver with measured reference curves, Kubelka-Munk K/S mixing, SCISSOR validation, confidence scoring, one-shortcode platform build with HLC-guided solver, public material/pigment candidates, formula curves, SCISSOR overlay and registry workflow.
+- * Version: 5.2.0
++ * Version: 5.2.1-rc1
+  * Author: ARBE λ*
+  * Requires PHP: 8.1
+  *
+@@ -20,7 +20,9 @@
+ 
+ if (!defined('ABSPATH')) { exit; }
+ 
+-define('ARBE_FP_SOLVER_VERSION', '5.2.0');
++define('ARBE_FP_SOLVER_VERSION', '5.2.1-rc1');
++// Parser-only releases do not require schema work or demo reference seeding.
++define('ARBE_FP_SCHEMA_VERSION', '5.2.0');
+ define('ARBE_FP_SOLVER_PATH', plugin_dir_path(__FILE__));
+ define('ARBE_FP_SOLVER_URL', plugin_dir_url(__FILE__));
+ 
+@@ -41,22 +43,25 @@ require_once ARBE_FP_SOLVER_PATH . 'includes/hlc-acquisition.php';
+ require_once ARBE_FP_SOLVER_PATH . 'includes/spectral-search.php';
+ require_once ARBE_FP_SOLVER_PATH . 'includes/shortcodes.php';
+ 
+-register_activation_hook(__FILE__, function() {
+-    arbe_fp_solver_create_tables();
+-    arbe_fp_solver_seed_color_master();
+-    if (function_exists('arbe_hlc_acq_create_tables')) { arbe_hlc_acq_create_tables(); }
+-    if (function_exists('arbe_hlc_acq_create_tables')) { arbe_hlc_acq_create_tables(); }
+-        update_option('arbe_fp_platform_version', ARBE_FP_SOLVER_VERSION);
+-});
++register_activation_hook(__FILE__, 'arbe_fp_platform_maybe_upgrade');
+ 
+ add_action('plugins_loaded', 'arbe_fp_platform_maybe_upgrade');
+ 
+ function arbe_fp_platform_maybe_upgrade() {
+-    $installed = get_option('arbe_fp_platform_version', '0.0.0');
+-    if (version_compare($installed, ARBE_FP_SOLVER_VERSION, '<')) {
++    // Existing 5.2.0 installs have only the historical version option. Adopt
++    // that schema version without rerunning DDL or inserting demo references.
++    $installed_schema = get_option('arbe_fp_platform_schema_version',
++        get_option('arbe_fp_platform_version', '0.0.0'));
++    if (version_compare($installed_schema, ARBE_FP_SCHEMA_VERSION, '<')) {
+         arbe_fp_solver_create_tables();
+         arbe_fp_solver_seed_color_master();
+-    if (function_exists('arbe_hlc_acq_create_tables')) { arbe_hlc_acq_create_tables(); }
++        if (function_exists('arbe_hlc_acq_create_tables')) { arbe_hlc_acq_create_tables(); }
++        $installed_schema = ARBE_FP_SCHEMA_VERSION;
++    }
++    if (get_option('arbe_fp_platform_schema_version', '') !== $installed_schema) {
++        update_option('arbe_fp_platform_schema_version', $installed_schema);
++    }
++    if (get_option('arbe_fp_platform_version', '') !== ARBE_FP_SOLVER_VERSION) {
+         update_option('arbe_fp_platform_version', ARBE_FP_SOLVER_VERSION);
+     }
+ }

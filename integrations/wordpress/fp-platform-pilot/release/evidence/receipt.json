@@ -1,0 +1,18 @@
+{
+  "workflow_run": 38025965183,
+  "tested_head": "022185562a9fe0104e10f94ed16cde52f204a29f",
+  "artifacts": [
+    {
+      "artifact_id": 11659964874,
+      "archive_sha256": "8fec0e0e85c798e184aa5d2a4596e53d8e38f9a8707b617de7fdf95b84f3bb55",
+      "saved_file": "acceptance-php-8.1.34.json",
+      "saved_sha256": "d8668ca32db4222c8a8ae5f421757f52a97a15568c6cdc615c9218693a932fe7"
+    },
+    {
+      "artifact_id": 11659114002,
+      "archive_sha256": "b9742db43a16c4c2761bc26b8048115bf944373c8d78139f55fe3431065e3470",
+      "saved_file": "acceptance-php-8.5.11.json",
+      "saved_sha256": "b046cd80b9b1c9622c1db8219b7a8b51b53118c205e3761ddea5b4581ea9d21f"
+    }
+  ]
+}
