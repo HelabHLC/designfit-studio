@@ -1,10 +1,14 @@
 name: Deploy to IONOS
 
 on:
+  # Repository merges must never publish the production application.
   workflow_dispatch:
-  push:
-    branches:
-      - main
+    inputs:
+      confirm_production:
+        description: 'Deploy main to IONOS production'
+        type: boolean
+        required: true
+        default: false
 
 concurrency:
   group: ionos-production
@@ -15,6 +19,7 @@ permissions:
 
 jobs:
   validate:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.confirm_production
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -35,6 +40,7 @@ jobs:
         run: npm run build
 
   deploy:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.confirm_production
     needs: validate
     runs-on: ubuntu-latest
     environment: production
