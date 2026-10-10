@@ -1,0 +1,93 @@
+{
+  "status": "PASS",
+  "wordpress_commit": "160387b7312c9407c7fe4b1d3dd2055206749a34",
+  "wordpress_version": "7.1.2",
+  "php": "8.1.34",
+  "database": "10.11.19",
+  "phase_assertions": 313,
+  "http_requests": 19,
+  "protected_tables": 8,
+  "phases": {
+    "install": {
+      "phase": "install",
+      "status": "PASS",
+      "assertions": 3,
+      "wp": "7.1.2",
+      "php": "8.1.34",
+      "database": "10.11.19",
+      "plugin_version": null,
+      "scope": "Isolated synthetic fixture only; not production-site acceptance or payload authentication"
+    },
+    "baseline": {
+      "phase": "baseline",
+      "status": "PASS",
+      "assertions": 15,
+      "wp": "7.1.2",
+      "php": "8.1.34",
+      "database": "10.11.19",
+      "plugin_version": "5.2.0",
+      "scope": "Isolated synthetic fixture only; not production-site acceptance or payload authentication"
+    },
+    "upgrade": {
+      "phase": "upgrade",
+      "status": "PASS",
+      "assertions": 11,
+      "wp": "7.1.2",
+      "php": "8.1.34",
+      "database": "10.11.19",
+      "plugin_version": "5.2.0",
+      "scope": "Isolated synthetic fixture only; not production-site acceptance or payload authentication"
+    },
+    "accept": {
+      "phase": "accept",
+      "status": "PASS",
+      "assertions": 232,
+      "wp": "7.1.2",
+      "php": "8.1.34",
+      "database": "10.11.19",
+      "plugin_version": "5.2.1-rc1",
+      "scope": "Isolated synthetic fixture only; not production-site acceptance or payload authentication"
+    },
+    "reactivate": {
+      "phase": "reactivate",
+      "status": "PASS",
+      "assertions": 22,
+      "wp": "7.1.2",
+      "php": "8.1.34",
+      "database": "10.11.19",
+      "plugin_version": "5.2.1-rc1",
+      "scope": "Isolated synthetic fixture only; not production-site acceptance or payload authentication"
+    },
+    "rollback": {
+      "phase": "rollback",
+      "status": "PASS",
+      "assertions": 11,
+      "wp": "7.1.2",
+      "php": "8.1.34",
+      "database": "10.11.19",
+      "plugin_version": "5.2.1-rc1",
+      "scope": "Isolated synthetic fixture only; not production-site acceptance or payload authentication"
+    },
+    "rollback-check": {
+      "phase": "rollback-check",
+      "status": "PASS",
+      "assertions": 12,
+      "wp": "7.1.2",
+      "php": "8.1.34",
+      "database": "10.11.19",
+      "plugin_version": "5.2.0",
+      "scope": "Isolated synthetic fixture only; not production-site acceptance or payload authentication"
+    },
+    "fresh": {
+      "phase": "fresh",
+      "status": "PASS",
+      "assertions": 7,
+      "wp": "7.1.2",
+      "php": "8.1.34",
+      "database": "10.11.19",
+      "plugin_version": "5.2.1-rc1",
+      "scope": "Isolated synthetic fixture only; not production-site acceptance or payload authentication"
+    }
+  },
+  "scope": "Real WordPress on a disposable synthetic database; no production/site-plugin-stack acceptance; FP payload not authenticated"
+}
