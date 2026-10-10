@@ -1,0 +1,398 @@
+--- legacy-v3.0.0/arbe-fp-structural-solver.php
++++ live-2026-10-09/source/arbe-fp-structural-solver.php
+@@ -1,8 +1,8 @@
+ <?php
+ /**
+- * Plugin Name: ARBE FP Structural Solver
+- * Description: FP-Code to pigment formula solver with measured reference curves, Kubelka-Munk K/S mixing, SCISSOR validation, confidence scoring, production fix release with stable certificate registry, QR verification, raw HTML print export and REST API.
+- * Version: 3.0.0
++ * Plugin Name: ARBE FP Platform
++ * Description: FP-Code to pigment formula solver with measured reference curves, Kubelka-Munk K/S mixing, SCISSOR validation, confidence scoring, one-shortcode platform build with HLC-guided solver, public material/pigment candidates, formula curves, SCISSOR overlay and registry workflow.
++ * Version: 5.2.0
+  * Author: ARBE λ*
+  * Requires PHP: 8.1
+  *
+@@ -14,11 +14,13 @@
+  * [arbe_fp_certificate_json color="H095_L090_C105"]
+  * [arbe_fp_verify_certificate id="ARBE-FP-..."]
+  * [arbe_fp_registry_lookup]
++ * [arbe_spectral_search color="H095_L090_C105"]
++ * [arbe_fp]
+  */
+ 
+ if (!defined('ABSPATH')) { exit; }
+ 
+-define('ARBE_FP_SOLVER_VERSION', '3.0.0');
++define('ARBE_FP_SOLVER_VERSION', '5.2.0');
+ define('ARBE_FP_SOLVER_PATH', plugin_dir_path(__FILE__));
+ define('ARBE_FP_SOLVER_URL', plugin_dir_url(__FILE__));
+ 
+@@ -26,17 +28,38 @@
+ require_once ARBE_FP_SOLVER_PATH . 'includes/scissor.php';
+ require_once ARBE_FP_SOLVER_PATH . 'includes/formula-engine.php';
+ require_once ARBE_FP_SOLVER_PATH . 'includes/confidence.php';
++require_once ARBE_FP_SOLVER_PATH . 'includes/audit.php';
++require_once ARBE_FP_SOLVER_PATH . 'includes/import.php';
+ require_once ARBE_FP_SOLVER_PATH . 'includes/certificate.php';
+ require_once ARBE_FP_SOLVER_PATH . 'includes/optimizer.php';
+ require_once ARBE_FP_SOLVER_PATH . 'includes/solver.php';
++require_once ARBE_FP_SOLVER_PATH . 'includes/diagnostics.php';
++require_once ARBE_FP_SOLVER_PATH . 'includes/smoke-test.php';
+ require_once ARBE_FP_SOLVER_PATH . 'includes/rest-api.php';
+ require_once ARBE_FP_SOLVER_PATH . 'includes/admin.php';
++require_once ARBE_FP_SOLVER_PATH . 'includes/hlc-acquisition.php';
++require_once ARBE_FP_SOLVER_PATH . 'includes/spectral-search.php';
+ require_once ARBE_FP_SOLVER_PATH . 'includes/shortcodes.php';
+ 
+ register_activation_hook(__FILE__, function() {
+     arbe_fp_solver_create_tables();
+     arbe_fp_solver_seed_color_master();
++    if (function_exists('arbe_hlc_acq_create_tables')) { arbe_hlc_acq_create_tables(); }
++    if (function_exists('arbe_hlc_acq_create_tables')) { arbe_hlc_acq_create_tables(); }
++        update_option('arbe_fp_platform_version', ARBE_FP_SOLVER_VERSION);
+ });
++
++add_action('plugins_loaded', 'arbe_fp_platform_maybe_upgrade');
++
++function arbe_fp_platform_maybe_upgrade() {
++    $installed = get_option('arbe_fp_platform_version', '0.0.0');
++    if (version_compare($installed, ARBE_FP_SOLVER_VERSION, '<')) {
++        arbe_fp_solver_create_tables();
++        arbe_fp_solver_seed_color_master();
++    if (function_exists('arbe_hlc_acq_create_tables')) { arbe_hlc_acq_create_tables(); }
++        update_option('arbe_fp_platform_version', ARBE_FP_SOLVER_VERSION);
++    }
++}
+ 
+ add_action('wp_enqueue_scripts', 'arbe_fp_solver_assets');
+ add_action('admin_enqueue_scripts', 'arbe_fp_solver_assets');
+--- legacy-v3.0.0/includes/database.php
++++ live-2026-10-09/source/includes/database.php
+@@ -12,6 +12,7 @@
+     $sources = $wpdb->prefix . 'arbe_fp_pigment_sources';
+     $refcurves = $wpdb->prefix . 'arbe_fp_color_curves';
+     $certs = $wpdb->prefix . 'arbe_fp_certificates';
++    $audit = $wpdb->prefix . 'arbe_fp_audit_log';
+ 
+     dbDelta("CREATE TABLE $colors (
+         id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+@@ -129,6 +130,23 @@
+         UNIQUE KEY sha256_unique (sha256),
+         KEY fp_color_idx (fp_color_id)
+     ) $charset;");
++
++    dbDelta("CREATE TABLE $audit (
++        id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
++        event_type VARCHAR(64) NOT NULL,
++        object_type VARCHAR(64) NULL,
++        object_id VARCHAR(128) NULL,
++        fp_color_id VARCHAR(128) NULL,
++        user_id BIGINT UNSIGNED NULL,
++        ip_hash CHAR(64) NULL,
++        payload LONGTEXT NULL,
++        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
++        PRIMARY KEY (id),
++        KEY event_idx (event_type),
++        KEY object_idx (object_type, object_id),
++        KEY color_idx (fp_color_id),
++        KEY created_idx (created_at)
++    ) $charset;");
+ }
+ 
+ function arbe_fp_solver_counts() {
+@@ -140,6 +158,7 @@
+         'sources' => intval($wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->prefix}arbe_fp_pigment_sources")),
+         'reference_curve_points' => intval($wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->prefix}arbe_fp_color_curves")),
+         'certificates' => intval($wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->prefix}arbe_fp_certificates")),
++        'audit_events' => intval($wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->prefix}arbe_fp_audit_log")),
+     ];
+ }
+ 
+--- legacy-v3.0.0/includes/rest-api.php
++++ live-2026-10-09/source/includes/rest-api.php
+@@ -76,6 +76,53 @@
+         'methods'=>'GET',
+         'callback'=>'arbe_fp_rest_health',
+         'permission_callback'=>'__return_true',
++    ]);
++
++    register_rest_route('arbe/v1', '/selftest', [
++        'methods'=>'GET',
++        'callback'=>'arbe_fp_rest_selftest',
++        'permission_callback'=>'__return_true',
++    ]);
++
++    register_rest_route('arbe/v1', '/diagnostics', [
++        'methods'=>'GET',
++        'callback'=>'arbe_fp_rest_diagnostics',
++        'permission_callback'=>function() { return current_user_can('manage_options'); },
++    ]);
++
++    register_rest_route('arbe/v1', '/smoke-test', [
++        'methods'=>'GET',
++        'callback'=>'arbe_fp_rest_smoke_test',
++        'permission_callback'=>function() { return current_user_can('manage_options'); },
++    ]);
++
++    register_rest_route('arbe/v1', '/audit', [
++        'methods'=>'GET',
++        'callback'=>'arbe_fp_rest_audit',
++        'permission_callback'=>function() { return current_user_can('manage_options'); },
++        'args'=>[
++            'limit'=>['required'=>false],
++        ],
++    ]);
++
++    register_rest_route('arbe/v1', '/spectral-search', [
++        'methods'=>'GET',
++        'callback'=>'arbe_fp_rest_spectral_search',
++        'permission_callback'=>'__return_true',
++        'args'=>[
++            'color'=>['required'=>true],
++            'limit'=>['required'=>false],
++        ],
++    ]);
++
++    register_rest_route('arbe/v1', '/hlc-candidates', [
++        'methods'=>'GET',
++        'callback'=>'arbe_fp_rest_hlc_candidates',
++        'permission_callback'=>'__return_true',
++        'args'=>[
++            'hlc_id'=>['required'=>false],
++            'limit'=>['required'=>false],
++        ],
+     ]);
+ });
+ 
+@@ -106,6 +153,12 @@
+ 
+     $verification = arbe_fp_verify_certificate_payload($row['payload']);
+     $row['verification'] = $verification;
++    arbe_fp_audit_log('certificate_verified', [
++        'object_type'=>'certificate',
++        'object_id'=>$row['certificate_id'],
++        'fp_color_id'=>$row['payload']['reference']['fp_color_id'] ?? '',
++        'payload'=>['valid'=>$verification['valid'] ?? false],
++    ]);
+     return $row;
+ }
+ 
+@@ -117,6 +170,11 @@
+     $row = arbe_fp_get_certificate_by_id_or_hash($q);
+     if (!$row) return new WP_Error('arbe_certificate_not_found', 'Certificate not found in local registry.', ['status'=>404]);
+ 
++    arbe_fp_audit_log('certificate_export_json', [
++        'object_type'=>'certificate',
++        'object_id'=>$row['certificate_id'],
++        'fp_color_id'=>$row['payload']['reference']['fp_color_id'] ?? '',
++    ]);
+     $response = new WP_REST_Response($row['payload']);
+     $response->header('Content-Type', 'application/json; charset=utf-8');
+     $response->header('Content-Disposition', 'attachment; filename="' . sanitize_file_name($row['certificate_id']) . '.json"');
+@@ -161,6 +219,11 @@
+     $csv = implode(',', array_map('arbe_fp_csv_escape', array_keys($fields))) . "\n";
+     $csv .= implode(',', array_map('arbe_fp_csv_escape', array_values($fields))) . "\n";
+ 
++    arbe_fp_audit_log('certificate_export_csv', [
++        'object_type'=>'certificate',
++        'object_id'=>$row['certificate_id'],
++        'fp_color_id'=>$p['reference']['fp_color_id'] ?? '',
++    ]);
+     $response = new WP_REST_Response($csv);
+     $response->header('Content-Type', 'text/csv; charset=utf-8');
+     $response->header('Content-Disposition', 'attachment; filename="' . sanitize_file_name($row['certificate_id']) . '.csv"');
+@@ -244,6 +307,12 @@
+     $html .= '<p class="no-print"><button onclick="window.print()">Print / Save as PDF</button></p>';
+     $html .= '</div></body></html>';
+ 
++    arbe_fp_audit_log('certificate_export_print', [
++        'object_type'=>'certificate',
++        'object_id'=>$row['certificate_id'],
++        'fp_color_id'=>$p['reference']['fp_color_id'] ?? '',
++    ]);
++
+     status_header(200);
+     header('Content-Type: text/html; charset=utf-8');
+     header('X-Content-Type-Options: nosniff');
+@@ -260,4 +329,69 @@
+     ];
+ }
+ 
++
++function arbe_fp_rest_selftest(WP_REST_Request $request) {
++    $d = arbe_fp_platform_diagnostics();
++    return [
++        'engine' => 'ARBE FP Platform',
++        'version' => ARBE_FP_SOLVER_VERSION,
++        'status' => $d['status'],
++        'php_version' => $d['php_version'],
++        'wordpress_version' => $d['wordpress_version'],
++        'site_url' => $d['site_url'],
++        'counts' => $d['counts'],
++        'tables' => $d['tables'],
++        'functions' => $d['functions'],
++        'recommendations' => $d['recommendations'],
++        'rest_routes' => [
++            '/wp-json/arbe/v1/health',
++            '/wp-json/arbe/v1/selftest',
++            '/wp-json/arbe/v1/solve',
++            '/wp-json/arbe/v1/certificate',
++            '/wp-json/arbe/v1/verify',
++            '/wp-json/arbe/v1/certificate-json',
++            '/wp-json/arbe/v1/certificate-csv',
++            '/wp-json/arbe/v1/certificate-print',
++            '/wp-json/arbe/v1/diagnostics',
++        ],
++    ];
++}
++
++function arbe_fp_rest_diagnostics(WP_REST_Request $request) {
++    return arbe_fp_platform_diagnostics();
++}
++
++function arbe_fp_rest_smoke_test(WP_REST_Request $request) {
++    return arbe_fp_platform_smoke_test();
++}
++
++function arbe_fp_rest_audit(WP_REST_Request $request) {
++    return [
++        'events' => arbe_fp_audit_recent(intval($request->get_param('limit') ?: 50)),
++    ];
++}
++
++function arbe_fp_rest_spectral_search(WP_REST_Request $request) {
++    $result = arbe_fp_spectral_search($request->get_param('color'), [
++        'limit'=>intval($request->get_param('limit') ?: 20),
++    ]);
++    if (is_wp_error($result)) return $result;
++
++    // REST should not return full curves for all results by default.
++    foreach ($result['results'] as &$r) {
++        unset($r['curve']);
++    }
++    if (function_exists('arbe_hlc_acq_pigment_codes_for_hlc') && !empty($result['fp_color']['id'])) {
++        $result['hlc_candidate_codes'] = arbe_hlc_acq_pigment_codes_for_hlc($result['fp_color']['id']);
++    }
++    return $result;
++}
++
++function arbe_fp_rest_hlc_candidates(WP_REST_Request $request) {
++    return [
++        'hlc_id'=>arbe_hlc_acq_normalize_hlc($request->get_param('hlc_id') ?: ''),
++        'candidates'=>arbe_hlc_acq_recent_candidates($request->get_param('hlc_id') ?: '', intval($request->get_param('limit') ?: 25)),
++        'counts'=>arbe_hlc_acq_counts(),
++    ];
++}
+ ?>--- legacy-v3.0.0/includes/shortcodes.php
++++ live-2026-10-09/source/includes/shortcodes.php
+@@ -2,6 +2,7 @@
+ if (!defined('ABSPATH')) { exit; }
+ 
+ add_shortcode('arbe_fp_structural_solver', 'arbe_fp_structural_solver_shortcode');
++add_shortcode('arbe_spectral_search', function($atts){ return arbe_fp_render_spectral_search('', $atts); });
+ add_shortcode('arbe_fp_solver_result', 'arbe_fp_structural_solver_shortcode');
+ 
+ function arbe_fp_structural_solver_shortcode($atts) {
+@@ -27,7 +28,7 @@
+ 
+     ob_start();
+     echo '<section class="arbe-solver">';
+-    echo '<span class="arbe-kicker">ARBE FP Structural Solver v3.0</span>';
++    echo '<span class="arbe-kicker">ARBE FP Platform v4.4</span>';
+     echo '<h2>FP-Code → Best Structural Formula</h2>';
+     echo '<form method="get" class="arbe-form"><label>FP-Color ID<input name="fp_color" value="'.esc_attr($requested).'" placeholder="H095_L090_C105"></label><button type="submit">Solve Structure</button></form>';
+ 
+@@ -310,4 +311,74 @@
+     return ob_get_clean();
+ });
+ 
++
++add_shortcode('arbe_fp', function($atts) {
++    $atts = shortcode_atts([
++        'color'=>'',
++        'limit'=>'20',
++        'mode'=>'platform',
++        'show_solver'=>'1',
++    ], $atts);
++
++    $mode = strtolower(trim($atts['mode']));
++
++    // One public entry point:
++    // mode="platform" or default = complete spectral search workflow
++    // mode="registry" = public certificate lookup
++    // mode="card" = compact best formula card
++    // mode="certificate" = certificate only
++    if ($mode === 'registry') {
++        return do_shortcode('[arbe_fp_registry_lookup]');
++    }
++
++    if ($mode === 'card') {
++        return do_shortcode('[arbe_fp_solver_card color="' . esc_attr($atts['color']) . '"]');
++    }
++
++    if ($mode === 'certificate') {
++        return do_shortcode('[arbe_fp_certificate color="' . esc_attr($atts['color']) . '"]');
++    }
++
++    return arbe_fp_render_unified_platform($atts);
++});
++
++function arbe_fp_render_unified_platform($atts) {
++    $requested = arbe_fp_parse_color_query($_GET['fp_color'] ?? $atts['color'] ?? '');
++    $section = strtolower(trim($_GET['arbe_section'] ?? 'search'));
++
++    ob_start();
++    echo '<section class="arbe-solver arbe-fp-unified">';
++    echo '<span class="arbe-kicker">ARBE FP Platform</span>';
++    echo '<h2>One Shortcode Interface</h2>';
++    echo '<p class="arbe-note"><strong>Shortcode:</strong> <code>[arbe_fp]</code> · Suche, SCISSOR, Solver, Certificate und Registry in einer Oberfläche.</p>';
++
++    echo '<div class="arbe-tabs">';
++    $tabs = [
++        'search'=>'Spectral Search',
++        'registry'=>'Registry Lookup',
++    ];
++    foreach ($tabs as $key=>$label) {
++        $url = add_query_arg(['arbe_section'=>$key]);
++        $active = ($section === $key) ? ' arbe-tab-active' : '';
++        echo '<a class="arbe-tab'.$active.'" href="'.esc_url($url).'">'.esc_html($label).'</a>';
++    }
++    echo '</div>';
++
++    if ($section === 'registry') {
++        echo do_shortcode('[arbe_fp_registry_lookup]');
++        echo '</section>';
++        return ob_get_clean();
++    }
++
++    // Default: complete search workflow.
++    echo arbe_fp_render_spectral_search($requested, [
++        'color'=>$requested,
++        'limit'=>$atts['limit'] ?? '20',
++        'show_solver'=>$atts['show_solver'] ?? '1',
++    ]);
++
++    echo '</section>';
++    return ob_get_clean();
++}
++
+ ?>--- legacy-v3.0.0/includes/solver.php
++++ live-2026-10-09/source/includes/solver.php
+@@ -31,6 +31,17 @@
+         'reference_mode'=>$reference_mode,
+     ];
+ 
++    arbe_fp_audit_log('solve', [
++        'object_type'=>'fp_color',
++        'object_id'=>$color->fp_color_id,
++        'fp_color_id'=>$color->fp_color_id,
++        'payload'=>[
++            'settings'=>$solve['settings'],
++            'solution_count'=>count($solve['solutions']),
++            'reference_mode'=>$reference_mode,
++        ],
++    ]);
++
+     $solve['certificate'] = arbe_fp_certificate_payload($solve);
+     return $solve;
+ }

@@ -1,0 +1,161 @@
+{
+  "schema": "arbe-fp-live-source-view/1",
+  "site_url": "https://arbe-lambda-star.com",
+  "source_root": "wp-content/plugins/arbe-fp-structural-solver/",
+  "plugin_header_version": "5.2.0",
+  "active_plugin_verified": true,
+  "export_method": "Authenticated WPVibe 1.20.3 read_file; scope wp-content; read-only",
+  "captured_interval_utc": [
+    "2026-10-09T16:13:14.007Z",
+    "2026-10-09T16:13:26.452Z"
+  ],
+  "timestamp_note": "Client receipt/request timestamps; not server file modification times. The initial four core reads were timestamped immediately after their batch completed; other reads at request start.",
+  "source_integrity": "SHA-256 applies to reconstructed UTF-8 LF source views and saved receipts. Server raw-file hashes, newline encoding, terminal-newline fidelity and absence of silent masking are not independently attested.",
+  "reconstruction": "Validate complete numbered lines 1..N, strip only number plus first TAB, join with LF, encode UTF-8; add no implicit terminal newline.",
+  "visible_redaction_markers_found": false,
+  "scope": "All 20 files in the provider allowed-source inventory; not a host ZIP, full WordPress backup, binary/hidden-file inventory or atomic filesystem snapshot.",
+  "original_5_2_0_pre_edit_baseline": "NOT_AVAILABLE",
+  "historical_parser_diff": "UNKNOWN",
+  "files": [
+    {
+      "path": "arbe-fp-structural-solver.php",
+      "server_path_relative_to_wp_content": "plugins/arbe-fp-structural-solver/arbe-fp-structural-solver.php",
+      "retrieved_at": "2026-10-09T16:13:14.007Z",
+      "export_bytes": 3506,
+      "export_sha256": "7d4c6f6de5a1eb1cbd97e909cf609d6abeedb9228c2772a61071f853cc6a5c8a"
+    },
+    {
+      "path": "assets/arbe-fp-solver.css",
+      "server_path_relative_to_wp_content": "plugins/arbe-fp-structural-solver/assets/arbe-fp-solver.css",
+      "retrieved_at": "2026-10-09T16:13:26.452Z",
+      "export_bytes": 4505,
+      "export_sha256": "1c749074fdf817945bb2b723011e6ebf37756ec0f410acd1bb1721959d33b6d8"
+    },
+    {
+      "path": "assets/arbe-fp-solver.js",
+      "server_path_relative_to_wp_content": "plugins/arbe-fp-structural-solver/assets/arbe-fp-solver.js",
+      "retrieved_at": "2026-10-09T16:13:26.452Z",
+      "export_bytes": 1233,
+      "export_sha256": "73e55ba0a155aac63a96564f384c344806bbaa6d1104619e778a662e54f66226"
+    },
+    {
+      "path": "includes/admin.php",
+      "server_path_relative_to_wp_content": "plugins/arbe-fp-structural-solver/includes/admin.php",
+      "retrieved_at": "2026-10-09T16:13:26.452Z",
+      "export_bytes": 20642,
+      "export_sha256": "0fc4e177ddb32b86151c19e7764ea93d2aa7bbc93501b396dd16955831f86fd2"
+    },
+    {
+      "path": "includes/audit.php",
+      "server_path_relative_to_wp_content": "plugins/arbe-fp-structural-solver/includes/audit.php",
+      "retrieved_at": "2026-10-09T16:13:26.452Z",
+      "export_bytes": 1136,
+      "export_sha256": "dd62af79a38496c5cd633d8a3334a93d043c0f82fa749d452a22afae2e32eb25"
+    },
+    {
+      "path": "includes/certificate.php",
+      "server_path_relative_to_wp_content": "plugins/arbe-fp-structural-solver/includes/certificate.php",
+      "retrieved_at": "2026-10-09T16:13:26.452Z",
+      "export_bytes": 8110,
+      "export_sha256": "b88830e86dbc3e9e75645c245c3c9bc27bd657cac71b3257261d7674c6ecf61c"
+    },
+    {
+      "path": "includes/confidence.php",
+      "server_path_relative_to_wp_content": "plugins/arbe-fp-structural-solver/includes/confidence.php",
+      "retrieved_at": "2026-10-09T16:13:26.452Z",
+      "export_bytes": 864,
+      "export_sha256": "c3feb91a9bc5dd4663a27476983d33c52af8c51c3ae227f15837f9d37c932606"
+    },
+    {
+      "path": "includes/database.php",
+      "server_path_relative_to_wp_content": "plugins/arbe-fp-structural-solver/includes/database.php",
+      "retrieved_at": "2026-10-09T16:13:14.007Z",
+      "export_bytes": 18270,
+      "export_sha256": "4904968d6a3b5e9082690730109739d1d2222f804f86809716ea2b15ff7fc309"
+    },
+    {
+      "path": "includes/diagnostics.php",
+      "server_path_relative_to_wp_content": "plugins/arbe-fp-structural-solver/includes/diagnostics.php",
+      "retrieved_at": "2026-10-09T16:13:26.452Z",
+      "export_bytes": 3200,
+      "export_sha256": "0419588610a5117eef5fa2ff933f31342d9ddc16e8101357df57978dbb779f2a"
+    },
+    {
+      "path": "includes/formula-engine.php",
+      "server_path_relative_to_wp_content": "plugins/arbe-fp-structural-solver/includes/formula-engine.php",
+      "retrieved_at": "2026-10-09T16:13:26.452Z",
+      "export_bytes": 2729,
+      "export_sha256": "0459f345c105ca52385caa63d551f9965ab1c28fc13737901efd306070f0824e"
+    },
+    {
+      "path": "includes/hlc-acquisition.php",
+      "server_path_relative_to_wp_content": "plugins/arbe-fp-structural-solver/includes/hlc-acquisition.php",
+      "retrieved_at": "2026-10-09T16:13:26.452Z",
+      "export_bytes": 8714,
+      "export_sha256": "1bb92083fbe12ec790c1f21e0131261be37ba877972d2c7b955259b122befc1c"
+    },
+    {
+      "path": "includes/import.php",
+      "server_path_relative_to_wp_content": "plugins/arbe-fp-structural-solver/includes/import.php",
+      "retrieved_at": "2026-10-09T16:13:26.452Z",
+      "export_bytes": 7343,
+      "export_sha256": "5eac420017a45d11dd7012e15ed5d0d56221442417e20f6dbe3d2bd1fe4d8ad8"
+    },
+    {
+      "path": "includes/optimizer.php",
+      "server_path_relative_to_wp_content": "plugins/arbe-fp-structural-solver/includes/optimizer.php",
+      "retrieved_at": "2026-10-09T16:13:26.452Z",
+      "export_bytes": 7819,
+      "export_sha256": "c45b51bd422b4ddd888a32168011557bb9412b0002adf7bbbcdc2baed7a15031"
+    },
+    {
+      "path": "includes/rest-api.php",
+      "server_path_relative_to_wp_content": "plugins/arbe-fp-structural-solver/includes/rest-api.php",
+      "retrieved_at": "2026-10-09T16:13:26.452Z",
+      "export_bytes": 16465,
+      "export_sha256": "da0910f9530f59bc4446a174b840923da5f99ad85841eacc134401bde4764657"
+    },
+    {
+      "path": "includes/scissor.php",
+      "server_path_relative_to_wp_content": "plugins/arbe-fp-structural-solver/includes/scissor.php",
+      "retrieved_at": "2026-10-09T16:13:26.452Z",
+      "export_bytes": 2720,
+      "export_sha256": "db6ebe3d2c9c5bc1870ce8866d7f176047a937b665e82048f5b188ca27f3822d"
+    },
+    {
+      "path": "includes/shortcodes.php",
+      "server_path_relative_to_wp_content": "plugins/arbe-fp-structural-solver/includes/shortcodes.php",
+      "retrieved_at": "2026-10-09T16:13:14.007Z",
+      "export_bytes": 18246,
+      "export_sha256": "c0d150dc75beffa803613ef0c35aac7bb7c572fb5f0154e85db18374a7562065"
+    },
+    {
+      "path": "includes/smoke-test.php",
+      "server_path_relative_to_wp_content": "plugins/arbe-fp-structural-solver/includes/smoke-test.php",
+      "retrieved_at": "2026-10-09T16:13:26.452Z",
+      "export_bytes": 2974,
+      "export_sha256": "0afd3a8069d077624023c3c97b0b75e039cfe60e9ad39cff8667e642ef4d47e6"
+    },
+    {
+      "path": "includes/solver.php",
+      "server_path_relative_to_wp_content": "plugins/arbe-fp-structural-solver/includes/solver.php",
+      "retrieved_at": "2026-10-09T16:13:14.007Z",
+      "export_bytes": 1743,
+      "export_sha256": "c94a4e2f30b6dc2698ff34cf075b177c9961572ca016a818ea300cd33312ccb2"
+    },
+    {
+      "path": "includes/spectral-search.php",
+      "server_path_relative_to_wp_content": "plugins/arbe-fp-structural-solver/includes/spectral-search.php",
+      "retrieved_at": "2026-10-09T16:13:26.452Z",
+      "export_bytes": 17695,
+      "export_sha256": "2ce3313fe9c460cfb0d622c0979dbcb557bb4d705af3a337d2f8a87d308c5b15"
+    },
+    {
+      "path": "release-manifest.json",
+      "server_path_relative_to_wp_content": "plugins/arbe-fp-structural-solver/release-manifest.json",
+      "retrieved_at": "2026-10-09T16:13:14.007Z",
+      "export_bytes": 2480,
+      "export_sha256": "c56caa3e42c87dd02690cdb7bb7a7130e77a3cbb789c6db575565856805a9c55"
+    }
+  ]
+}

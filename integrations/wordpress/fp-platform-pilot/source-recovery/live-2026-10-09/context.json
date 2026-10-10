@@ -1,0 +1,80 @@
+{
+  "captured_at": "2026-10-09T16:14:48.367Z",
+  "site_url": "https://arbe-lambda-star.com",
+  "page_read": {
+    "status": "fulfilled",
+    "value": {
+      "content": [
+        {
+          "type": "text",
+          "text": "[\n  {\n    \"id\": 4946,\n    \"slug\": \"arbe-fp-pigment-atlas\",\n    \"status\": \"publish\",\n    \"link\": \"https://arbe-lambda-star.com/arbe-fp-pigment-atlas/\",\n    \"content\": {\n      \"raw\": \"<!-- wp:paragraph -->\\n<p>ALL Demo Files </p>\\n<!-- /wp:paragraph -->\\n\\n<!-- wp:shortcode -->\\n[arbe_fp]\\n<!-- /wp:shortcode -->\",\n      \"rendered\": \"\\n<p class=\\\"wp-block-paragraph\\\">ALL Demo Files </p>\\n\\n\\n<section class=\\\"arbe-solver arbe-fp-unified\\\"><span class=\\\"arbe-kicker\\\">ARBE FP Platform</span><h2>One Shortcode Interface</h2><p class=\\\"arbe-note\\\"><strong>Shortcode:</strong> <code>[arbe_fp]</code> · Suche, SCISSOR, Solver, Certificate und Registry in einer Oberfläche.</p><div class=\\\"arbe-tabs\\\"><a class=\\\"arbe-tab arbe-tab-active\\\" href=\\\"/?rest_route=%2Fwp%2Fv2%2Fpages&#038;slug=arbe-fp-pigment-atlas&#038;context=edit&#038;_fields=id%2Clink%2Cslug%2Cstatus%2Ccontent&#038;wpvibe_cb=1791562442700&#038;arbe_section=search\\\">Spectral Search</a><a class=\\\"arbe-tab\\\" href=\\\"/?rest_route=%2Fwp%2Fv2%2Fpages&#038;slug=arbe-fp-pigment-atlas&#038;context=edit&#038;_fields=id%2Clink%2Cslug%2Cstatus%2Ccontent&#038;wpvibe_cb=1791562442700&#038;arbe_section=registry\\\">Registry Lookup</a></div><section class=\\\"arbe-solver arbe-search-engine\\\"><span class=\\\"arbe-kicker\\\">ARBE Spectral Search Engine v1.0</span><h2>FP-Code → Pigment Ranking → SCISSOR</h2><form method=\\\"get\\\" class=\\\"arbe-form\\\"><label>FP-Code / FP-Color ID<input name=\\\"fp_color\\\" value=\\\"\\\" placeholder=\\\"FP::H095_L090_C105\\\"></label><button type=\\\"submit\\\">Search Pigments</button></form><p class=\\\"arbe-note\\\">Gib einen FP-Code ein, z. B. <code>FP::H095_L090_C105</code>.</p></section></section>\\n\",\n      \"protected\": false,\n      \"block_version\": 1\n    }\n  }\n]\n\nWPVibe usage: your account has used 62 of its 100 calls in the current rolling 24-hour window. Nothing is blocked yet, and earlier calls free up as they age past 24 hours, but a large batch may reach the limit. Details: https://mcp.wpvibe.ai/account"
+        }
+      ],
+      "isError": false
+    }
+  },
+  "plugin_list_read": {
+    "method": "WPVibe run_wp_cli plugin list --name=arbe-fp-structural-solver --format=json",
+    "note": "Provider returned all plugins despite filter; only the three relevant records retained.",
+    "entries": [
+      {
+        "name": "ARBE FP Guardrail Shortcode",
+        "status": "active",
+        "version": "1.0.1",
+        "update": "none",
+        "update_version": "",
+        "file": "arbe-fp-guardrail-shortcode/arbe-fp-guardrail-shortcode.php"
+      },
+      {
+        "name": "ARBE FP One",
+        "status": "active",
+        "version": "2.0.0",
+        "update": "none",
+        "update_version": "",
+        "file": "arbe-fp-one-v20/arbe-fp-one.php"
+      },
+      {
+        "name": "ARBE FP Platform",
+        "status": "active",
+        "version": "5.2.0",
+        "update": "none",
+        "update_version": "",
+        "file": "arbe-fp-structural-solver/arbe-fp-structural-solver.php"
+      }
+    ]
+  },
+  "adjacent_entry_files": [
+    {
+      "path": "plugins/arbe-fp-guardrail-shortcode/arbe-fp-guardrail-shortcode.php",
+      "retrieved_at": "2026-10-09T16:14:25.676Z",
+      "result": {
+        "status": "fulfilled",
+        "value": {
+          "content": [
+            {
+              "type": "text",
+              "text": "**plugins/arbe-fp-guardrail-shortcode/arbe-fp-guardrail-shortcode.php** (wp-content, read-only)\nKnown secret patterns are masked; do not treat redacted source as byte-exact.\nLines 1-111 of 111\n```\n1\t<?php\n2\t/**\n3\t * Plugin Name: ARBE FP Guardrail Shortcode\n4\t * Description: Adds the [arbe_fp_guardrail] shortcode for atlas-only FP string parsing.\n5\t * Version: 1.0.1\n6\t * Author: ARBE λ*\n7\t */\n8\t\n9\tif (!defined('ABSPATH')) {\n10\t    exit;\n11\t}\n12\t\n13\tfunction arbe_fp_guardrail_shortcode() {\n14\t    ob_start();\n15\t    ?>\n16\t    <section class=\"arbe-fp-guardrail-widget\" aria-labelledby=\"arbe-fp-guardrail-title\">\n17\t      <h2 id=\"arbe-fp-guardrail-title\">FP-Code Guardrail Check</h2>\n18\t      <p>Paste an ARBE FP string. The widget returns atlas-bound fields and keeps unknown fields raw / unverified.</p>\n19\t      <textarea id=\"arbe-fp-input\" rows=\"5\" style=\"width:100%;\">FP1|ID=H235_L010_C005|ST=SCISSOR|A=H230_L010_C005|SOL=SS03-A100-E0002|MS=S:P,C:A|CLS=DA|SIG=S_60C98EE54AB6</textarea>\n20\t      <p><button id=\"arbe-fp-run\" type=\"button\">Validate FP string</button></p>\n21\t      <pre id=\"arbe-fp-output\" aria-live=\"polite\"></pre>\n22\t    </section>\n23\t    <script>\n24\t    window.ARBE_FP_GUARDRAIL = (function () {\n25\t      const REF_RE = /^H\\d{3}_L\\d{3}_C\\d{3}$/;\n26\t      const ALLOWED_OPERATORS = {\n27\t        \"SCISSOR\": \"ARBE Spectral Scissor\"\n28\t      };\n29\t      const FORBIDDEN_INTERPRETATIONS = [\n30\t        \"warehouse coordinate\",\n31\t        \"SAP logistics command\",\n32\t        \"MES routing command\",\n33\t        \"robot movement command\",\n34\t        \"height / length / column coordinate\",\n35\t        \"storage position\",\n36\t        \"material recipe\",\n37\t        \"pigment recipe\",\n38\t        \"manufacturing instruction\"\n39\t      ];\n40\t\n41\t      function parseFP(s) {\n42\t        const parts = String(s || \"\").split(\"|\").map(x => x.trim()).filter(Boolean);\n43\t        const raw = {};\n44\t        let fp = null;\n45\t\n46\t        for (const part of parts) {\n47\t          if (/^FP\\d+$/.test(part)) {\n48\t            fp = part;\n49\t            raw.FP = part;\n50\t            continue;\n51\t          }\n52\t          const idx = part.indexOf(\"=\");\n53\t          if (idx > -1) {\n54\t            const key = part.slice(0, idx).trim();\n55\t            const value = part.slice(idx + 1).trim();\n56\t            raw[key] = value;\n57\t          }\n58\t        }\n59\t\n60\t        const id = raw.ID || null;\n61\t        const anchor = raw.A || null;\n62\t        const st = raw.ST || null;\n63\t\n64\t        const errors = [];\n65\t        if (!id || !REF_RE.test(id)) errors.push(\"Missing or invalid primary Hxxx_Lxxx_Cxxx reference in ID.\");\n66\t        if (anchor && !REF_RE.test(anchor)) errors.push(\"Invalid anchor Hxxx_Lxxx_Cxxx reference in A.\");\n67\t        if (st && !(st in ALLOWED_OPERATORS)) errors.push(\"Unknown operator. Keep ST raw / unverified.\");\n68\t\n69\t        return {\n70\t          block_type: \"ARBE_FP_PROCESS_BLOCK\",\n71\t          parse_status: errors.length ? \"INVALID_OR_UNVERIFIED\" : \"VALID_REFERENCE_BLOCK\",\n72\t          primary_reference: id,\n73\t          anchor_reference: anchor,\n74\t          operator: st ? {\n75\t            code: st,\n76\t            meaning: ALLOWED_OPERATORS[st] || null,\n77\t            status: ALLOWED_OPERATORS[st] ? \"ALLOWED_OPERATOR\" : \"RAW_UNVERIFIED\"\n78\t          } : null,\n79\t          raw_fields: raw,\n80\t          forbidden_interpretations: FORBIDDEN_INTERPRETATIONS,\n81\t          validation: {\n82\t            reference_pattern_valid: !!(id && REF_RE.test(id)),\n83\t            anchor_pattern_valid: !anchor || REF_RE.test(anchor),\n84\t            no_semantic_expansion: true,\n85\t            unknown_fields_remain_raw: true\n86\t          },\n87\t          errors: errors\n88\t        };\n89\t      }\n90\t\n91\t      return { parseFP };\n92\t    })();\n93\t\n94\t    (function(){\n95\t      const input = document.getElementById(\"arbe-fp-input\");\n96\t      const output = document.getElementById(\"arbe-fp-output\");\n97\t      const run = document.getElementById(\"arbe-fp-run\");\n98\t      function render(){\n99\t        output.textContent = JSON.stringify(window.ARBE_FP_GUARDRAIL.parseFP(input.value), null, 2);\n100\t      }\n101\t      if (run && input && output) {\n102\t        run.addEventListener(\"click\", render);\n103\t        render();\n104\t      }\n105\t    })();\n106\t    </script>\n107\t    <?php\n108\t    return ob_get_clean();\n109\t}\n110\tadd_shortcode('arbe_fp_guardrail', 'arbe_fp_guardrail_shortcode');\n111\t\n```"
+            }
+          ],
+          "isError": false
+        }
+      }
+    },
+    {
+      "path": "plugins/arbe-fp-one-v20/arbe-fp-one.php",
+      "retrieved_at": "2026-10-09T16:14:25.677Z",
+      "result": {
+        "status": "fulfilled",
+        "value": {
+          "content": [
+            {
+              "type": "text",
+              "text": "**plugins/arbe-fp-one-v20/arbe-fp-one.php** (wp-content, read-only)\nKnown secret patterns are masked; do not treat redacted source as byte-exact.\nLines 1-79 of 79\n```\n1\t<?php\n2\t/**\n3\t * Plugin Name: ARBE FP One\n4\t * Description: FP One analysis module. Reads normalized spectral CSV from ARBE Spectral Acquisition Engine or manual CSV input. Shortcode: [arbe_fp_one]\n5\t * Version: 2.0.0\n6\t * Author: ARBE\n7\t */\n8\tif (!defined('ABSPATH')) { exit; }\n9\t\n10\tfunction arbe_fpo20_register_assets() {\n11\t    $base = plugin_dir_url(__FILE__);\n12\t    wp_register_style('arbe-fpo20-css', $base . 'assets/arbe-fpo20.css', array(), '2.0.0');\n13\t    wp_register_script('arbe-fpo20-js', $base . 'assets/arbe-fpo20.js', array(), '2.0.0', true);\n14\t}\n15\tadd_action('wp_enqueue_scripts', 'arbe_fpo20_register_assets');\n16\t\n17\tfunction arbe_fp_one_shortcode($atts) {\n18\t    wp_enqueue_style('arbe-fpo20-css');\n19\t    wp_enqueue_script('arbe-fpo20-js');\n20\t\n21\t    $atts = shortcode_atts(array(\n22\t        'title' => 'ARBE FP One v2.0',\n23\t        'auto_load' => 'yes'\n24\t    ), $atts, 'arbe_fp_one');\n25\t\n26\t    ob_start(); ?>\n27\t    <div class=\"arbe-fpo20\" data-auto-load=\"<?php echo esc_attr($atts['auto_load']); ?>\">\n28\t      <div class=\"arbe-fpo20-head\">\n29\t        <h3><?php echo esc_html($atts['title']); ?></h3>\n30\t        <p>Analyze normalized spectral CSV from ARBE Spectral Acquisition Engine.</p>\n31\t      </div>\n32\t\n33\t      <div class=\"arbe-fpo20-actions\">\n34\t        <button type=\"button\" class=\"arbe-fpo20-load\">Load from Acquisition Engine</button>\n35\t        <button type=\"button\" class=\"arbe-fpo20-analyze\">Run FP One Analysis</button>\n36\t        <button type=\"button\" class=\"arbe-fpo20-download-report\">Download JSON Report</button>\n37\t        <button type=\"button\" class=\"arbe-fpo20-clear\">Clear</button>\n38\t      </div>\n39\t\n40\t      <div class=\"arbe-fpo20-upload\">\n41\t        <label>Manual CSV fallback\n42\t          <input type=\"file\" class=\"arbe-fpo20-file\" accept=\".csv,text/csv\">\n43\t        </label>\n44\t        <textarea class=\"arbe-fpo20-paste\" placeholder=\"Or paste CSV here: pigment_code,wavelength_nm,remission\"></textarea>\n45\t        <button type=\"button\" class=\"arbe-fpo20-use-paste\">Use pasted CSV</button>\n46\t      </div>\n47\t\n48\t      <div class=\"arbe-fpo20-status\">Ready.</div>\n49\t\n50\t      <div class=\"arbe-fpo20-grid\">\n51\t        <div class=\"arbe-fpo20-card\">\n52\t          <h4>Spectrum Summary</h4>\n53\t          <div class=\"arbe-fpo20-summary\"></div>\n54\t        </div>\n55\t        <div class=\"arbe-fpo20-card\">\n56\t          <h4>ARBE λ* Prototype</h4>\n57\t          <div class=\"arbe-fpo20-lambda\"></div>\n58\t        </div>\n59\t        <div class=\"arbe-fpo20-card\">\n60\t          <h4>SCISSOR Prototype</h4>\n61\t          <div class=\"arbe-fpo20-scissor\"></div>\n62\t        </div>\n63\t      </div>\n64\t\n65\t      <div class=\"arbe-fpo20-chart-wrap\">\n66\t        <canvas class=\"arbe-fpo20-chart\" width=\"900\" height=\"420\"></canvas>\n67\t      </div>\n68\t\n69\t      <textarea class=\"arbe-fpo20-output\" readonly placeholder=\"Loaded CSV / report output appears here.\"></textarea>\n70\t\n71\t      <p class=\"arbe-fpo20-note\">\n72\t        Status: prototype analysis. Use validated manufacturer spectral data for publication-quality ARBE reference cards.\n73\t      </p>\n74\t    </div>\n75\t    <?php\n76\t    return ob_get_clean();\n77\t}\n78\tadd_shortcode('arbe_fp_one', 'arbe_fp_one_shortcode');\n79\t?>\n```"
+            }
+          ],
+          "isError": false
+        }
+      }
+    }
+  ]
+}

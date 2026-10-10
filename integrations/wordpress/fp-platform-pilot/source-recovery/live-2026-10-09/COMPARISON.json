@@ -1,0 +1,52 @@
+{
+  "repository": "HelabHLC/designfit-studio",
+  "pr_number": 95,
+  "compared_pr_head": "b0299bcbdef4fdfc5720e0594dedbc320bfec2f9",
+  "inspected_main": "da0449e64c3ff18ea92c263ae46af27947191896",
+  "matching_pre_edit_5_2_0_available": false,
+  "historical_diff": "UNKNOWN; legacy comparisons are 3.0.0 versus the current source view, not the 2026-09-27 edit.",
+  "comparisons": [
+    {
+      "repository_path_relative_to_source_recovery": "arbe-fp-structural-solver.php",
+      "live_path": "arbe-fp-structural-solver.php",
+      "repository_sha256": "7d4c6f6de5a1eb1cbd97e909cf609d6abeedb9228c2772a61071f853cc6a5c8a",
+      "live_export_sha256": "7d4c6f6de5a1eb1cbd97e909cf609d6abeedb9228c2772a61071f853cc6a5c8a",
+      "identical_export_bytes": true
+    },
+    {
+      "repository_path_relative_to_source_recovery": "legacy-v3.0.0/arbe-fp-structural-solver.php",
+      "live_path": "arbe-fp-structural-solver.php",
+      "repository_sha256": "2fb1ecac5e4687b60151ba95658813a28f1904645ba1c7bd6ddb3a947114ef98",
+      "live_export_sha256": "7d4c6f6de5a1eb1cbd97e909cf609d6abeedb9228c2772a61071f853cc6a5c8a",
+      "identical_export_bytes": false
+    },
+    {
+      "repository_path_relative_to_source_recovery": "legacy-v3.0.0/includes/database.php",
+      "live_path": "includes/database.php",
+      "repository_sha256": "7b91b2ffb4186cee975464b73cd5e497bbe4b9b314073be5c5e213cf39784c8f",
+      "live_export_sha256": "4904968d6a3b5e9082690730109739d1d2222f804f86809716ea2b15ff7fc309",
+      "identical_export_bytes": false
+    },
+    {
+      "repository_path_relative_to_source_recovery": "legacy-v3.0.0/includes/rest-api.php",
+      "live_path": "includes/rest-api.php",
+      "repository_sha256": "aeea1239061e0aa744b43bbd653a03ba6360f7a1230419cd3f70a91cc363459c",
+      "live_export_sha256": "da0910f9530f59bc4446a174b840923da5f99ad85841eacc134401bde4764657",
+      "identical_export_bytes": false
+    },
+    {
+      "repository_path_relative_to_source_recovery": "legacy-v3.0.0/includes/shortcodes.php",
+      "live_path": "includes/shortcodes.php",
+      "repository_sha256": "40e4195b9dbf8c28db43876c489aeafb6f9daea3fd1913b7ea2bd8db6ac6d8ec",
+      "live_export_sha256": "c0d150dc75beffa803613ef0c35aac7bb7c572fb5f0154e85db18374a7562065",
+      "identical_export_bytes": false
+    },
+    {
+      "repository_path_relative_to_source_recovery": "legacy-v3.0.0/includes/solver.php",
+      "live_path": "includes/solver.php",
+      "repository_sha256": "4aadd3513702fd1a62b4dced524bb72431d0c208149e725c32f62da8e70738ac",
+      "live_export_sha256": "c94a4e2f30b6dc2698ff34cf075b177c9961572ca016a818ea300cd33312ccb2",
+      "identical_export_bytes": false
+    }
+  ]
+}

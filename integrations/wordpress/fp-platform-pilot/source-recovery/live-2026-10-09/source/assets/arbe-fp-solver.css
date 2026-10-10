@@ -1,0 +1,35 @@
+.arbe-solver{border:1px solid #d8dee8;border-radius:20px;background:#fff;padding:22px;box-shadow:0 12px 34px rgba(15,23,42,.08);font-family:system-ui,-apple-system,Segoe UI,sans-serif}.arbe-kicker{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:800;color:#64748b}.arbe-solver h2,.arbe-solver h3{margin:6px 0 12px;color:#0f172a}.arbe-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;align-items:end;margin:16px 0}.arbe-form label{font-weight:800;color:#334155}.arbe-form input{display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:12px}.arbe-form button{background:#0f172a;color:#fff;border:0;border-radius:12px;padding:12px 16px;font-weight:900;cursor:pointer}.arbe-card,.arbe-best{position:relative;border:1px solid #d8dee8;border-radius:18px;background:#f8fafc;padding:18px;margin:18px 0}.arbe-swatch{width:76px;height:76px;border-radius:18px;border:1px solid rgba(15,23,42,.18);position:absolute;right:18px;top:18px}.arbe-metric-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:14px 0}.arbe-metric-row div{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:12px}.arbe-metric-row b{display:block;color:#475569}.arbe-metric-row strong{display:block;font-size:24px;color:#0f172a}.arbe-chip{display:inline-block;border-radius:999px;padding:6px 10px;font-weight:900}.arbe-chip-match{background:#dcfce7;color:#166534}.arbe-chip-similar{background:#fef9c3;color:#854d0e}.arbe-chip-different{background:#ffedd5;color:#9a3412}.arbe-chip-distinct{background:#fee2e2;color:#991b1b}.arbe-table{width:100%;border-collapse:collapse;margin:16px 0}.arbe-table th,.arbe-table td{border-bottom:1px solid #e2e8f0;padding:9px 5px;text-align:left;vertical-align:top}.arbe-table th{color:#334155}.arbe-chart{border:1px solid #e2e8f0;border-radius:18px;background:#fff;padding:12px;margin:16px 0}.arbe-note{background:#f8fafc;border-radius:14px;padding:12px;color:#334155}.arbe-error{border-left:4px solid #dc2626;background:#fee2e2;padding:12px;margin:14px 0}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.arbe-cert{border:1px solid #d8dee8;border-radius:20px;background:#fff;padding:20px;margin:20px 0;box-shadow:0 10px 28px rgba(15,23,42,.06)}
+.arbe-cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:14px 0}
+.arbe-cert-grid div{background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:12px}
+.arbe-cert-grid b{display:block;color:#475569}.arbe-cert-grid strong{display:block;color:#0f172a}
+.arbe-cert-json summary{cursor:pointer;font-weight:800;color:#0f172a}
+.arbe-cert-json pre{white-space:pre-wrap;word-break:break-word;background:#0f172a;color:#e2e8f0;border-radius:14px;padding:14px;font-size:12px}
+
+.arbe-compact{max-width:760px}
+.arbe-json-only{white-space:pre-wrap;word-break:break-word;background:#0f172a;color:#e2e8f0;border-radius:14px;padding:14px;font-size:12px}
+
+.arbe-cert-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start}
+.arbe-cert-qr{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:10px}
+.arbe-cert-qr img{display:block;width:132px;height:132px}
+@media(max-width:700px){.arbe-cert-head{display:block}.arbe-cert-qr{display:inline-block;margin:10px 0}}
+
+.arbe-registry{max-width:980px}
+
+.arbe-button{display:inline-block;background:#0f172a;color:#fff!important;text-decoration:none;border-radius:10px;padding:9px 12px;font-weight:800;margin:4px 6px 4px 0}
+
+.arbe-search-engine .arbe-table td{vertical-align:top}
+.arbe-search-engine h3{margin-top:24px}
+
+.arbe-fp-unified{max-width:1100px}
+.arbe-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 18px}
+.arbe-tab{display:inline-block;padding:9px 13px;border:1px solid #cbd5e1;border-radius:999px;text-decoration:none!important;font-weight:800;color:#0f172a;background:#fff}
+.arbe-tab-active{background:#0f172a!important;color:#fff!important;border-color:#0f172a!important}
+.arbe-fp-unified .arbe-search-engine{box-shadow:none;border-style:dashed;margin-top:12px}
+
+.arbe-hlc-public{margin:18px 0}
+.arbe-pigment-chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 14px}
+.arbe-pigment-chip{display:inline-block;border:1px solid #cbd5e1;border-radius:999px;padding:7px 10px;background:#fff;text-decoration:none!important;font-weight:800;color:#0f172a}
+.arbe-pigment-chip:hover{background:#f8fafc}
+
+.arbe-hlc-public .arbe-table td{vertical-align:top}

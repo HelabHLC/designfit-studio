@@ -1,0 +1,16 @@
+{
+  "reference": "H055_L060_C085",
+  "source_pickle_sha256": "15ade17834b63bd607e6549defb6aa1f3a795ce94fb19375478f9dcd7b01506e",
+  "source_cxf": "HLC-Colour-Atlas-XL_SpectralData_v1-2.cxf",
+  "grid": "380-730 step 10",
+  "curve_points": 36,
+  "csv_sha256": "56623a4d8a6ef4c26871b4400a81d101693cfa0502c26bfcea6b5c00ec67bbca",
+  "hex": "#EA6700",
+  "rgb": "[234, 103, 0]",
+  "lab": [
+    60.0,
+    48.754,
+    69.6279
+  ],
+  "status": "pilot data; pigment rankings are not validated formulas"
+}

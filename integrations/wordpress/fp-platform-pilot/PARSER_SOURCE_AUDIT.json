@@ -1,0 +1,437 @@
+{
+  "audit_date": "2026-09-30",
+  "status": "BLOCKED_MISSING_SOURCE_DIFF",
+  "repository": "HelabHLC/designfit-studio",
+  "pr": 95,
+  "base_sha": "da0449e64c3ff18ea92c263ae46af27947191896",
+  "original_head_sha": "d924016bc9a7b2c75f41fc73ff98818da2410ef4",
+  "original_tree_sha": "fa4c7a2f95ad9b677dea06c6fa12e79705165843",
+  "reachable_commit_count": 666,
+  "historical_path_count": 367,
+  "refs": [
+    {
+      "ref": "refs/remotes/origin/agent/production-smoke-simulation",
+      "sha": "ea2e5337373dbafbc1644ac5ffda796c4577e6a0"
+    },
+    {
+      "ref": "refs/remotes/origin/agent/reference-engine-runtime-v1-release",
+      "sha": "71752040eac6dc05572b1982d71220aee3ff6293"
+    },
+    {
+      "ref": "refs/remotes/origin/agent/wp14-1-production-qualification-evidence",
+      "sha": "351ee87befdd30f9311f650ebcb508587e91bf2c"
+    },
+    {
+      "ref": "refs/remotes/origin/chore/domain-neutral-branding",
+      "sha": "c047dcf894b74b6c1fadad882e24ec7c5aa90c65"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/arbe-hlc-reference-engine-v016",
+      "sha": "adde8d1b1f4d512df583fd957c7b288c669c6c69"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/clarify-hlc-runtime-plugin-name",
+      "sha": "2c333d2ac82a9051a84f0352a2180aa419a2f0f3"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/confirm-runtime-upstream-data",
+      "sha": "0db8428c916a75080192742b7a7bcdd753185020"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/fp-platform-h055-pilot",
+      "sha": "d924016bc9a7b2c75f41fc73ff98818da2410ef4"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/reference-runtime-provenance-audit",
+      "sha": "b00232eec11944d6b3f58c9cdd535d97ff6317da"
+    },
+    {
+      "ref": "refs/remotes/origin/docs/cmt-data-permission",
+      "sha": "84b6065e38d550e3c29258247385bbe9014b73ef"
+    },
+    {
+      "ref": "refs/remotes/origin/docs/cmt-hlc-atlas-history",
+      "sha": "9ddb2e7c1bd7f3c02a803b5b1fb048cefaf96c46"
+    },
+    {
+      "ref": "refs/remotes/origin/feat/wp11-cmt-rs-adapter",
+      "sha": "52e9743cf14802995e9a6feb0ef9c0286d7e24d9"
+    },
+    {
+      "ref": "refs/remotes/origin/feat/wp11-provenance-engine",
+      "sha": "d0fda4b1c80bd1165f837d09aee4dbe836ba125f"
+    },
+    {
+      "ref": "refs/remotes/origin/feat/wp11-spectral-provider-registry",
+      "sha": "ecb4902f36e21c845ffcfc969b16e3878198c87d"
+    },
+    {
+      "ref": "refs/remotes/origin/feat/wp11-spectral-reference-layer",
+      "sha": "35b075cadd814d3a61334dd36499e0076348ead3"
+    },
+    {
+      "ref": "refs/remotes/origin/feat/wp11-spectral-reference-validation",
+      "sha": "e5e8dc6f2484fc970e9c43d38e02d4b116862d03"
+    },
+    {
+      "ref": "refs/remotes/origin/feat/wp12-feasibility-qualification-contract",
+      "sha": "f1b4d5bf36b4e342eab63627590ddcba059b0b1c"
+    },
+    {
+      "ref": "refs/remotes/origin/feat/wp13-production-qualification-report",
+      "sha": "e2a7db481a940778b2e2c00352ac2a73e7a04f5d"
+    },
+    {
+      "ref": "refs/remotes/origin/feat/wp13-production-qualification-report-v1",
+      "sha": "463eb593d42afc2094dd95eb135f56ed9d5e8f3b"
+    },
+    {
+      "ref": "refs/remotes/origin/feature/atlas-repository",
+      "sha": "0842009150fba6725fe7654009e4f17707a653f6"
+    },
+    {
+      "ref": "refs/remotes/origin/feature/atlasfit-audit-contracts",
+      "sha": "acbcdbc0892c27383d515d5805d06e51cefda81b"
+    },
+    {
+      "ref": "refs/remotes/origin/feature/atlasfit-evidence-layer",
+      "sha": "d987fcc26ead064f8447c2d7fb3d4b7e96248345"
+    },
+    {
+      "ref": "refs/remotes/origin/feature/creative-workspace-release-0-6",
+      "sha": "baedc944435182ee296617eefeefeacf4d144e45"
+    },
+    {
+      "ref": "refs/remotes/origin/feature/creative-workspace-v0.6",
+      "sha": "b58a8a3ba888fb16275d8aa8ed176c136ad33a18"
+    },
+    {
+      "ref": "refs/remotes/origin/feature/final-mixlock-orchestrator",
+      "sha": "a0755abecffea0f16b2b58d1a860ce42f5be3c2f"
+    },
+    {
+      "ref": "refs/remotes/origin/feature/first-live-reference-api",
+      "sha": "c1ce509fd4caac5800afd015b817ddbcc52a12fc"
+    },
+    {
+      "ref": "refs/remotes/origin/feature/image-palette-foundation",
+      "sha": "90062efbab2d51671ebe9fe236bcc302e1a72bf1"
+    },
+    {
+      "ref": "refs/remotes/origin/feature/lambda-v2-brent-runtime",
+      "sha": "5212dbecf00f83080e24aa74ac406ad1dc2ee875"
+    },
+    {
+      "ref": "refs/remotes/origin/feature/lambda-v2-conformance-gate",
+      "sha": "14f50d773b159e2b7d31f882a787d01e4a844e7e"
+    },
+    {
+      "ref": "refs/remotes/origin/feature/lambda-v2-master-suite",
+      "sha": "49a9cf848fcc9f4b5c4c18440487d856caa055c9"
+    },
+    {
+      "ref": "refs/remotes/origin/feature/live-atlas-candidate-search",
+      "sha": "29d239766607218665beaf48d42744ad77d07e7d"
+    },
+    {
+      "ref": "refs/remotes/origin/feature/metamerism-gate",
+      "sha": "2384918aaa998cf4232f8c0dd6efb272cefddba2"
+    },
+    {
+      "ref": "refs/remotes/origin/feature/mixlock-candidate-evaluation",
+      "sha": "9be0de6d565b10e69b94a2dbee200d25352be5e1"
+    },
+    {
+      "ref": "refs/remotes/origin/feature/mixlock-kb-v05-fixture",
+      "sha": "9ef6d35c27198eb6048f0dbd4163f9185bf6d544"
+    },
+    {
+      "ref": "refs/remotes/origin/feature/public-arbe-org",
+      "sha": "32e4f4838fa5b0313fbb6ef80a030f9e723906bf"
+    },
+    {
+      "ref": "refs/remotes/origin/feature/reference-engine",
+      "sha": "34f1980d2ab78112d98dbf6e4c2841df7184b9ea"
+    },
+    {
+      "ref": "refs/remotes/origin/feature/runtime-master-repository",
+      "sha": "ccdb2bd927ccd16c2a4f7a7e04b7b623634a7804"
+    },
+    {
+      "ref": "refs/remotes/origin/feature/scissor-integrated-pipeline",
+      "sha": "dfac74d1fa802db5dae7374d5d1dc6463cf6820c"
+    },
+    {
+      "ref": "refs/remotes/origin/feature/scissor-structural-drift-lock",
+      "sha": "a002193edaddd657094a45f4b3cd95e5f0add599"
+    },
+    {
+      "ref": "refs/remotes/origin/feature/scissor-structural-drift-lock-v2",
+      "sha": "382bb827f6482fadaf3eafd75f8835a02d00eb8e"
+    },
+    {
+      "ref": "refs/remotes/origin/feature/second-recipe-solver",
+      "sha": "16f94e7d51eb7c5690e101dfeda816b23a6511c3"
+    },
+    {
+      "ref": "refs/remotes/origin/feature/spectral-scissor-gate",
+      "sha": "59d5c96966d7cc9177ea7b704b5aff336907e003"
+    },
+    {
+      "ref": "refs/remotes/origin/feature/spectral-scissor-v03-core",
+      "sha": "ceb0dccd715d1946da8fd1e3586603736739a3a8"
+    },
+    {
+      "ref": "refs/remotes/origin/main",
+      "sha": "da0449e64c3ff18ea92c263ae46af27947191896"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-01-mixlock-report",
+      "sha": "68d2eb088045139b7f391373c197d16bde6887a7"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-01-report-envelope",
+      "sha": "c93c830d953b64ea6e904325f65eb35ecb3044e1"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-01-report-integrity",
+      "sha": "a9c818ce86258f800ac67b2f1dfcc226c9e9f098"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-01-runtime-report-binding",
+      "sha": "fb5b88f6d2981306cd6db2b3ca8a3a6a966291bf"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-02-hex-binding",
+      "sha": "7c2dcb7a2da5aee9b65f291407e16bb9357029ed"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-02-lch-ab-d50-binding",
+      "sha": "3a9b16f1393a6bf94f187520c4b0f2736f99dad1"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-02-reference-gateway",
+      "sha": "90c9d4b7c57d9f16bb643be6ebf0ac483afb00b9"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-02-srgb8-binding",
+      "sha": "1e4f6d1542f0b1cefad5e46d394d970e5a8adef0"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-02-xyz-d50-binding",
+      "sha": "27c3dd440b210390ea7a4e03374ae6f9d9b26b6d"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-02-xyz-d65-binding",
+      "sha": "b50f5a0c7f5b134f4990e772fdd8ff01afde729a"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-03-decision-object-v1",
+      "sha": "1a9e049a127be1f739a3042c60ba387f83c58a60"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-03-evidence-chain-v1",
+      "sha": "acb75447e049ff94f25bd88f4216787b57a2fdec"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-03-explainable-decision-v1",
+      "sha": "1898371ce5b71afee3f33eac0621845a76d5b234"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-03-runtime-trace-v1",
+      "sha": "6f9cf9b56cb4ba6b6275475bb0644b949bb97879"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-03-trust-assessment-v1",
+      "sha": "40e1116248ee1a517e528157cf7e5564d6203a48"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-04-evidence-trust-report-v1",
+      "sha": "f2ffe4eb97315e631b6e43936e4d31f6c6d1de84"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-05-spectral-intelligence-evidence-package-v1",
+      "sha": "87652858fb5105eb93e51935d588be2fcfcfdb50"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-05-spectral-intelligence-report-binding-v1",
+      "sha": "ec5ef26a2f07a0376fea815f23e2d4df6a53c52f"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-05-spectral-intelligence-summary-v1",
+      "sha": "21ac54d2cad13bcf567878b629961f6bab151f26"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-05-spectral-moment-descriptor-v1",
+      "sha": "ee0483be327735a8c9317ea0cc9514d4e6ef2a48"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-05-spectral-window-structure-v1",
+      "sha": "ad4423e2c70e9bd9182b6a376910d0634af616ed"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-05-structural-cause-indicators-v1",
+      "sha": "bc16ad5b94be398fd48bac41210dcc65e16a0c01"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-05-structural-cause-report-binding-v1",
+      "sha": "f4f4c71c3116530baa5cbada70eebdf04b11c649"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-05-structural-intelligence-explanation-v1",
+      "sha": "63215e508665a22bc32beb85c73ee785ef1bf68f"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-05-structural-intelligence-v1",
+      "sha": "786db4cf15248508b692822aa0b0a0b568502122"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-06-recipe-candidate-comparison-v1",
+      "sha": "03d9a77bb9169729eee3fe83292673140a1f3440"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-06-recipe-candidate-ranking-v1",
+      "sha": "72e747b7eafc3c7f1c52b9c209041aeff1c94ebe"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-06-recipe-decision-support-report-binding-v1",
+      "sha": "c2cb6d63b20f4ba366394cc87aa9d153087b5c7a"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-06-recipe-decision-support-v1",
+      "sha": "99c61140eff26095995992770261f3ddc8811b79"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-06-recipe-evidence-assessment-v1",
+      "sha": "8b720acaecd237aaa9d14b76c9813f099cca57b7"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-06-recipe-evidence-report-binding-v1",
+      "sha": "102e6f540c4734211f56cf9eb09e77813e2df72a"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-06-recipe-intelligence-contract-v1",
+      "sha": "89ec68ea38033a5640046771962232ac564d3494"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-06-recipe-intelligence-evidence-package-v1",
+      "sha": "a6fbb85e6f5fd6e3658dbb5e1f395bac3044cb0c"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-07-runtime-evidence-chain-verification-report-v1",
+      "sha": "a06255446dffe8eb2ee84e7d028fcfb4bdca1518"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-07-runtime-evidence-chain-verification-v1",
+      "sha": "365335d13e4a6dadf44d0f21d673f9f3b3662803"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-07-runtime-intelligence-audit-manifest-v1",
+      "sha": "75ea7d34fc5f6cce2e4ba177ffe91134cbd69db4"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-07-runtime-intelligence-evidence-package-v1",
+      "sha": "ef2b84b38f90b8e0b3be7ccc375ae17f1b5526ff"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-07-runtime-intelligence-orchestration-contract-v1",
+      "sha": "b3ec5202822ab65ff57c8a21bff8b7f4a017db5c"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-07-runtime-intelligence-orchestrator-v1",
+      "sha": "a2d49317a4dd2a531df644b3c9723d82efe64dff"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-07-runtime-intelligence-report-binding-v1",
+      "sha": "4bc4a797f47ca9a7c5bb92a822dd95b45404c2df"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-07-runtime-verification-audit-package-v1",
+      "sha": "aba34582513ea63204add02bc5624b2eaf33e198"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-08-decision-narrative-report-binding-v1",
+      "sha": "ec97ca6eeb6a778edfa1aed50e694737a727eda6"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-08-decision-narrative-v1",
+      "sha": "d61b7f69a76ab9c5586771178322ac01f07955a3"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-08-explainable-decision-engine-v1",
+      "sha": "283623cfe192220884da22d4ba73886748714a2f"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-08-explainable-decision-report-binding-v1",
+      "sha": "4bc65879da092f7d5af033006fb47cdfcc993d38"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-08-industrial-validation-contract-v1",
+      "sha": "3a445497f79a0cd0d386ff8cbd24c826828e5546"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-08-industrial-validation-report-binding-v1",
+      "sha": "9571523ebaa2cb4b0d4a4f27606f448587503c57"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-09-decision-graph-v1",
+      "sha": "813561e0fec54e047cef185d9332741c58c52be8"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-09-decision-ledger-v1",
+      "sha": "649190043c6c2886899d56ab2d61901b152941e4"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-09-industrial-decision-contract-v1",
+      "sha": "5eeae61e14a8413fac437a7276081f7d61fdf56e"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-09-industrial-decision-engine-v1",
+      "sha": "1ab8d4191c4b58e84c7e8a71921e7faabedf81ab"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-09-industrial-decision-report-v1",
+      "sha": "1ee47b07521fa312bce793dc6304c43f66b14f59"
+    },
+    {
+      "ref": "refs/remotes/origin/platform/wp-10-ionos-production-foundation",
+      "sha": "eb11b8918187775dc727c5edc951221477386988"
+    },
+    {
+      "ref": "refs/tags/arbe-hlc-runtime-v1.0.0",
+      "sha": "da0449e64c3ff18ea92c263ae46af27947191896"
+    }
+  ],
+  "original_changed_files": [
+    {
+      "path": "integrations/wordpress/fp-platform-pilot/README.md",
+      "sha256": "0d1c54ecb06e8d05e1d2caa07e5c0458d07950e2b5a37b669724fcdb7b995793"
+    },
+    {
+      "path": "integrations/wordpress/fp-platform-pilot/plugin/arbe-fp-h055-pilot-importer/README.md",
+      "sha256": "5bd8dba8c03c27e5608c1b1346d1b306973a34a9034ea2d533a9ead0563a904e"
+    },
+    {
+      "path": "integrations/wordpress/fp-platform-pilot/plugin/arbe-fp-h055-pilot-importer/arbe-fp-h055-pilot-importer.php",
+      "sha256": "037a9026032da661c9b24df967d2f1b433b456811e0197af6f69c8d3cb41d41f"
+    },
+    {
+      "path": "integrations/wordpress/fp-platform-pilot/plugin/arbe-fp-h055-pilot-importer/data/H055_L060_C085_pilot_manifest.json",
+      "sha256": "f34a6ac2b1df528662e9df6825a36708fa1d4fec7f0d5bbdb8503d7371567195"
+    },
+    {
+      "path": "integrations/wordpress/fp-platform-pilot/plugin/arbe-fp-h055-pilot-importer/data/H055_L060_C085_reference_curves.csv",
+      "sha256": "56623a4d8a6ef4c26871b4400a81d101693cfa0502c26bfcea6b5c00ec67bbca"
+    },
+    {
+      "path": "integrations/wordpress/fp-platform-pilot/plugin/arbe-fp-h055-pilot-importer/data/RELEASE_NOTICE.md",
+      "sha256": "9c30d7fd3fbbbe9d8caaaf4107f08a0b4f5b07f85e8dab120056e66a2ec50807"
+    },
+    {
+      "path": "integrations/wordpress/fp-platform-pilot/prepare_fp_reference_pilot.py",
+      "sha256": "a61ae60990ef90d37d15ad39c5b54ccf61083bc3141b3e210b7a7c33508c0899"
+    }
+  ],
+  "fp_platform_source_paths": [],
+  "wordpress_actions": []
+}
