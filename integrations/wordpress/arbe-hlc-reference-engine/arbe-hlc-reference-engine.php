@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: ARBE HLC Reference Engine
+ * Plugin Name: ARBE HLC Reference Engine — Runtime Match
  * Plugin URI: https://example.com/
  * Description: Atlas-only nearest-match engine for WordPress with MySQL-backed runtime master, guided installation, REST matching, and one validated Hxxx_Lxxx_Cxxx output.
  * Version: 0.1.6
